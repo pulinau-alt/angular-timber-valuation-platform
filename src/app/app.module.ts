@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginRegisterModule } from './login-register/login-register.module';
 import { CoreModule } from './core/core.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { AssessmentsModule } from './assessments/assessments.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ComponentsModule,
     AppRoutingModule,
     LoginRegisterModule,
-    CoreModule
+    CoreModule,
+    AssessmentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
