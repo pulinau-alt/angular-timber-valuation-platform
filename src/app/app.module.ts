@@ -9,10 +9,13 @@ import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginRegisterModule } from './login-register/login-register.module';
+import { CoreModule } from './core/core.module';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,8 @@ import { LoginRegisterModule } from './login-register/login-register.module';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ComponentsModule,
     AppRoutingModule,
-    LoginRegisterModule
+    LoginRegisterModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
