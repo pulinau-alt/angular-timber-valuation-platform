@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SubmissionFormComponent } from './submission-form/submission-form.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    MDBBootstrapModule.forRoot(),
   ],
-  declarations: []
+  declarations: [SubmissionFormComponent],
+  exports: [SubmissionFormComponent]
 })
 export class AssessmentsModule { }
