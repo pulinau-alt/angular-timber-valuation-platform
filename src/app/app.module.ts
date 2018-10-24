@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { AngularFireModule } from "@angular/fire";
 
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     MDBBootstrapModule.forRoot(),
     MaterialModule,
+    FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ComponentsModule,
