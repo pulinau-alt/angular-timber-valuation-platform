@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFireModule } from "@angular/fire";
 
@@ -12,6 +13,7 @@ import { LoginRegisterModule } from './login-register/login-register.module';
 import { CoreModule } from './core/core.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AssessmentsModule } from './assessments/assessments.module';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { AssessmentsModule } from './assessments/assessments.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     MDBBootstrapModule.forRoot(),
+    MaterialModule,
     AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ComponentsModule,
