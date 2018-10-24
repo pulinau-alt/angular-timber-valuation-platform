@@ -1,4 +1,6 @@
-# AngularTimberValuationPlatform
+# Timber Valuation Platform
+
+A platform built for the forest department for the valuation of timber.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
 
