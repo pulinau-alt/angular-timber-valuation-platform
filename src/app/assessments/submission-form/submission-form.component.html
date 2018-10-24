@@ -1,0 +1,63 @@
+<div class="container">
+  <mat-card>
+    <!-- Header -->
+    <mat-card-header class="center">
+      <mat-card-title>Stumpage Assessment</mat-card-title>
+    </mat-card-header>
+
+    <form class="mat-form">
+      <!-- Form -->
+      <mat-card-content>
+        <div class="card-content">
+          <section [style.width]="'50%'">
+            <mat-form-field>
+              <input matInput placeholder="Division">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="Beat">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="Range">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="Block">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="S.Block">
+            </mat-form-field>
+          </section>
+
+          <section [style.width]="'33%'">
+            <mat-form-field>
+              <input matInput placeholder="S.Block">
+            </mat-form-field>
+          </section>
+
+        </div>
+        <div>
+          <mat-divider></mat-divider>
+
+          <mat-form-field>
+            <mat-select placeholder="Species">
+              <mat-option value="option">Option</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-divider></mat-divider>
+        </div>
+
+
+      </mat-card-content>
+
+      <!-- Actions -->
+      <mat-card-actions>
+        <button mat-button>SUBMIT</button>
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+</div>
