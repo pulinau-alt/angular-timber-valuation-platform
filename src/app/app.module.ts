@@ -7,6 +7,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginRegisterModule } from './login-register/login-register.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AppRoutingModule } from './app-routing.module';
     MDBBootstrapModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ComponentsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    LoginRegisterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
