@@ -1,5 +1,5 @@
 export class Forest {
-    id: string;
+    id?: string;
     division: string;
     beat: string;
     range: string;

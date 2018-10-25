@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AssessmentService } from 'src/app/services/assessment.service';
+import { Observable } from 'rxjs';
+import { Forest } from 'src/models/forest';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-submission-form',
@@ -7,7 +12,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubmissionFormComponent implements OnInit {
 
-  constructor() { }
+  forest: Forest;
+  forestForm: FormGroup;
 
-  ngOnInit() { }
+  constructor(private as: AssessmentService) { }
+
+  ngOnInit() {
+    this.initForm();
+  }
+
+  private initForm() {
+    this.forestForm = new FormGroup({
+      division: new FormControl('', Validators.required),
+      beat: new FormControl('', Validators.required),
+      range: new FormControl('', Validators.required),
+      block: new FormControl('', Validators.required),
+      sBlock: new FormControl('', Validators.required)
+    })
+  }
+
+  onSubmit() {
+    console.log(this.as.addForest(this.forestForm.value));
+  }
+
+  saveAssesssment() {
+
+  }
 }
