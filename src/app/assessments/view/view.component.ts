@@ -12,7 +12,7 @@ import { DataSource } from '@angular/cdk/table';
 export class ViewComponent implements OnInit {
 
   dataSource = new AssessmentDataSource(this.as);
-  displayedColumns: string[] = ['division', 'beat', 'range', 'block', 'sBlock'];
+  displayedColumns: string[] = ['division', 'beat', 'range', 'block', 'sBlock', 'edit', 'delete'];
 
   constructor(private as: AssessmentService) { }
 
