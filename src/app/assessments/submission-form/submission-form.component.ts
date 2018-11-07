@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AssessmentService } from 'src/app/services/assessment.service';
+import { AssessmentService } from '../../services/assessment.service';
 import { Observable } from 'rxjs';
-import { Forest } from 'src/models/forest';
+import { Forest } from '../../core/models/forest';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({

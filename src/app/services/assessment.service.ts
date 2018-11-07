@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Forest, Timber, Logs, TransmissionPoles, FencePosts, RoundPoles } from "../../models/forest";
+import { Forest, Timber, Logs, TransmissionPoles, FencePosts, RoundPoles } from "../core/models/forest";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssessmentService {
 
+  private forestsCollection: AngularFirestoreCollection<Forest>;
   forest$: Observable<Forest>;
 
-  constructor(private afs: AngularFirestore) {}
+  constructor(private afs: AngularFirestore) {
+    this.forestsCollection = afs.collection("forests");
+  }
 
   addForest(forest) {
-    const forestsCollection: AngularFirestoreCollection<Forest> = this.afs.collection("forests");
+    // const forestsCollection: AngularFirestoreCollection<Forest> = this.afs.collection("forests");
     const data: Forest = {
       division: forest.division,
       beat: forest.beat,
@@ -21,7 +24,11 @@ export class AssessmentService {
       block: forest.block,
       sBlock: forest.sBlock
     }
-    return forestsCollection.add(data);
+    return this.forestsCollection.add(data);
+  }
+
+  getForests(): Observable<Forest[]> {
+    return this.forestsCollection.valueChanges();
   }
 
 }
