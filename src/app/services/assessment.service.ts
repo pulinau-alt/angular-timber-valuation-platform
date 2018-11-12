@@ -38,4 +38,8 @@ export class AssessmentService {
     );
   }
 
+  deleteForest(forestId) {
+    this.forestsCollection.ref.doc(forestId).delete();
+  }
+
 }

@@ -19,6 +19,13 @@ export class ViewComponent implements OnInit {
   ngOnInit() {
   }
 
+  onRowClicked(row) {
+    console.log('Row clicked: ', row.id);
+  }
+
+  onDeleteClicked(row) {
+    this.as.deleteForest(row.id);
+  }
 }
 
 export class AssessmentDataSource extends DataSource<any> {
@@ -26,7 +33,7 @@ export class AssessmentDataSource extends DataSource<any> {
     super();
   }
 
-  connect() { 
+  connect() {
     return this.as.getForests();
   }
 
