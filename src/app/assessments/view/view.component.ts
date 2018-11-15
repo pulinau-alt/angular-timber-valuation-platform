@@ -3,6 +3,7 @@ import { Forest } from '../../core/models/forest';
 import { AssessmentService } from 'src/app/services/assessment.service';
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view',
@@ -14,7 +15,7 @@ export class ViewComponent implements OnInit {
   dataSource = new AssessmentDataSource(this.as);
   displayedColumns: string[] = ['division', 'beat', 'range', 'block', 'sBlock', 'edit', 'delete'];
 
-  constructor(private as: AssessmentService) { }
+  constructor(private as: AssessmentService, public router: Router) { }
 
   ngOnInit() {
   }
@@ -25,6 +26,10 @@ export class ViewComponent implements OnInit {
 
   onDeleteClicked(row) {
     this.as.deleteForest(row.id);
+  }
+
+  onEditClicked(row) {
+    this.router.navigate(['/assessment/submit'], { queryParams: { id: row.id } });
   }
 }
 

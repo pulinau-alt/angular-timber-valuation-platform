@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <!-- Header -->
-    <mat-card-header class="center">
+    <mat-card-header class="block">
       <mat-card-title>Stumpage Assessment</mat-card-title>
     </mat-card-header>
 
@@ -10,13 +10,15 @@
       <mat-card-content>
         <div class="card-content">
           <section [style.width]="'100%'">
-            <mat-form-field>
-              <input formControlName="division" matInput placeholder="Division">
-            </mat-form-field>
-
-            <mat-form-field>
-              <input formControlName="beat" matInput placeholder="Beat">
-            </mat-form-field>
+            <div class="row">
+              <mat-form-field>
+                <input formControlName="division" matInput placeholder="Division">
+              </mat-form-field>
+  
+              <mat-form-field>
+                <input formControlName="beat" matInput placeholder="Beat">
+              </mat-form-field>              
+            </div>
 
             <mat-form-field>
               <input formControlName="range" matInput placeholder="Range">

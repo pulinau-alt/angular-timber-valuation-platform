@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Forest, Timber, Logs, TransmissionPoles, FencePosts, RoundPoles } from "../core/models/forest";
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentSnapshot } from "@angular/fire/firestore";
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -33,9 +33,13 @@ export class AssessmentService {
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Forest;
         const id = a.payload.doc.id;
-        return {id, ...data};
+        return { id, ...data };
       }))
     );
+  }
+
+  getForest(id) {
+    return this.forestsCollection.doc<Forest>(id).get() as Observable<DocumentSnapshot<any>>;
   }
 
   deleteForest(forestId) {
