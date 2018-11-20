@@ -17,15 +17,15 @@ export class AssessmentService {
   }
 
   addForest(forest) {
-    // const forestsCollection: AngularFirestoreCollection<Forest> = this.afs.collection("forests");
-    const data: Forest = {
-      division: forest.division,
-      beat: forest.beat,
-      range: forest.range,
-      block: forest.block,
-      sBlock: forest.sBlock
-    }
-    return this.forestsCollection.add(data);
+    // // const forestsCollection: AngularFirestoreCollection<Forest> = this.afs.collection("forests");
+    // const data: Forest = {
+    //   division: forest.division,
+    //   beat: forest.beat,
+    //   range: forest.range,
+    //   block: forest.block,
+    //   sBlock: forest.sBlock
+    // }
+    return this.forestsCollection.add(forest);
   }
 
   getForests(): Observable<Forest[]> {
@@ -44,6 +44,10 @@ export class AssessmentService {
 
   deleteForest(forestId) {
     this.forestsCollection.ref.doc(forestId).delete();
+  }
+
+  updateForest(id, data) {
+    this.forestsCollection.doc(id).update(data);
   }
 
 }

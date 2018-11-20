@@ -3,7 +3,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { Observable } from 'rxjs';
 import { Forest } from '../../core/models/forest';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
 
 @Component({
@@ -18,20 +18,26 @@ export class SubmissionFormComponent implements OnInit {
   sub;
   id: String;
 
-  constructor(private as: AssessmentService, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(
+    private as: AssessmentService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.initForm();
 
     this.sub = this.route.queryParams
       .subscribe(params => {
-        this.id = params['id'] || '0';
-      });    
-      this.loadForestDetails(this.id);
+        this.id = params['id'];
+      });
+    this.id ? this.loadForestDetails(this.id) : '';
   }
 
   private initForm() {
     this.forestForm = this.fb.group({
+      id: new FormControl({ value: '', disabled: true }),
       division: new FormControl('', Validators.required),
       beat: new FormControl('', Validators.required),
       range: new FormControl('', Validators.required),
@@ -44,6 +50,7 @@ export class SubmissionFormComponent implements OnInit {
     this.as.getForest(id)
       .subscribe(next => {
         this.forest = next.data();
+        this.forestForm.get('id').setValue(id);
         this.forestForm.get('division').setValue(this.forest.division);
         this.forestForm.get('beat').setValue(this.forest.beat);
         this.forestForm.get('range').setValue(this.forest.range);
@@ -53,6 +60,14 @@ export class SubmissionFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.as.addForest(this.forestForm.value));
+    if (this.id = this.forestForm.get('id').value) {
+      console.log(this.as.updateForest(this.id, this.forestForm.getRawValue()))
+      console.log('Updated')
+    } else {
+      if (this.forestForm.valid) {
+        console.log(this.as.addForest(this.forestForm.value));
+      }
+    }
+    this.router.navigate(['assessment/view']);
   }
 }
