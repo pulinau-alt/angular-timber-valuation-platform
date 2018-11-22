@@ -44,8 +44,8 @@
           <mat-divider></mat-divider>
 
           <mat-form-field>
-            <mat-select placeholder="Species">
-              <mat-option value="option">Option</mat-option>
+            <mat-select formControlName="species" placeholder="Species">
+              <mat-option *ngFor='let tree of trees' [value]="tree">{{tree.species}}</mat-option>
             </mat-select>
           </mat-form-field>
 

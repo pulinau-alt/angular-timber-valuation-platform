@@ -16,7 +16,7 @@ export class TreeService {
     this.treesCollection = this.afs.collection("trees");
   }
 
-  getTrees(): Observable<Tree[]> {
+  public getTrees(): Observable<Tree[]> {
     return this.treesCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Tree;
@@ -26,7 +26,7 @@ export class TreeService {
     );
   }
   
-  getTree(id) {
+  public getTree(id) {
     return this.treesCollection.doc<Tree>(id).get() as Observable<DocumentSnapshot<any>>;
   }
 }

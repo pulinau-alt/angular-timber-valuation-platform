@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { Observable } from 'rxjs';
-import { Forest } from '../../core/models/forest';
+import { Forest, Tree } from '../../core/models/forest';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
+import { TreeService } from 'src/app/services/tree.service';
 
 @Component({
   selector: 'app-submission-form',
@@ -17,13 +18,17 @@ export class SubmissionFormComponent implements OnInit {
   forestForm: FormGroup;
   sub;
   id: String;
+  trees: Tree[];
 
   constructor(
     private as: AssessmentService,
+    private ts: TreeService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.trees = [];
+  }
 
   ngOnInit() {
     this.initForm();
@@ -32,7 +37,17 @@ export class SubmissionFormComponent implements OnInit {
       .subscribe(params => {
         this.id = params['id'];
       });
+
+    // If forest id has been passed, load forest details
     this.id ? this.loadForestDetails(this.id) : '';
+
+    // Populate trees list
+    this.ts.getTrees()
+      .subscribe(trees => {
+        trees.forEach(tree => {
+          this.trees.push(tree);
+        });
+      })
   }
 
   private initForm() {
@@ -42,7 +57,8 @@ export class SubmissionFormComponent implements OnInit {
       beat: new FormControl('', Validators.required),
       range: new FormControl('', Validators.required),
       block: new FormControl('', Validators.required),
-      sBlock: new FormControl('', Validators.required)
+      sBlock: new FormControl('', Validators.required),
+      species: new FormControl(''),
     });
   }
 
