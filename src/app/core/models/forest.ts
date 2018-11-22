@@ -1,4 +1,4 @@
-export class Forest {
+export interface Forest {
     id?: string;
     division: string;
     beat: string;
@@ -7,26 +7,27 @@ export class Forest {
     sBlock: number;
 }
 
-export class Timber {
+export interface Tree {
+    id?: string
     species: string;
 }
 
-export class Logs {
+export interface Logs {
     girthClass: string;
     volume: number;
 }
 
-export class TransmissionPoles {
+export interface TransmissionPoles {
     category: string;
     quantity: number;
 }
 
-export class RoundPoles {
-    class: string;
+export interface RoundPoles {
+    interface: string;
     quantity: number;
 }
 
-export class FencePosts {
+export interface FencePosts {
     class: string;
     quantity: number;
 }
