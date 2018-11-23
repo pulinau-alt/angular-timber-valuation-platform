@@ -16,6 +16,7 @@ export class SubmissionFormComponent implements OnInit {
 
   forest: Forest;
   forestForm: FormGroup;
+  tpForm: FormGroup;
   sub;
   id: String;
   trees: Tree[];
@@ -60,6 +61,11 @@ export class SubmissionFormComponent implements OnInit {
       sBlock: new FormControl('', Validators.required),
       species: new FormControl(''),
     });
+
+    this.tpForm = this.fb.group({
+      tpCategory: new FormControl(''),
+      tpQty: new FormControl(''),
+    })
   }
 
   private loadForestDetails(id) {
