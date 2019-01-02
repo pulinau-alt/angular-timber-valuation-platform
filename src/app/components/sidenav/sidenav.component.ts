@@ -1,3 +1,4 @@
+import { AuthService } from './../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,7 +12,7 @@ export class SidenavComponent implements OnInit {
   opened = true;
   screenWidth: number;
 
-  constructor() {
+  constructor(public auth: AuthService) {
     // set screenWidth on page load
     this.screenWidth = window.innerWidth;
     window.onresize = () => {
