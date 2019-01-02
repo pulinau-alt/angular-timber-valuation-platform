@@ -1,20 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-.mat-card {
-    margin-top: 25px
-  }
-  
-  .mat-card-header {
-    margin: 10px;
-    text-align: center;
-  }
-  
-  .card-content {
-      display: flex;
-    }
-  
-  .row {
-    margin-left: auto;
-  }
+.body {
+  height: 100vh;
+  margin: 16px;
+}
+
+
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+@mixin global-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+}
+
+$default-theme: mat-light-theme(
+  mat-palette($mat-teal, 500, A100, 900),
+  mat-palette($mat-amber, 600, A100, 900),
+  mat-palette($mat-red, 500, A100, 900)
+);
+
+$dark-theme: mat-dark-theme(
+  mat-palette($mat-purple),
+  mat-palette($mat-blue),
+  mat-palette($mat-red)
+);
+
+.default-theme {
+  @include angular-material-theme($default-theme);
+}
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+  @include global-theme($dark-theme);
+}
