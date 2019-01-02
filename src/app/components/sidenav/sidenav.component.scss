@@ -1,8 +1,46 @@
 mat-sidenav, mat-sidenav-content {
     padding: 16px;
+    height: 100%;
+}
+
+mat-sidenav {
+    width: 315px;
+    padding-top: 42px;
+    padding-bottom: 100px;
+}
+
+mat-sidenav-content {
+    padding: 36px;
+}
+
+mat-sidenav-container {
+    height: 100vh;
+}
+
+mat-button {
+    display: inline-block;
 }
 
 .menu {
     margin-left: -20px;
     margin-bottom: 12px;
+}
+
+.profile-avatar {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+    margin: 12px auto;
+    height: 100px;
+    width: 100px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.sidebar-footer {
+    bottom: 0;
+    width: 100%;
 }

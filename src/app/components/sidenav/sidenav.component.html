@@ -1,15 +1,21 @@
 <mat-sidenav-container>
+
+  <!-- Sidebar -->
   <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
-    <div class="sidenav-header">
-      <a routerLink="/">
-        <h5>Hello world!</h5>
-      </a>
+    <div class="sidenav-header center" color="warn">
+      <div mat-card-avatar class="profile-avatar"></div>
+    </div>
+
+    <p>Text</p>
+    <div class="sidebar-footer center">
+      <button mat-stroked-button color="primary">LOGOUT</button>
     </div>
   </mat-sidenav>
 
+  <!-- Content -->
   <mat-sidenav-content>
     <div class="menu" [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">
-      <button type="button" mat-button (click)="sidenav.open()">
+      <button type="button" mat-button class="block" (click)="sidenav.open()">
         <mat-icon>menu</mat-icon>
       </button>
     </div>
