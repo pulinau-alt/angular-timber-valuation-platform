@@ -1,0 +1,22 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
+    <div class="sidenav-header">
+      <a routerLink="/">
+        <h5>Hello world!</h5>
+      </a>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="menu" [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">
+      <button type="button" mat-button (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+    <router-outlet></router-outlet>
+
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
