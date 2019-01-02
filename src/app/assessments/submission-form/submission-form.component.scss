@@ -1,20 +1,9 @@
-.mat-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .mat-form > * {
-    width: 100%;
-  }
-
-mat-form-field {
-  margin-right: 15px
+.container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.row {
-  margin-top: 7px;
-}
-
-button {
-  margin-top: 7px;
+.container > * {
+  width: 100%;
+  margin: auto 8px;
 }
