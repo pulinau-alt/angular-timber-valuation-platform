@@ -14,6 +14,7 @@ import { CoreModule } from './core/core.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { MaterialModule } from './material.module';
+import { PriceListModule } from './price-list/price-list.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MaterialModule } from './material.module';
     AppRoutingModule,
     LoginRegisterModule,
     CoreModule,
-    AssessmentsModule
+    AssessmentsModule,
+    PriceListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
