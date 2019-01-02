@@ -4,6 +4,7 @@ import { PriceListFormComponent } from './price-list-form/price-list-form.compon
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { PriceListViewComponent } from './price-list-view/price-list-view.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule
   ],
-  declarations: [PriceListFormComponent],
-  exports: [PriceListFormComponent]
+  declarations: [PriceListFormComponent, PriceListViewComponent],
+  exports: [PriceListFormComponent, PriceListViewComponent]
 })
 export class PriceListModule { }
