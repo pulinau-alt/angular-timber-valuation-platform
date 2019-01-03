@@ -1,5 +1,7 @@
+import { LINKS } from './link-list';
 import { AuthService } from './../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-sidenav',
@@ -8,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidenavComponent implements OnInit {
 
+  links = LINKS;
   events: string[] = [];
   opened = true;
   screenWidth: number;
