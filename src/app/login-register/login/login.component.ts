@@ -16,11 +16,13 @@ export class LoginComponent implements OnInit {
     this.initForm();
   }
 
-  private googleLogin() {
+  public googleLogin() {
     this.auth.googleLogin();
+
+    this.route.navigate(['home']);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.auth.isAuthenticated()) { this.route.navigate(['']); }
   }
 

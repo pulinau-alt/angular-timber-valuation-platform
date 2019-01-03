@@ -1,37 +1,47 @@
-<mat-card>
-  <mat-card-title>Login</mat-card-title>
-  <mat-card-subtitle>You are about to access a secure area. Please enter your credentials to continue.</mat-card-subtitle>
+<div *ngIf="auth.user | async; then authenticated else guest"></div>
 
-  <!-- Login Form -->
-  <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mat-form">
-    <div class="wrapper">
-      <div class="flex-container center">
-        <mat-form-field>
-          <input matInput formControlName="username" placeholder="Username">
-        </mat-form-field>
+<ng-template #guest>
+  <mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-subtitle>You are about to access a secure area. Please enter your credentials to continue.</mat-card-subtitle>
 
-        <mat-form-field>
-          <input matInput type="password" formControlName="password" placeholder="Password">
-        </mat-form-field>
+    <!-- Login Form -->
+    <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mat-form">
+      <div class="wrapper">
+        <div class="flex-container center">
+          <mat-form-field>
+            <input matInput formControlName="username" placeholder="Username">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="password" formControlName="password" placeholder="Password">
+          </mat-form-field>
+        </div>
       </div>
+
+      <div class="wrapper">
+        <button mat-raised-button color="primary" type="submit" form="forestForm">LOGIN</button>
+      </div>
+    </form>
+    <!-- /Login Form -->
+
+    <div class="divider">
+      <mat-divider [inset]="true"></mat-divider>
     </div>
 
     <div class="wrapper">
-      <button mat-raised-button color="primary" type="submit" form="forestForm">LOGIN</button>
+      <button mat-raised-button color="warn" (click)="googleLogin()">
+        <span><i class="fa fa-google" aria-hidden="true"></i></span>
+        SIGN-IN WITH GOOGLE
+      </button>
     </div>
-  </form>
-  <!-- /Login Form -->
+  </mat-card>
+</ng-template>
 
-  <div class="divider">
-    <mat-divider [inset]="true"></mat-divider>
+<ng-template #authenticated>
+  <div *ngIf="auth.user | async as user">
+    <h3>Hello, {{ user.displayName }}</h3>
+    <p>UID: {{ user.uid }}</p>
+    <button mat-button color="primary" (click)="this.route.navigate('home')">Continue</button>
   </div>
-
-  <div class="wrapper">
-    <button mat-raised-button color="warn"
-    (click)="googleLogin()">
-      <span style="margin-right: 4px"><i class="fa fa-google" aria-hidden="true"></i></span>
-      SIGN-IN WITH GOOGLE
-    </button>
-  </div>
-
-</mat-card>
+</ng-template>
