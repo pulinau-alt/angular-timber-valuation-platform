@@ -1,24 +1,3 @@
 <!-- Sidebar -->
-<div *ngIf="auth.user; then authenticated else guest"></div>
+<app-sidenav></app-sidenav>
 <!-- /.Sidebar -->
-<!--Navbar-->
-
-<!--/.Navbar-->
-<app-footer></app-footer>
-
-<!-- User NOT logged in -->
-<ng-template #guest>
-    <h3>Howdy, GUEST</h3>
-    <p>Login to get started...</p>
-
-    <button (click)="auth.googleLogin()">
-        <i class="fa fa-google"></i> Login with Google
-    </button>
-
-</ng-template>
-
-
-<!-- User logged in -->
-<ng-template #authenticated>
-    <app-sidenav></app-sidenav>
-</ng-template>

@@ -40,7 +40,7 @@ export class SubmissionFormComponent implements OnInit {
       });
 
     // If forest id has been passed, load forest details
-    this.id ? this.loadForestDetails(this.id) : '';
+    if (this.id) { this.loadForestDetails(this.id); }
 
     // Populate trees list
     this.ts.getTrees()
@@ -48,7 +48,7 @@ export class SubmissionFormComponent implements OnInit {
         trees.forEach(tree => {
           this.trees.push(tree);
         });
-      })
+      });
   }
 
   private initForm() {
@@ -65,7 +65,7 @@ export class SubmissionFormComponent implements OnInit {
     this.tpForm = this.fb.group({
       tpCategory: new FormControl(''),
       tpQty: new FormControl(''),
-    })
+    });
   }
 
   private loadForestDetails(id) {
@@ -83,8 +83,8 @@ export class SubmissionFormComponent implements OnInit {
 
   onSubmit() {
     if (this.id = this.forestForm.get('id').value) {
-      console.log(this.as.updateForest(this.id, this.forestForm.getRawValue()))
-      console.log('Updated')
+      console.log(this.as.updateForest(this.id, this.forestForm.getRawValue()));
+      console.log('Updated');
     } else {
       if (this.forestForm.valid) {
         console.log(this.as.addForest(this.forestForm.value));
