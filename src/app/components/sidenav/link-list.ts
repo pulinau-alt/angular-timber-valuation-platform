@@ -23,7 +23,7 @@ export const LINKS: Link[] = [
   },
   {
     name: 'Plots',
-    route: '/',
+    route: '/plots',
     icon: 'fas fa-chart-pie'
   },
   {
