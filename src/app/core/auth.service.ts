@@ -34,7 +34,7 @@ export class AuthService {
     );
   }
 
-  googleLogin() {
+  public googleLogin() {
     const provider = new auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
@@ -45,7 +45,6 @@ export class AuthService {
         this.updateUserData(credential.user);
       });
   }
-
 
   private updateUserData(user) {
     // Sets user data to firestore on login
@@ -60,11 +59,9 @@ export class AuthService {
     };
 
     return userRef.set(data, { merge: true });
-
   }
 
-
-  signOut() {
+  public signOut() {
     this.afAuth.auth.signOut().then(() => {
         this.router.navigate(['/']);
     });
