@@ -1,3 +1,37 @@
-<p>
-  login works!
-</p>
+<mat-card>
+  <mat-card-title>Login</mat-card-title>
+  <mat-card-subtitle>You are about to access a secure area. Please enter your credentials to continue.</mat-card-subtitle>
+
+  <!-- Login Form -->
+  <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mat-form">
+    <div class="wrapper">
+      <div class="flex-container center">
+        <mat-form-field>
+          <input matInput formControlName="username" placeholder="Username">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="password" formControlName="password" placeholder="Password">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="wrapper">
+      <button mat-raised-button color="primary" type="submit" form="forestForm">LOGIN</button>
+    </div>
+  </form>
+  <!-- /Login Form -->
+
+  <div class="divider">
+    <mat-divider [inset]="true"></mat-divider>
+  </div>
+
+  <div class="wrapper">
+    <button mat-raised-button color="warn"
+    (click)="googleLogin()">
+      <span style="margin-right: 4px"><i class="fa fa-google" aria-hidden="true"></i></span>
+      SIGN-IN WITH GOOGLE
+    </button>
+  </div>
+
+</mat-card>
