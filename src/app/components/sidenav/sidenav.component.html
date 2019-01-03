@@ -1,7 +1,7 @@
 <mat-sidenav-container>
 
   <!-- Sidebar -->
-  <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
+  <mat-sidenav *ngIf="auth.user | async" #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
     <div class="sidenav-header center" color="warn">
       <div mat-card-avatar class="profile-avatar"></div>
     </div>
