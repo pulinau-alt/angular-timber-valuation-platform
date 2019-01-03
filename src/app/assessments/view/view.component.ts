@@ -18,6 +18,7 @@ export class ViewComponent implements OnInit {
   forestList: Forest[];
   displayedColumns: string[] = ['division', 'beat', 'range', 'block', 'sBlock', 'edit', 'delete'];
   dataSource: MatTableDataSource<Forest>;
+  numItems: number;
 
   constructor(private as: AssessmentService, public router: Router) { }
 
@@ -27,6 +28,7 @@ export class ViewComponent implements OnInit {
       this.forestList = [];
       forest.forEach(e => {
         this.forestList.push(e);
+        this.numItems = this.forestList.length;
       });
       this.dataSource = new MatTableDataSource(this.forestList);
     });
