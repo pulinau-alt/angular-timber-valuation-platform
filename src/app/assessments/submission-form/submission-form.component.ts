@@ -90,6 +90,6 @@ export class SubmissionFormComponent implements OnInit {
         console.log(this.as.addForest(this.forestForm.value));
       }
     }
-    this.router.navigate(['assessment/view']);
+    this.router.navigate(['assessments']);
   }
 }

@@ -9,22 +9,35 @@ import { ViewComponent } from './assessments/view/view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   {
     path: 'home',
     component: DashboardComponent,
+    data: {
+      breadcrumb: 'dashboard'
+    },
     canActivate: [AuthGuard]
   },
   {
-    path: 'assessment/submit',
-    component: SubmissionFormComponent,
+    path: 'assessments',
+    data: {
+      breadcrumb: 'assessments'
+    },
+    children: [
+      {
+        path: '',
+        component: ViewComponent
+      },
+      {
+        path: 'submit',
+        component: SubmissionFormComponent,
+        data: {
+          breadcrumb: 'submit'
+        }
+      },
+    ],
     canActivate: [AuthGuard]
   },
-  {
-    path: 'assessment/view',
-    component: ViewComponent,
-    canActivate: [AuthGuard]
-  },
-  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({

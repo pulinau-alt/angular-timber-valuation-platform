@@ -29,7 +29,7 @@ export class ViewComponent implements OnInit {
   }
 
   onEditClicked(row) {
-    this.router.navigate(['/assessment/submit'], { queryParams: { id: row.id } });
+    this.router.navigate(['/assessments/submit'], { queryParams: { id: row.id } });
   }
 }
 

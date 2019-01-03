@@ -8,7 +8,7 @@ export const LINKS: Link[] = [
   },
   {
     name: 'Assessments',
-    route: 'assessment/view',
+    route: 'assessments',
     icon: 'fas fa-clipboard-list'
   },
   {
