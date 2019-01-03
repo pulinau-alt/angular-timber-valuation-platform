@@ -66,4 +66,9 @@ export class AuthService {
         this.router.navigate(['/']);
     });
   }
+
+  public isAuthenticated(): Boolean {
+    if (this.user) { return true; }
+    return false;
+  }
 }

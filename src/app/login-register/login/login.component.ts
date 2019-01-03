@@ -1,6 +1,7 @@
 import { AuthService } from './../../core/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private route: Router) {
     this.initForm();
   }
 
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.auth.isAuthenticated()) { this.route.navigate(['']); }
   }
 
   private initForm() {
