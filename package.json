@@ -26,6 +26,7 @@
     "@angular/pwa": "^0.10.2",
     "@angular/router": "^7.1.4",
     "@angular/service-worker": "^7.1.4",
+    "@ng-bootstrap/ng-bootstrap": "^4.0.1",
     "@types/chart.js": "^2.7.40",
     "angular5-csv": "^0.2.10",
     "bootstrap": "^4.2.1",
