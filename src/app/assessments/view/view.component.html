@@ -1,7 +1,7 @@
 <div class="header">
   <mat-icon matPrefix>search</mat-icon>
   <mat-form-field floatLabel="never">
-    <input matInput placeholder="Search">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
   </mat-form-field>
   <h4>Assessments</h4>
 </div>
