@@ -1,12 +1,17 @@
 <div class="header">
-  <div>
-    <mat-icon matPrefix>search</mat-icon>
-    <mat-form-field floatLabel="never">
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-    </mat-form-field>
-    <a routerLink="/assessments/submit" mat-raised-button style="float: right">NEW ASSESSMENT</a>
-    <div fxFlex></div>
+  <div class="row">
+    <div class="col-4">
+      <mat-icon matPrefix>search</mat-icon>
+      <mat-form-field floatLabel="never">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+      </mat-form-field>
+    </div>
 
+    <div class="col-5"></div>
+
+    <div class="col-3" style="float: right;">
+      <a routerLink="/assessments/submit" mat-raised-button>NEW ASSESSMENT</a>
+    </div>
   </div>
 
   <h2 class="mat-title" style="display: inline-block">Assessments</h2>
