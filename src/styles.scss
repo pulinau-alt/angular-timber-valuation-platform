@@ -18,8 +18,9 @@
   min-width: 300px;
 }
 
-.mat-table {
+mat-table {
   overflow: auto;
+  max-height: 500px;
 }
 
 .mobile-label {

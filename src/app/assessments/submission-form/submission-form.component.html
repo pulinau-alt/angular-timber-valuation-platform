@@ -63,7 +63,7 @@
   </form>
 
   <div class="table-container">
-    <mat-table #table [dataSource]="logsDataSource" [class.isMobile]="isMobile">
+    <table mat-table [dataSource]="logsDataSource" [class.isMobile]="isMobile">
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
@@ -94,7 +94,7 @@
 
       <tr mat-header-row *matHeaderRowDef="logsDisplayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: logsDisplayedColumns;"></tr>
-    </mat-table>
+    </table>
   </div>
 </mat-card>
 <!-- Logs -->
