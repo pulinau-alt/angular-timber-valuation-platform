@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Forest, Tree, Logs, TransmissionPoles, FencePosts, RoundPoles } from '../core/models/forest';
+import { Forest, Tree, Log, TransmissionPoles, FencePosts, RoundPoles } from '../core/models/forest';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentSnapshot } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';

@@ -8,12 +8,12 @@ export interface Forest {
 }
 
 export interface Tree {
-    id?: string
+    id?: string;
     species: string;
 }
 
-export interface Logs {
-    girthClass: string;
+export interface Log {
+    mgClass: string;
     volume: number;
 }
 

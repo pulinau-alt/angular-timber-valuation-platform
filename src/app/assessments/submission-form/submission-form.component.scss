@@ -1,9 +1,10 @@
-.container {
+.form-field-container {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
-.container > * {
+.form-field-container > mat-form-field {
   width: 100%;
   margin: auto 8px;
 }

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
-import { Observable } from 'rxjs';
-import { Forest, Tree } from '../../core/models/forest';
+import { Observable, of } from 'rxjs';
+import { Forest, Tree, Log } from '../../core/models/forest';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
 import { TreeService } from 'src/app/services/tree.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-submission-form',
@@ -20,6 +21,13 @@ export class SubmissionFormComponent implements OnInit {
   sub;
   id: String;
   trees: Tree[];
+  newAttribute: any = {};
+
+  mgClass: string;
+  volume: number;
+  fieldArray: Array<Log> = [];
+  logsDisplayedColumns: string[] = ['mgClass', 'volume', 'delete'];
+  logsDataSource: MatTableDataSource<Log>;
 
   constructor(
     private as: AssessmentService,
@@ -33,6 +41,7 @@ export class SubmissionFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.loadLogs();
 
     this.sub = this.route.queryParams
       .subscribe(params => {
@@ -63,8 +72,8 @@ export class SubmissionFormComponent implements OnInit {
     });
 
     this.tpForm = this.fb.group({
-      tpCategory: new FormControl(''),
-      tpQty: new FormControl(''),
+      tpCategory: [''],
+      tpQty: [''],
     });
   }
 
@@ -81,6 +90,18 @@ export class SubmissionFormComponent implements OnInit {
       });
   }
 
+  private loadLogs() {
+    of(this.fieldArray).subscribe(logs => {
+      const rows = [];
+      logs.forEach(log => {
+        rows.push(log);
+        console.log('Added log: ' + log);
+      });
+      this.logsDataSource = new MatTableDataSource(rows);
+    }
+    );
+  }
+
   onSubmit() {
     if (this.id = this.forestForm.get('id').value) {
       console.log(this.as.updateForest(this.id, this.forestForm.getRawValue()));
@@ -91,5 +112,22 @@ export class SubmissionFormComponent implements OnInit {
       }
     }
     this.router.navigate(['assessments']);
+  }
+
+  addFieldValue() {
+    // this.fieldArray.push(this.newAttribute);
+    // this.newAttribute = {};
+    this.fieldArray.push({
+      mgClass: this.mgClass,
+      volume: this.volume,
+    });
+    this.loadLogs();
+    console.log(this.fieldArray);
+  }
+
+  deleteFieldValue(index) {
+    this.fieldArray.splice(index, 1);
+    this.loadLogs();
+    console.log(this.fieldArray);
   }
 }
