@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PriceListService {
+  
   private priceListCollection: AngularFirestoreCollection<Price>;
   priceList$: Observable<Price>;
 
@@ -15,7 +16,11 @@ export class PriceListService {
     this.priceListCollection = afs.collection("priceList");
    }
 
-   getPriceList(): Observable<Price[]>{
+   addPriceList(priceList) {
+    return this.priceListCollection.add(priceList);
+  }
+
+   getPriceLists(): Observable<Price[]>{
     return this.priceListCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Price;
@@ -24,6 +29,18 @@ export class PriceListService {
       }))
     );
    }
+
+   getPriceList(id) {
+    return this.priceListCollection.doc<Price>(id).get() as Observable<DocumentSnapshot<any>>;
+  }
+
+  deletePriceList(priceId) {
+    this.priceListCollection.ref.doc(priceId).delete();
+  }
+
+  updatePriceList(id, data) {
+    this.priceListCollection.doc(id).update(data);
+  }  
 
 }
 
