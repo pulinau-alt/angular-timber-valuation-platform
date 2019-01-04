@@ -49,7 +49,7 @@ export class SubmissionFormComponent implements OnInit {
 
     // If forest id has been passed, load forest details
     if (this.id) { this.loadForestDetails(this.id); }
-    this.loadLogs();
+    this.logsDataSource = this.loadDataSource(this.logsFieldArray);
 
     // Populate trees list
     this.ts.getTrees()
@@ -61,6 +61,7 @@ export class SubmissionFormComponent implements OnInit {
   }
 
   private initForm() {
+    // Forest form
     this.forestForm = this.fb.group({
       id: new FormControl({ value: '', disabled: true }),
       division: new FormControl('', Validators.required),
@@ -70,12 +71,14 @@ export class SubmissionFormComponent implements OnInit {
       sBlock: new FormControl('', Validators.required),
     });
 
+    // Log form
     this.logForm = this.fb.group({
       species: ['', Validators.required],
       mgClass: ['', Validators.required],
       volume: ['', Validators.required]
     });
 
+    // Telephone Posts form
     this.tpForm = this.fb.group({
       tpCategory: [''],
       tpQty: [''],
@@ -103,20 +106,20 @@ export class SubmissionFormComponent implements OnInit {
               });
             });
           });
-          this.loadLogs();
+          this.logsDataSource = this.loadDataSource(this.logsFieldArray);
           console.log(this.logsFieldArray);
         }
       });
   }
 
-  private loadLogs() {
-    of(this.logsFieldArray).subscribe(logs => {
-      const rows = [];
-      logs.forEach(log => {
-        rows.push(log);
+  private loadDataSource(source: any[]) {
+    const rows = [];
+    of(source).subscribe(next => {
+      next.forEach(e => {
+        rows.push(e);
       });
-      this.logsDataSource = new MatTableDataSource(rows);
     });
+    return new MatTableDataSource(rows);
   }
 
   onSubmit() {
@@ -152,18 +155,18 @@ export class SubmissionFormComponent implements OnInit {
     }
   }
 
-  addFieldValue() {
+  addLogField() {
     if (this.logForm.valid) {
       this.logsFieldArray.push(this.logForm.value);
-      this.loadLogs();
-      // console.log(this.fieldArray);
+      this.logsDataSource = this.loadDataSource(this.logsFieldArray);
+      // console.log(this.logsFieldArray);
       this.logForm.reset();
     }
   }
 
-  deleteFieldValue(index) {
-    this.logsFieldArray.splice(index, 1);
-    this.loadLogs();
-    // console.log(this.fieldArray);
+  deleteLogField(row) {
+    this.logsFieldArray.splice(this.logsFieldArray.indexOf(row), 1);
+    this.logsDataSource = this.loadDataSource(this.logsFieldArray);
+    // console.log(this.logsFieldArray);
   }
 }

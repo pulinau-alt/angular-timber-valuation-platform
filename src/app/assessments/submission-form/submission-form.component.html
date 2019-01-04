@@ -55,7 +55,7 @@
         <input matInput formControlName="volume" placeholder="Felled Volume">
         <span matSuffix>m<sup>3</sup></span>
       </mat-form-field>
-      <button mat-mini-fab color="primary" (click)="addFieldValue()" form="logForm">
+      <button mat-mini-fab color="primary" (click)="addLogField()" form="logForm">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -69,7 +69,7 @@
           <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let row">
-              <button mat-button color="warn" (click)="deleteFieldValue(row)">
+              <button mat-button color="warn" (click)="deleteLogField(row)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
