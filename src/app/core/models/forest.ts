@@ -5,11 +5,17 @@ export interface Forest {
     range: string;
     block: number;
     sBlock: number;
+    trees?: LogList;
 }
 
 export interface Tree {
     id?: string;
     species: string;
+    logs?: Log[];
+}
+
+export interface LogList {
+    [species: string]: Log[];
 }
 
 export interface Log {

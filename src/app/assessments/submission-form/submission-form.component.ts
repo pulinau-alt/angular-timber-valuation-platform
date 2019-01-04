@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { Observable, of } from 'rxjs';
-import { Forest, Tree, Log } from '../../core/models/forest';
+import { Forest, Tree, Log, LogList } from '../../core/models/forest';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
@@ -15,33 +15,32 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class SubmissionFormComponent implements OnInit {
 
-  forest: Forest;
+  // Forms
   forestForm: FormGroup;
   tpForm: FormGroup;
+
   sub;
+  forest: Forest;
   id: String;
   trees: Tree[];
-  newAttribute: any = {};
 
-  mgClass: string;
-  volume: number;
-  fieldArray: Array<Log> = [];
-  logsDisplayedColumns: string[] = ['mgClass', 'volume', 'delete'];
-  logsDataSource: MatTableDataSource<Log>;
+  logForm: FormGroup;
+  logsFieldArray: Array<any> = [];
+  logsDisplayedColumns: string[] = ['species', 'mgClass', 'volume', 'delete'];
+  logsDataSource: MatTableDataSource<any>;
 
   constructor(
     private as: AssessmentService,
     private ts: TreeService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.trees = [];
   }
 
   ngOnInit() {
     this.initForm();
-    this.loadLogs();
 
     this.sub = this.route.queryParams
       .subscribe(params => {
@@ -50,6 +49,7 @@ export class SubmissionFormComponent implements OnInit {
 
     // If forest id has been passed, load forest details
     if (this.id) { this.loadForestDetails(this.id); }
+    this.loadLogs();
 
     // Populate trees list
     this.ts.getTrees()
@@ -68,7 +68,12 @@ export class SubmissionFormComponent implements OnInit {
       range: new FormControl('', Validators.required),
       block: new FormControl('', Validators.required),
       sBlock: new FormControl('', Validators.required),
-      species: new FormControl(''),
+    });
+
+    this.logForm = this.fb.group({
+      species: ['', Validators.required],
+      mgClass: ['', Validators.required],
+      volume: ['', Validators.required]
     });
 
     this.tpForm = this.fb.group({
@@ -87,49 +92,78 @@ export class SubmissionFormComponent implements OnInit {
         this.forestForm.get('range').setValue(this.forest.range);
         this.forestForm.get('block').setValue(this.forest.block);
         this.forestForm.get('sBlock').setValue(this.forest.sBlock);
+
+        if (this.forest.trees) {
+          Object.entries(this.forest.trees).forEach(e => {
+            e[1].forEach(log => {
+              this.logsFieldArray.push({
+                species: e[0],
+                mgClass: log.mgClass,
+                volume: log.volume,
+              });
+            });
+          });
+          this.loadLogs();
+          console.log(this.logsFieldArray);
+        }
       });
   }
 
   private loadLogs() {
-    of(this.fieldArray).subscribe(logs => {
+    of(this.logsFieldArray).subscribe(logs => {
       const rows = [];
       logs.forEach(log => {
         rows.push(log);
-        console.log('Added log: ' + log);
       });
       this.logsDataSource = new MatTableDataSource(rows);
-    }
-    );
+    });
   }
 
   onSubmit() {
-    if (this.id = this.forestForm.get('id').value) {
-      console.log(this.as.updateForest(this.id, this.forestForm.getRawValue()));
-      console.log('Updated');
-    } else {
-      if (this.forestForm.valid) {
-        console.log(this.as.addForest(this.forestForm.value));
+    if (this.forestForm.valid) {
+      const data = this.forestForm.getRawValue();
+      const logMap = new Map<string, any[]>();
+
+      this.logsDataSource.data.forEach(e => {
+        const log: Log = ({
+          mgClass: e.mgClass,
+          volume: e.volume,
+        });
+        if (!logMap.has(e.species)) {
+          logMap.set(e.species, []);
+        }
+        logMap.get(e.species).push(log);
+      });
+
+      const obj = {};
+      logMap.forEach((value, key) => { obj[key] = value; });
+
+      data['trees'] = obj;
+
+      console.log(data);
+
+      if (this.id === this.forestForm.get('id').value) {
+        this.as.updateForest(this.id, data);
+        console.log('Updated');
+      } else {
+        this.as.addForest(data).then(value => console.log(value));
       }
+      this.router.navigate(['assessments']);
     }
-    this.router.navigate(['assessments']);
   }
 
   addFieldValue() {
-    // this.fieldArray.push(this.newAttribute);
-    // this.newAttribute = {};
-    this.fieldArray.push({
-      mgClass: this.mgClass,
-      volume: this.volume,
-    });
-    this.loadLogs();
-    console.log(this.fieldArray);
-    this.mgClass = null;
-    this.volume = null;
+    if (this.logForm.valid) {
+      this.logsFieldArray.push(this.logForm.value);
+      this.loadLogs();
+      // console.log(this.fieldArray);
+      this.logForm.reset();
+    }
   }
 
   deleteFieldValue(index) {
-    this.fieldArray.splice(index, 1);
+    this.logsFieldArray.splice(index, 1);
     this.loadLogs();
-    console.log(this.fieldArray);
+    // console.log(this.fieldArray);
   }
 }
