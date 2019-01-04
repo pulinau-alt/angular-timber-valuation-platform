@@ -8,194 +8,314 @@
 
     <!-- Main Form -->
     <mat-card-content class="card-content">
-      <form id="priceListForm" [formGroup]="priceListForm" (ngSubmit)="onSubmit" class="mat-form">
+      <form id="priceListForm" [formGroup]="priceListForm" (ngSubmit)="onSubmit()" class="mat-form">
 
         <mat-divider></mat-divider>
         <section [style.width]="'100%'">
 
           <mat-form-field>
-            <input formControlName="class" matInput placeholder="Classification Type">
-          </mat-form-field>
-          <mat-divider></mat-divider>
-
-          <!-- Title row-->
-          <mat-form-field>
-            <strong>Girth class(m) / (Title)</strong>
+            <input formControlName="id" matInput>
           </mat-form-field>
 
           <div class="row">
-            <div class="col">
-              <input type="text" formControlName="r11" class="form-control" placeholder="1.22 & Above" /></div>
-            <div class="col">
-              <input type="text" formControlName="r12" class="form-control" placeholder="1.34 - 1.12" /></div>
-            <div class="col">
-              <input type="text" formControlName="r13" class="form-control" placeholder="1.10 - 1.00" /></div>
-            <div class="col">
-              <input type="text" formControlName="r14" class="form-control" placeholder="0.98 - 0.82" /></div>
-            <div class="col">
-              <input type="text" formControlName="r15" class="form-control" placeholder="0.80 - 0.64" /></div>
-            <div class="col">
-              <input type="text" formControlName="r16" class="form-control" placeholder="0.62 - 0.48" /></div>
-            <div class="col">
-              <input type="text" formControlName="r17" class="form-control" placeholder="0.46 & Below" /></div>
+            <mat-form-field appearance="outline">
+              <input formControlName="row" matInput placeholder="Row Name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm1" matInput placeholder="column 1">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm2" matInput placeholder="column 2">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm3" matInput placeholder="column 3">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm4" matInput placeholder="column 4">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm5" matInput placeholder="column 5">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm6" matInput placeholder="column 6">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm7" matInput placeholder="column 7">
+            </mat-form-field>
           </div>
-          <!-- End of title row-->
-
-          <mat-form-field>
-            Avg.Selling price(Rs./m<sup>3</sup>)
-          </mat-form-field>
-
-          <div class="row">
-            <div class="col">
-              <input type="text" formControlName="r21" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r22" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r23" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r24" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r25" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r26" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r27" class="form-control" /></div>
-          </div>
-
-          <mat-form-field>
-            Operation Cost(Rs.)
-          </mat-form-field>
-
-          <div class="row">
-            <div class="col">
-              <input type="text" formControlName="r31" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r32" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r33" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r34" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r35" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r36" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r37" class="form-control" /></div>
-          </div>
-
-          <mat-form-field>
-            Other Costs(Rs.)
-          </mat-form-field>
-
-          <div class="row">
-            <div class="col">
-              <input type="text" formControlName="r41" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r42" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r43" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r44" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r45" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r46" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r47" class="form-control" /></div>
-          </div>
-
-          <mat-form-field>
-            Overhead Cost(Rs./m<sup>3</sup>)
-          </mat-form-field>
-
-          <div class="row">
-            <div class="col">
-              <input type="text" formControlName="r51" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r52" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r53" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r54" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r55" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r56" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r57" class="form-control" /></div>
-          </div>
-
-          <mat-form-field>
-            Stumpage value(Rs./m<sup>3</sup>)
-          </mat-form-field>
-
-          <div class="row">
-            <div class="col">
-              <input type="text" formControlName="r61" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r62" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r63" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r64" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r65" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r66" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r67" class="form-control" /></div>
-          </div>
-
-          <mat-form-field>
-            Profit(Rs./m<sup>3</sup>)
-          </mat-form-field>
-
-          <div class="row">
-            <div class="col">
-              <input type="text" formControlName="r71" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r72" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r73" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r74" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r75" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r76" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r77" class="form-control" /></div>
-          </div>
-          <mat-form-field>
-            Stumpage%
-          </mat-form-field>
-
-          <div class="row">
-            <div class="col">
-              <input type="text" formControlName="r81" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r82" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r83" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r84" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r85" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r86" class="form-control" /></div>
-            <div class="col">
-              <input type="text" formControlName="r87" class="form-control" /></div>
-          </div>
-
         </section>
+
+        <mat-divider></mat-divider>
+        <section [style.width]="'100%'">
+
+          <mat-form-field>
+            <input formControlName="id" matInput>
+          </mat-form-field>
+
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <input formControlName="row" matInput placeholder="Row Name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm1" matInput placeholder="column 1">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm2" matInput placeholder="column 2">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm3" matInput placeholder="column 3">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm4" matInput placeholder="column 4">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm5" matInput placeholder="column 5">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm6" matInput placeholder="column 6">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm7" matInput placeholder="column 7">
+            </mat-form-field>
+          </div>
+        </section>
+
+        <mat-divider></mat-divider>
+        <section [style.width]="'100%'">
+
+          <mat-form-field>
+            <input formControlName="id" matInput>
+          </mat-form-field>
+
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <input formControlName="row" matInput placeholder="Row Name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm1" matInput placeholder="column 1">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm2" matInput placeholder="column 2">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm3" matInput placeholder="column 3">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm4" matInput placeholder="column 4">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm5" matInput placeholder="column 5">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm6" matInput placeholder="column 6">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm7" matInput placeholder="column 7">
+            </mat-form-field>
+          </div>
+        </section>
+
+        <mat-divider></mat-divider>
+        <section [style.width]="'100%'">
+
+          <mat-form-field>
+            <input formControlName="id" matInput>
+          </mat-form-field>
+
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <input formControlName="row" matInput placeholder="Row Name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm1" matInput placeholder="column 1">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm2" matInput placeholder="column 2">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm3" matInput placeholder="column 3">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm4" matInput placeholder="column 4">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm5" matInput placeholder="column 5">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm6" matInput placeholder="column 6">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm7" matInput placeholder="column 7">
+            </mat-form-field>
+          </div>
+        </section>
+
+        <mat-divider></mat-divider>
+        <section [style.width]="'100%'">
+
+          <mat-form-field>
+            <input formControlName="id" matInput>
+          </mat-form-field>
+
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <input formControlName="row" matInput placeholder="Row Name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm1" matInput placeholder="column 1">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm2" matInput placeholder="column 2">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm3" matInput placeholder="column 3">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm4" matInput placeholder="column 4">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm5" matInput placeholder="column 5">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm6" matInput placeholder="column 6">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm7" matInput placeholder="column 7">
+            </mat-form-field>
+          </div>
+        </section>
+
+        <mat-divider></mat-divider>
+        <section [style.width]="'100%'">
+
+          <mat-form-field>
+            <input formControlName="id" matInput>
+          </mat-form-field>
+
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <input formControlName="row" matInput placeholder="Row Name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm1" matInput placeholder="column 1">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm2" matInput placeholder="column 2">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm3" matInput placeholder="column 3">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm4" matInput placeholder="column 4">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm5" matInput placeholder="column 5">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm6" matInput placeholder="column 6">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm7" matInput placeholder="column 7">
+            </mat-form-field>
+          </div>
+        </section>
+
+        <mat-divider></mat-divider>
+        <section [style.width]="'100%'">
+
+          <mat-form-field>
+            <input formControlName="id" matInput>
+          </mat-form-field>
+
+          <div class="row">
+            <mat-form-field appearance="outline">
+              <input formControlName="row" matInput placeholder="Row Name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm1" matInput placeholder="column 1">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm2" matInput placeholder="column 2">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm3" matInput placeholder="column 3">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm4" matInput placeholder="column 4">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm5" matInput placeholder="column 5">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm6" matInput placeholder="column 6">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <input formControlName="colm7" matInput placeholder="column 7">
+            </mat-form-field>
+          </div>
+        </section>
+
+
+
+
+
       </form>
+
     </mat-card-content>
 
     <!-- Actions -->
     <mat-card-actions>
-      <button type="submit" class="btn btn-success">Save</button>
-      <button class="btn btn-warning" routerLink="/price-list">Cancel</button>
-      <button class="btn btn-danger">Delete</button>
+      <button mat-stroked-button type="submit" form="priceListForm">SUBMIT</button>
     </mat-card-actions>
+
   </mat-card><br><br><br>
 </div>
