@@ -21,8 +21,11 @@ export class SubmissionFormComponent implements OnInit {
   id: String;
   trees: Tree[];
 
+<<<<<<< HEAD
+=======
   items = 2;
 
+>>>>>>> 533a93df9e334ff84059ee5535e7f6e08e4db030
   constructor(
     private as: AssessmentService,
     private ts: TreeService,
