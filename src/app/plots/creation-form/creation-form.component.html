@@ -1,0 +1,68 @@
+<div class="container">
+    <mat-card>
+      <!-- Header -->
+      <mat-card-header class="block">
+        <mat-card-title>Plot Creation</mat-card-title>
+      </mat-card-header>
+      <!-- Form -->
+      <mat-card-content class="card-content">
+        <form id="plotForm" [formGroup]="plotForm" (ngSubmit)="onSubmit()" class="mat-form">
+            <!-- [formGroup]="plotForm" -->
+          <section [style.width]="'100%'">
+            <div class="line">
+              <mat-form-field>
+                <input formControlName="division" matInput placeholder="Division">
+              </mat-form-field>
+
+              <mat-form-field>
+                <input formControlName="beat" matInput placeholder="Beat">
+              </mat-form-field>
+
+              <mat-form-field>
+                <input formControlName="range" matInput placeholder="Range">
+              </mat-form-field>
+            </div>
+
+            <div class="line">
+              <mat-form-field>
+                <input formControlName="block" matInput placeholder="Block">
+              </mat-form-field>
+
+              <mat-form-field>
+                <input formControlName="sBlock" matInput placeholder="Sub Block">
+              </mat-form-field>
+
+              <mat-form-field>
+                  <input formControlName="plot" matInput placeholder="Plot">
+              </mat-form-field>
+            </div>
+            <!-- <mat-divider></mat-divider> -->
+            <div class="line">
+                <mat-form-field>
+                  <input formControlName="plotSize" matInput placeholder="Plot Size">
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input formControlName="nStanding" matInput placeholder="No.Standing">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input formControlName="nRemoved" matInput placeholder="No.Removed">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input formControlName="pYear" matInput placeholder="Plant Year">
+                </mat-form-field>
+              </div>
+          </section>
+        </form>
+        <mat-divider></mat-divider>
+      </mat-card-content>
+
+      <!-- Actions -->
+      <mat-card-actions>
+        <button mat-raised-button type="submit" form="plotForm">SUBMIT</button>
+      </mat-card-actions>
+
+    </mat-card>
+  </div>

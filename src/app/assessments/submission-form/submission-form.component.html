@@ -1,0 +1,84 @@
+<div class="container">
+  <mat-card>
+
+    <!-- Header -->
+    <mat-card-header class="block">
+      <mat-card-title>Stumpage Assessment</mat-card-title>
+    </mat-card-header>
+
+    <!-- Main Form -->
+    <mat-card-content class="card-content">
+      <form id="forestForm" [formGroup]="forestForm" (ngSubmit)="onSubmit()" class="mat-form">
+
+        <section [style.width]="'100%'">
+          <mat-form-field>
+            <input formControlName="id" matInput>
+          </mat-form-field>
+
+          <div class="row">
+            <mat-form-field>
+              <input formControlName="division" matInput placeholder="Division">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input formControlName="beat" matInput placeholder="Beat">
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field>
+              <input formControlName="range" matInput placeholder="Range">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input formControlName="block" matInput placeholder="Block">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input formControlName="sBlock" matInput placeholder="S.Block">
+            </mat-form-field>
+          </div>
+        </section>
+        <mat-divider></mat-divider>
+
+        <section [style.width]="'100%'">
+          <div class="row">
+            <mat-form-field>
+              <mat-select formControlName="species" placeholder="Species">
+                <mat-option *ngFor='let tree of trees' [value]="tree">{{tree.species}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </section>
+      </form>
+
+      <mat-divider></mat-divider>
+
+      <!-- TP Form -->
+      <form [formGroup]="tpForm">
+        <div class="row">
+          <h5>Transmission Poles</h5>
+        </div>
+        <div class="row">
+          <mat-form-field>
+            <input formControlName="tpCategory" matInput placeholder="Category">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="tpQty" matInput placeholder="Quantity">
+          </mat-form-field>
+
+          <button mat-mini-fab color="warn" type="submit">+</button>
+        </div>
+      </form>
+
+      <mat-divider></mat-divider>
+    </mat-card-content>
+
+    <!-- Actions -->
+    <mat-card-actions>
+      <button mat-stroked-button type="submit" form="forestForm">SUBMIT</button>
+    </mat-card-actions>
+
+  </mat-card>
+</div>

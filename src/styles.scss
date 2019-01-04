@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.mat-card {
+    margin-top: 25px
+  }
+  
+  .mat-card-header {
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .card-content {
+      display: flex;
+    }
+  
+  .row {
+    margin-left: auto;
+  }
