@@ -1,4 +1,4 @@
-import { PriceListService } from './../../services/price-list.service';
+import { PriceListService } from '../../services/price-list.service';
 import { Component, OnInit } from '@angular/core';
 import { ClasService } from '../../services/clas.service';
 import { Observable } from 'rxjs';
