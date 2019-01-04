@@ -123,6 +123,8 @@ export class SubmissionFormComponent implements OnInit {
     });
     this.loadLogs();
     console.log(this.fieldArray);
+    this.mgClass = null;
+    this.volume = null;
   }
 
   deleteFieldValue(index) {

@@ -18,48 +18,65 @@
   <span style="margin: 14px">{{ numItems }} items</span>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-  <ng-container matColumnDef="edit">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let row">
-      <button mat-flat-button color="primary" (click)="onEditClicked(row)">EDIT</button>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="delete">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let row">
-      <button mat-flat-button color="warn" (click)="onDeleteClicked(row)">DELETE</button>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="division">
-    <th mat-header-cell *matHeaderCellDef> Division </th>
-    <td mat-cell *matCellDef="let forest"> {{forest.division}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="beat">
-    <th mat-header-cell *matHeaderCellDef> Beat </th>
-    <td mat-cell *matCellDef="let forest"> {{forest.beat}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="range">
-    <th mat-header-cell *matHeaderCellDef> Range </th>
-    <td mat-cell *matCellDef="let forest"> {{forest.range}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="block">
-    <th mat-header-cell *matHeaderCellDef> Block </th>
-    <td mat-cell *matCellDef="let forest"> {{forest.block}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="sBlock">
-    <th mat-header-cell *matHeaderCellDef> S.Block </th>
-    <td mat-cell *matCellDef="let forest"> {{forest.sBlock}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-</table>
+<div class="table-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" [class.isMobile]="isMobile">
+  
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-flat-button color="primary" (click)="onEditClicked(row)">EDIT</button>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-flat-button color="warn" (click)="onDeleteClicked(row)">DELETE</button>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="division">
+      <th mat-header-cell *matHeaderCellDef> Division </th>
+      <td mat-cell *matCellDef="let forest">
+        <span class="mobile-label">Division:</span>
+        {{forest.division}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="beat">
+      <th mat-header-cell *matHeaderCellDef> Beat </th>
+      <td mat-cell *matCellDef="let forest">
+        <span class="mobile-label">Beat:</span>
+        {{forest.beat}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="range">
+      <th mat-header-cell *matHeaderCellDef> Range </th>
+      <td mat-cell *matCellDef="let forest">
+        <span class="mobile-label">Range:</span>
+        {{forest.range}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="block">
+      <th mat-header-cell *matHeaderCellDef> Block </th>
+      <td mat-cell *matCellDef="let forest">
+        <span class="mobile-label">Block:</span>
+        {{forest.block}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="sBlock">
+      <th mat-header-cell *matHeaderCellDef> S.Block </th>
+      <td mat-cell *matCellDef="let forest">
+        <span class="mobile-label">S.Block:</span>
+        {{forest.sBlock}}
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+  </mat-table>
+</div>
