@@ -13,7 +13,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 })
 export class PriceListViewComponent implements OnInit {
   dataSource = new PriceListDataSource(this.ps);
-  displayedColumns: string[] = ['row', 'colm1', 'colm2', 'colm3', 'colm4', 'colm5', 'colm6', 'colm7'];
+  displayedColumns: string[] = ['row', 'colm1', 'colm2', 'colm3', 'colm4', 'colm5', 'colm6', 'colm7', 'edit', 'delete'];
 
   clasForm: FormGroup;
   clases: Clas[];
@@ -47,6 +47,15 @@ export class PriceListViewComponent implements OnInit {
     //}
     //this.sel = this.clasForm.get('row').value;
   } 
+
+  onDeleteClicked(row) {
+    this.ps.deletePriceList(row.id);
+  }
+
+  onEditClicked(row) {
+    this.router.navigate(['/price-list/price-list-form'], { queryParams: { id: row.id } });
+  }
+
 }
 
 export class PriceListDataSource extends DataSource<any> {
