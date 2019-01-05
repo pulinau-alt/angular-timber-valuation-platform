@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Forest, Tree, Logs, TransmissionPoles, FencePosts, RoundPoles } from "../core/models/forest";
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentSnapshot } from "@angular/fire/firestore";
+import { Forest, Tree, Log, TransmissionPoles, FencePosts, RoundPoles } from '../core/models/forest';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentSnapshot } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ export class AssessmentService {
   forest$: Observable<Forest>;
 
   constructor(private afs: AngularFirestore) {
-    this.forestsCollection = afs.collection("forests");
+    this.forestsCollection = afs.collection('forests');
   }
 
   addForest(forest) {

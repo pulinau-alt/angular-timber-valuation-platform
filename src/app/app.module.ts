@@ -1,3 +1,4 @@
+import { AuthGuard } from './core/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +15,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { MaterialModule } from './material.module';
 import { PriceListModule } from './price-list/price-list.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { SharedModule } from './shared.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { PriceListModule } from './price-list/price-list.module';
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
+    SharedModule,
     AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ComponentsModule,
@@ -31,9 +35,10 @@ import { PriceListModule } from './price-list/price-list.module';
     LoginRegisterModule,
     CoreModule,
     AssessmentsModule,
-    PriceListModule
+    PriceListModule,
+    DashboardModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

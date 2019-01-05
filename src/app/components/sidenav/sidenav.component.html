@@ -1,0 +1,47 @@
+<mat-sidenav-container>
+
+  <!-- Sidebar -->
+  <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
+    <!-- Sidebar Header -->
+    <div *ngIf="auth.user | async as user">
+      <div class="sidenav-header center" color="warn">
+        <div mat-card-avatar class="profile-avatar"></div>
+      </div>
+      <p mat-title>{{ user.displayName }}</p>
+    </div>
+
+    <!-- Sidebar Content -->
+    <div class="sidebar-content">
+      <mat-nav-list>
+        <a mat-list-item routerLink="{{ link.route }}" *ngFor="let link of links">
+          <span><i class="{{link.icon}}" matListIcon></i></span>&nbsp;{{ link.name }}
+        </a>
+      </mat-nav-list>
+    </div>
+    <!-- /Sidebar Content -->
+
+
+    <!-- Sidebar Footer -->
+    <div *ngIf="auth.user | async" class="sidebar-footer center">
+      <button mat-stroked-button color="primary" (click)="auth.signOut()">LOGOUT</button>
+    </div>
+  </mat-sidenav>
+  <!-- /Sidebar -->
+
+  <!-- Main Content -->
+  <mat-sidenav-content>
+    <div class="menu" [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">
+      <button type="button" mat-button (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+    <app-breadcrumb></app-breadcrumb>
+
+    <router-outlet></router-outlet>
+
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+  <!-- /Main Content -->
+
+</mat-sidenav-container>
