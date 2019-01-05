@@ -24,15 +24,15 @@ export class SubmissionFormComponent implements OnInit {
   // Forms
   forestForm: FormGroup;
 
-  tpForm: FormGroup;
-  tpFieldArray: Array<any> = [];
-  tpDisplayedColumns: string[] = ['species', 'tpCategory', 'tpQty', 'delete'];
-  tpDataSource: MatTableDataSource<any>;
-
   logForm: FormGroup;
   logsFieldArray: Array<any> = [];
   logsDisplayedColumns: string[] = ['species', 'mgClass', 'volume', 'delete'];
   logsDataSource: MatTableDataSource<any>;
+
+  tpForm: FormGroup;
+  tpFieldArray: Array<any> = [];
+  tpDisplayedColumns: string[] = ['species', 'tpCategory', 'tpQty', 'delete'];
+  tpDataSource: MatTableDataSource<any>;
 
   rpForm: FormGroup;
   rpFieldArray: Array<any> = [];
@@ -88,6 +88,7 @@ export class SubmissionFormComponent implements OnInit {
       range: ['', Validators.required],
       block: ['', Validators.required],
       sBlock: ['', Validators.required],
+      firewood: [''],
     });
 
     // Log form
@@ -129,6 +130,7 @@ export class SubmissionFormComponent implements OnInit {
         this.forestForm.get('range').setValue(this.forest.range);
         this.forestForm.get('block').setValue(this.forest.block);
         this.forestForm.get('sBlock').setValue(this.forest.sBlock);
+        this.forestForm.get('firewood').setValue(this.forest.firewood);
 
         // Load logs
         if (this.forest.logs) {
@@ -141,7 +143,6 @@ export class SubmissionFormComponent implements OnInit {
               });
             });
           });
-          this.logsDataSource = this.loadDataSource(this.logsFieldArray);
         }
         ///
 
@@ -156,7 +157,6 @@ export class SubmissionFormComponent implements OnInit {
               });
             });
           });
-          this.tpDataSource = this.loadDataSource(this.tpFieldArray);
         }
         ///
 
@@ -171,7 +171,6 @@ export class SubmissionFormComponent implements OnInit {
               });
             });
           });
-          this.rpDataSource = this.loadDataSource(this.rpFieldArray);
         }
         ///
 
@@ -186,11 +185,18 @@ export class SubmissionFormComponent implements OnInit {
               });
             });
           });
-          this.fpDataSource = this.loadDataSource(this.fpFieldArray);
         }
         ///
+        this.loadDataSources();
 
       });
+  }
+
+  private loadDataSources() {
+    this.logsDataSource = this.loadDataSource(this.logsFieldArray);
+    this.tpDataSource = this.loadDataSource(this.tpFieldArray);
+    this.rpDataSource = this.loadDataSource(this.rpFieldArray);
+    this.fpDataSource = this.loadDataSource(this.fpFieldArray);
   }
 
   private loadDataSource(source: any[]) {
@@ -209,6 +215,14 @@ export class SubmissionFormComponent implements OnInit {
     source.forEach((value, key) => { obj[key] = value; });
 
     return obj;
+  }
+
+  private resetFieldArrays() {
+    this.logsFieldArray = [];
+    this.tpFieldArray = [];
+    this.rpFieldArray = [];
+    this.fpFieldArray = [];
+    this.forestForm.get('firewood').reset();
   }
 
   onSubmit() {
@@ -272,19 +286,19 @@ export class SubmissionFormComponent implements OnInit {
 
       // Add fence posts
 
-      // objMap = new Map<string, any[]>();
-      // this.fpDataSource.data.forEach(e => {
-      //   const element: FencePost = ({
-      //     class: e.class,
-      //     quantity: e.qty,
-      //   });
-      //   if (!objMap.has(e.species)) {
-      //     objMap.set(e.species, []);
-      //   }
-      //   objMap.get(e.species).push(element);
-      // });
+      objMap = new Map<string, any[]>();
+      this.fpDataSource.data.forEach(e => {
+        const element: FencePost = ({
+          class: e.class,
+          quantity: e.qty,
+        });
+        if (!objMap.has(e.species)) {
+          objMap.set(e.species, []);
+        }
+        objMap.get(e.species).push(element);
+      });
 
-      // data['fencePosts'] = this.mapToObject(objMap);
+      data['fencePosts'] = this.mapToObject(objMap);
 
       ///
 
@@ -302,6 +316,22 @@ export class SubmissionFormComponent implements OnInit {
   onEditClicked() {
     this.forestForm.enable();
     this.editable = true;
+  }
+
+  onCancelClicked() {
+    if (this.forest) {
+      this.resetFieldArrays();
+      this.loadForestDetails(this.id);
+      this.forestForm.disable();
+      this.editable = false;
+    } else {
+      this.router.navigate(['assessments']);
+    }
+  }
+
+  onResetClicked() {
+    this.resetFieldArrays();
+    this.loadDataSources();
   }
 
   // Log operations

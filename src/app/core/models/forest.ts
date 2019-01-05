@@ -9,6 +9,7 @@ export interface Forest {
     transmissionPoles?: TransmissionPoleList;
     roundPoles?: RoundPoleList;
     fencePosts?: FencePostList;
+    firewood: number;
 }
 
 export interface Tree {

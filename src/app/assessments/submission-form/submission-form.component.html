@@ -48,7 +48,7 @@
     <div class="form-field-container">
       <mat-form-field style="width: 12em">
         <mat-select formControlName="species" placeholder="Species">
-          <mat-option *ngFor='let tree of trees' [value]="tree.species">{{tree.species}}</mat-option>
+          <mat-option *ngFor='let tree of trees' [value]="tree.species">{{ tree.species }}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -127,7 +127,7 @@
     <div class="form-field-container">
       <mat-form-field style="width: 12em">
         <mat-select formControlName="species" placeholder="Species">
-          <mat-option *ngFor='let tree of trees' [value]="tree.species">{{tree.species}}</mat-option>
+          <mat-option *ngFor='let tree of trees' [value]="tree.species">{{ tree.species }}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -202,7 +202,7 @@
     <div class="form-field-container">
       <mat-form-field style="width: 12em">
         <mat-select formControlName="species" placeholder="Species">
-          <mat-option *ngFor='let tree of trees' [value]="tree.species">{{tree.species}}</mat-option>
+          <mat-option *ngFor='let tree of trees' [value]="tree.species">{{ tree.species }}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -270,9 +270,96 @@
 
 <!-- Fence Posts -->
 <h4>Fence Posts</h4>
+
+<mat-card>
+  <form *ngIf="editable" id="fpForm" [formGroup]="fpForm">
+
+    <div class="form-field-container">
+      <mat-form-field style="width: 12em">
+        <mat-select formControlName="species" placeholder="Species">
+          <mat-option *ngFor='let tree of trees' [value]="tree.species">{{ tree.species }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="width: 7.5em">
+        <input matInput formControlName="class" placeholder="Class">
+      </mat-form-field>
+
+      <mat-form-field style="width: 8.3em;">
+        <input matInput formControlName="qty" placeholder="Quantity">
+      </mat-form-field>
+      <button mat-mini-fab color="primary" (click)="addFPField()" form="fpForm">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+  </form>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-7">
+      <div class="table-container">
+        <table mat-table [dataSource]="fpDataSource" [class.isMobile]="isMobile">
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row">
+              <button *ngIf="editable" mat-button color="warn" (click)="deleteFPField(row)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="species">
+            <th mat-header-cell *matHeaderCellDef> Species </th>
+            <td mat-cell *matCellDef="let row">
+              <span class="mobile-label">Species:</span>
+              {{ row.species }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="class">
+            <th mat-header-cell *matHeaderCellDef> Class </th>
+            <td mat-cell *matCellDef="let row">
+              <span class="mobile-label">Class:</span>
+              {{ row.class }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="qty">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let row">
+              <span class="mobile-label">Quantity:<br></span>
+              {{ row.qty }}
+              <br class="mobile-label">
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="fpDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: fpDisplayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</mat-card>
 <!-- /Fence Posts -->
+
+<!-- Firewood -->
+<h4>Firewood</h4>
+<mat-card>
+  <div [formGroup]="forestForm">
+    <mat-form-field>
+      <input matInput formControlName="firewood" placeholder="Volume" form="forestForm">
+      <span matSuffix>m<sup>3</sup></span>
+    </mat-form-field>
+  </div>
+</mat-card>
+<!-- /Firewood -->
 
 <!-- Actions -->
 
-<button *ngIf="editable" mat-raised-button color="primary" type="submit" form="forestForm">save</button>
-<button *ngIf="!editable" mat-raised-button color="primary" routerLink="/assessments">done</button>
+<div class="page-actions">
+  <button *ngIf="editable" mat-raised-button color="primary" type="submit" form="forestForm">save</button>
+  <button *ngIf="!editable" mat-raised-button color="primary" routerLink="/assessments">done</button>
+  <button *ngIf="editable" mat-raised-button (click)="onCancelClicked()">cancel</button>
+  <button *ngIf="editable" mat-raised-button style="float: right;" (click)="onResetClicked()">clear values</button>
+</div>
