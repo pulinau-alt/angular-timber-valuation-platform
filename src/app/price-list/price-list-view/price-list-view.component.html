@@ -5,51 +5,72 @@
     </mat-card-header>
     <mat-card-content>
 
-      <mat-form-field>
-        <mat-select ngModel name="priceListMethod" (change)="selected($event)" placeholder="Select Classification Type">
-            <mat-option *ngFor="let method of priceListMethods" [value]="method.id">{{ method.name }}</mat-option>          
-        </mat-select>
-      </mat-form-field>
+      <form>
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedValue" name="clas" (selectionChange)="changeSelect()" placeholder="Select Classification Type">
+            <mat-option *ngFor='let clas of clases' [value]="clas.name">{{ clas.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p>Selected option: {{ selectedValue }}</p>
+        <p>option: {{ sel }}</p>
+      </form>
+
+      <button mat-stroked-button>Add new Classification type</button>
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-flat-button color="primary" (click)="onEditClicked(row)">Edit</button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-flat-button color="warn" (click)="onDeleteClicked(row)">Delete</button>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="row">
-          <th mat-header-cell *matHeaderCellDef style="padding-right: 300px;"> C1 </th>
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 140px;"> Stumpage Percentage for each Timber
+            species </th>
           <td mat-cell *matCellDef="let priceList"> {{priceList.row}} </td>
         </ng-container>
 
         <ng-container matColumnDef="colm1">
-          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> C1 </th>
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> </th>
           <td mat-cell *matCellDef="let priceList"> {{priceList.colm1}} </td>
         </ng-container>
 
         <ng-container matColumnDef="colm2">
-          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> C1 </th>
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> </th>
           <td mat-cell *matCellDef="let priceList"> {{priceList.colm2}} </td>
         </ng-container>
 
         <ng-container matColumnDef="colm3">
-          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> C1 </th>
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> </th>
           <td mat-cell *matCellDef="let priceList"> {{priceList.colm3}} </td>
         </ng-container>
 
         <ng-container matColumnDef="colm4">
-          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> C1 </th>
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> </th>
           <td mat-cell *matCellDef="let priceList"> {{priceList.colm4}} </td>
         </ng-container>
 
         <ng-container matColumnDef="colm5">
-          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> C1 </th>
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> </th>
           <td mat-cell *matCellDef="let priceList"> {{priceList.colm5}} </td>
         </ng-container>
 
         <ng-container matColumnDef="colm6">
-          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> C1 </th>
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 100px;"> </th>
           <td mat-cell *matCellDef="let priceList"> {{priceList.colm6}} </td>
         </ng-container>
 
         <ng-container matColumnDef="colm7">
-          <th mat-header-cell *matHeaderCellDef style="padding-right: 20px;"> C1 </th>
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 20px;"> </th>
           <td mat-cell *matCellDef="let priceList"> {{priceList.colm7}} </td>
         </ng-container>
 

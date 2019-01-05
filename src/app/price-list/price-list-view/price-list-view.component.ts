@@ -1,8 +1,10 @@
 import { PriceListService } from './../../services/price-list.service';
 import { Component, OnInit } from '@angular/core';
-import { Price } from '../../core/models/price-list';
+import { Price, Clas } from '../../core/models/price-list';
 import { DataSource } from '@angular/cdk/table';
 import { Router } from '@angular/router';
+import { ClasService } from 'src/app/services/clas.service';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-price-list-view',
@@ -10,32 +12,61 @@ import { Router } from '@angular/router';
   styleUrls: ['./price-list-view.component.scss']
 })
 export class PriceListViewComponent implements OnInit {
-  dataSource = new PriceListDataSource(this.as);
-  displayedColumns: string[] = ['row','colm1','colm2','colm3','colm4','colm5','colm6','colm7'];
+  dataSource = new PriceListDataSource(this.ps);
+  displayedColumns: string[] = ['row', 'colm1', 'colm2', 'colm3', 'colm4', 'colm5', 'colm6', 'colm7', 'edit', 'delete'];
 
-  constructor(private as: PriceListService, public router: Router ) { }
+  clasForm: FormGroup;
+  clases: Clas[];
+
+  selectedValue: string;//selected value of drop down
+
+  sel:string;
+  
+  constructor(
+    private ps: PriceListService,
+    private cs: ClasService,
+    public router: Router
+  ) {
+    this.clases = [];
+    
+  }
 
   ngOnInit() {
+
+    // Populate class list
+    this.cs.getClas()
+      .subscribe(clases => {
+        clases.forEach(clas => {
+          this.clases.push(clas);
+        });
+      })
+  } 
+  changeSelect(){
+    //if(this.selectedValue== {
+      //this.sel ="true"
+    //}
+    //this.sel = this.clasForm.get('row').value;
+  } 
+
+  onDeleteClicked(row) {
+    this.ps.deletePriceList(row.id);
   }
-  priceListMethods = [
-    { id: 1, name: 'Teak - Super Luxury Class - Both Non RCT and RCT (Felled volume basis)'},
-    { id: 2, name: 'Super Luxury Class(Nadun)'},
-    { id: 3, name: 'Super Luxury Class - Ebony & Calamader'},
-    { id: 4, name: 'Luxury Class - Satin'},
-    { id: 5, name: 'Luxury Class - Halmilla, Rose wood'},
-    { id: 6, name: 'Luxury Class - Milla, Jak'}
-  ];
+
+  onEditClicked(row) {
+    this.router.navigate(['/price-list/price-list-form'], { queryParams: { id: row.id } });
+  }
 
 }
 
 export class PriceListDataSource extends DataSource<any> {
-  constructor(private as: PriceListService) {
+  constructor(private ps: PriceListService) {
     super();
   }
 
   connect() {
-    return this.as.getPriceList();
+    return this.ps.getPriceLists();
   }
 
   disconnect() { }
+  
 }
