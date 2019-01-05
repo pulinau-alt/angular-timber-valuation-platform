@@ -18,17 +18,17 @@ export class PriceListViewComponent implements OnInit {
   clasForm: FormGroup;
   clases: Clas[];
 
-  selectedValue: string;//selected value of drop down
+  selectedValue: string; // selected value of drop down
 
-  sel:string;
-  
+  sel: string;
+
   constructor(
     private ps: PriceListService,
     private cs: ClasService,
     public router: Router
   ) {
     this.clases = [];
-    
+
   }
 
   ngOnInit() {
@@ -39,21 +39,21 @@ export class PriceListViewComponent implements OnInit {
         clases.forEach(clas => {
           this.clases.push(clas);
         });
-      })
-  } 
-  changeSelect(){
-    //if(this.selectedValue== {
-      //this.sel ="true"
-    //}
-    //this.sel = this.clasForm.get('row').value;
-  } 
+      });
+  }
+  changeSelect() {
+    // if(this.selectedValue== {
+    // this.sel ="true"
+    // }
+    // this.sel = this.clasForm.get('row').value;
+  }
 
   onDeleteClicked(row) {
     this.ps.deletePriceList(row.id);
   }
 
   onEditClicked(row) {
-    this.router.navigate(['/price-list/price-list-form'], { queryParams: { id: row.id } });
+    this.router.navigate(['/pricelist/form'], { queryParams: { id: row.id } });
   }
 
 }
@@ -68,5 +68,5 @@ export class PriceListDataSource extends DataSource<any> {
   }
 
   disconnect() { }
-  
+
 }
