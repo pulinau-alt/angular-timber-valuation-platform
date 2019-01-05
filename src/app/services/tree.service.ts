@@ -13,7 +13,7 @@ export class TreeService {
   tree$: Observable<Tree>;
 
   constructor(private afs: AngularFirestore) {
-    this.treesCollection = this.afs.collection("trees");
+    this.treesCollection = this.afs.collection('trees');
   }
 
   public getTrees(): Observable<Tree[]> {
@@ -25,7 +25,7 @@ export class TreeService {
       }))
     );
   }
-  
+
   public getTree(id) {
     return this.treesCollection.doc<Tree>(id).get() as Observable<DocumentSnapshot<any>>;
   }
