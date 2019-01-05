@@ -4,9 +4,9 @@ import { Observable, of } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
-import { TreeService } from 'src/app/services/tree.service';
+import { TreeService } from '../../services/tree.service';
 import { MatTableDataSource } from '@angular/material';
-import { Forest, Tree, Log, TransmissionPole, RoundPole, FencePost } from 'src/app/core/models/forest';
+import { Forest, Tree, Log, TransmissionPole, RoundPole, FencePost } from '../../core/models/forest';
 
 @Component({
   selector: 'app-submission-form',
