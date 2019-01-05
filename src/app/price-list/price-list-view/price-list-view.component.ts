@@ -42,10 +42,7 @@ export class PriceListViewComponent implements OnInit {
       })
   } 
   changeSelect(){
-    //if(this.selectedValue== {
-      //this.sel ="true"
-    //}
-    //this.sel = this.clasForm.get('row').value;
+    this.ps.newSelect(this.selectedValue);    
   } 
 
   onDeleteClicked(row) {
@@ -62,6 +59,10 @@ export class PriceListDataSource extends DataSource<any> {
   constructor(private ps: PriceListService) {
     super();
   }
+  selectedValue: string;
+  changeSelect(){
+    this.ps.newSelect(this.selectedValue);    
+  } 
 
   connect() {
     return this.ps.getPriceLists();
