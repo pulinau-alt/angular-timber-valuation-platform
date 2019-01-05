@@ -15,6 +15,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { MaterialModule } from './material.module';
 import { PriceListModule } from './price-list/price-list.module';
+import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { PriceListModule } from './price-list/price-list.module';
     AssessmentsModule,
     PriceListModule
   ],
-  providers: [],
+  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

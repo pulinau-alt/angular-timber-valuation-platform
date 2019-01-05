@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class PriceListService {
 
   private priceListCollection: AngularFirestoreCollection<Price>;
-  priceList$: Observable<Price>;
+  priceList$: Observable<Price[]>;
 
   selectedItem = "Super Luxury Class(Nadun)";
   //selectFilter$: BehaviorSubject<string | null>;
@@ -19,6 +19,7 @@ export class PriceListService {
     //this.priceListCollection = afs.collection("priceList");
     console.log("this.selectedItem");
     this.priceListCollection = afs.collection('priceList', ref => ref.where('class', '==', this.selectedItem))
+    this.priceList$ = this.priceListCollection.valueChanges();
     //this.selectFilter$ = new BehaviorSubject(null);
   }
 

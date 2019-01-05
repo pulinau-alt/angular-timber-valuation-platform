@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Classification of Timber</h1>
+<div mat-dialog-content>
+  <p>Enter New Classification Type</p>
+  <mat-form-field>
+    <input matInput #newname [(ngModel)]="data.classific">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="save(newname.value)" [mat-dialog-close]="data.classific" cdkFocusInitial>Ok</button>
+</div>

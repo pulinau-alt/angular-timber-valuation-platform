@@ -5,6 +5,9 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PriceListViewComponent } from './price-list-view/price-list-view.component';
+import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
+import {MatDialogModule} from '@angular/material/dialog';
+import { Classification } from './price-list-view/price-list-view.component';
 
 @NgModule({
   imports: [
@@ -12,9 +15,13 @@ import { PriceListViewComponent } from './price-list-view/price-list-view.compon
     MDBBootstrapModule.forRoot(),
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule,
   ],
-  declarations: [PriceListFormComponent, PriceListViewComponent],
-  exports: [PriceListFormComponent, PriceListViewComponent]
+  declarations: [PriceListFormComponent, PriceListViewComponent, Classification ],
+  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
+  exports: [PriceListFormComponent, PriceListViewComponent, Classification],
+  entryComponents: [Classification],
+  bootstrap: [PriceListViewComponent]
 })
 export class PriceListModule { }

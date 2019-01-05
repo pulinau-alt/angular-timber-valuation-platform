@@ -7,7 +7,7 @@
 
       <form>
         <mat-form-field>
-          <mat-select [(ngModel)]="selectedValue" name="clas" (selectionChange)="changeSelect()" placeholder="Select Classification Type">
+          <mat-select [(ngModel)]="selectedValue" name="clas" (selectionChange)="changeSelect()" style="width:250px" placeholder="Select Classification Type">
             <mat-option *ngFor='let clas of clases' [value]="clas.name">{{ clas.name }}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -15,7 +15,8 @@
         <p>option: {{ sel }}</p>
       </form>
 
-      <button mat-stroked-button>Add new Classification type</button><br><br>
+      <button mat-raised-button (click)="openDialog()">Add new Classification type</button>        
+          <p>You chose: {{classific}}</p>
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
