@@ -1,9 +1,8 @@
-import { PlotsModule } from './plots/plots.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { AngularFireModule } from '@angular/fire';
+import { AngularFireModule } from "@angular/fire";
 
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -34,7 +33,7 @@ import { PriceListModule } from './price-list/price-list.module';
     LoginRegisterModule,
     CoreModule,
     AssessmentsModule,
-    PlotsModule,
+    PriceListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
