@@ -302,6 +302,10 @@ export class SubmissionFormComponent implements OnInit {
 
       ///
 
+      if (!data['firewood']) {
+        delete data['firewood'];
+      }
+
       if (this.id === this.forestForm.get('id').value) {
         this.as.updateForest(this.id, data);
         console.log('Updated');
