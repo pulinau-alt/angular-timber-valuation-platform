@@ -68,7 +68,7 @@ export class SubmissionFormComponent implements OnInit {
       this.forestForm.disable();
       this.editable = false;
     }
-    this.logsDataSource = this.loadDataSource(this.logsFieldArray);
+    this.loadDataSources();
 
     // Populate trees list
     this.ts.getTrees()
@@ -227,80 +227,90 @@ export class SubmissionFormComponent implements OnInit {
 
   onSubmit() {
     if (this.forestForm.valid) {
-      const data = this.forestForm.getRawValue();
+      const data = Object(this.forestForm.value);
       let objMap: Map<string, any[]>;
 
       // Add logs
 
-      objMap = new Map<string, any[]>();
-      this.logsDataSource.data.forEach(e => {
-        const element: Log = ({
-          mgClass: e.mgClass,
-          volume: e.volume,
+      if (this.logsDataSource.data) {
+        objMap = new Map<string, any[]>();
+        this.logsDataSource.data.forEach(e => {
+          const element: Log = ({
+            mgClass: e.mgClass,
+            volume: e.volume,
+          });
+          if (!objMap.has(e.species)) {
+            objMap.set(e.species, []);
+          }
+          objMap.get(e.species).push(element);
         });
-        if (!objMap.has(e.species)) {
-          objMap.set(e.species, []);
-        }
-        objMap.get(e.species).push(element);
-      });
 
-      data['logs'] = this.mapToObject(objMap);
+        data['logs'] = this.mapToObject(objMap);
+      }
 
       ///
 
       // Add transmission poles
 
-      objMap = new Map<string, any[]>();
-      this.tpDataSource.data.forEach(e => {
-        const element: TransmissionPole = ({
-          category: e.tpCategory,
-          quantity: e.tpQty,
+      if (this.tpDataSource.data) {
+        objMap = new Map<string, any[]>();
+        this.tpDataSource.data.forEach(e => {
+          const element: TransmissionPole = ({
+            category: e.tpCategory,
+            quantity: e.tpQty,
+          });
+          if (!objMap.has(e.species)) {
+            objMap.set(e.species, []);
+          }
+          objMap.get(e.species).push(element);
         });
-        if (!objMap.has(e.species)) {
-          objMap.set(e.species, []);
-        }
-        objMap.get(e.species).push(element);
-      });
 
-      data['transmissionPoles'] = this.mapToObject(objMap);
+        data['transmissionPoles'] = this.mapToObject(objMap);
+      }
 
       ///
 
       // Add round poles
 
-      objMap = new Map<string, any[]>();
-      this.rpDataSource.data.forEach(e => {
-        const element: RoundPole = ({
-          class: e.class,
-          quantity: e.qty,
+      if (this.rpDataSource.data) {
+        objMap = new Map<string, any[]>();
+        this.rpDataSource.data.forEach(e => {
+          const element: RoundPole = ({
+            class: e.class,
+            quantity: e.qty,
+          });
+          if (!objMap.has(e.species)) {
+            objMap.set(e.species, []);
+          }
+          objMap.get(e.species).push(element);
         });
-        if (!objMap.has(e.species)) {
-          objMap.set(e.species, []);
-        }
-        objMap.get(e.species).push(element);
-      });
 
-      data['roundPoles'] = this.mapToObject(objMap);
+        data['roundPoles'] = this.mapToObject(objMap);
+      }
 
       ///
 
       // Add fence posts
 
-      objMap = new Map<string, any[]>();
-      this.fpDataSource.data.forEach(e => {
-        const element: FencePost = ({
-          class: e.class,
-          quantity: e.qty,
+      if (this.fpDataSource.data) {
+        objMap = new Map<string, any[]>();
+        this.fpDataSource.data.forEach(e => {
+          const element: FencePost = ({
+            class: e.class,
+            quantity: e.qty,
+          });
+          if (!objMap.has(e.species)) {
+            objMap.set(e.species, []);
+          }
+          objMap.get(e.species).push(element);
         });
-        if (!objMap.has(e.species)) {
-          objMap.set(e.species, []);
-        }
-        objMap.get(e.species).push(element);
-      });
 
-      data['fencePosts'] = this.mapToObject(objMap);
+        data['fencePosts'] = this.mapToObject(objMap);
+      }
 
       ///
+
+      console.log(data);
 
       if (!data['firewood']) {
         delete data['firewood'];
