@@ -1,9 +1,5 @@
 <div class="container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Price List</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+  <h3>Price List</h3>
 
       <form>
         <mat-form-field>
@@ -18,7 +14,8 @@
       <button mat-raised-button (click)="openDialog()">Add new Classification type</button>        
           <p>You chose: {{classific}}</p>
 
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource">
 
         <ng-container matColumnDef="edit">
           <th mat-header-cell *matHeaderCellDef style="padding-right: 110px;"></th>

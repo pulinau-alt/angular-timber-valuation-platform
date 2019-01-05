@@ -1,8 +1,8 @@
+import { AuthGuard } from './core/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { AngularFireModule } from "@angular/fire";
+import { AngularFireModule } from '@angular/fire';
 
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -15,7 +15,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { MaterialModule } from './material.module';
 import { PriceListModule } from './price-list/price-list.module';
-import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { SharedModule } from './shared.module';
 
 @NgModule({
   declarations: [
@@ -25,8 +26,8 @@ import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MDBBootstrapModule.forRoot(),
     MaterialModule,
+    SharedModule,
     AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ComponentsModule,
@@ -34,9 +35,11 @@ import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
     LoginRegisterModule,
     CoreModule,
     AssessmentsModule,
-    PriceListModule
+    PriceListModule,
+    DashboardModule,
   ],
-  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
+
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

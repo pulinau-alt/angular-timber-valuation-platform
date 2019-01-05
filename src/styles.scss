@@ -1,20 +1,86 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-.mat-card {
-    margin-top: 25px
+.body {
+  height: 100vh;
+  margin: 16px;
+}
+
+.span {
+  margin-right: 4px;
+}
+
+button {
+  text-transform: uppercase;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+}
+
+mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.mobile-label {
+  display: none;
+}
+
+@media(max-width: 600px) {
+  .mobile-label {
+    width: 80px;
+    display: inline-block;
+      font-weight: bold;
   }
-  
-  .mat-card-header {
-    margin: 10px;
-    text-align: center;
+
+  .mat-header-row {
+    display: none;
   }
-  
-  .card-content {
-      display: flex;
-    }
-  
-  .row {
-    margin-left: auto;
+
+  .mat-row { 
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
   }
+}
+
+mat-card {
+  margin: 20px auto;
+}
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+@mixin global-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+}
+
+$default-theme: mat-light-theme(
+  mat-palette($mat-teal, 500, A100, 900),
+  mat-palette($mat-amber, 600, A100, 900),
+  mat-palette($mat-red, 500, A100, 900)
+);
+
+$dark-theme: mat-dark-theme(
+  mat-palette($mat-purple),
+  mat-palette($mat-blue),
+  mat-palette($mat-red)
+);
+
+.default-theme {
+  @include angular-material-theme($default-theme);
+}
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+  @include global-theme($dark-theme);
+}

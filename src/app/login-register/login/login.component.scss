@@ -1,0 +1,35 @@
+mat-card {
+    max-width: calc(100vh - 45%);
+    text-align: center;
+}
+
+.wrapper {
+    margin: 14px auto;
+    align-content: center;
+}
+
+.flex-container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-container > * {
+    width: 100%;
+    max-width: 350px;
+}
+
+.center {
+    align-items: center;
+    justify-content: center;
+}
+
+.divder {
+    padding: 12px;
+}

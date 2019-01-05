@@ -14,7 +14,7 @@ import { DocumentSnapshot } from '@angular/fire/firestore';
 })
 export class PriceListFormComponent implements OnInit {
 
-  price: Price
+  price: Price;
   priceListForm: FormGroup;
   sub;
   id: String;
@@ -26,7 +26,7 @@ export class PriceListFormComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.initForm();
 
     this.sub = this.route.queryParams
@@ -35,7 +35,7 @@ export class PriceListFormComponent implements OnInit {
       });
 
     // If plice-list id has been passed, load price-list details
-    this.id ? this.loadPriceDetails(this.id) : '';
+    if (this.id) { this.loadPriceDetails(this.id); }
 
   }
 
@@ -59,7 +59,7 @@ export class PriceListFormComponent implements OnInit {
       .subscribe(next => {
         this.price = next.data();
         this.priceListForm.get('id').setValue(id);
-        //this.priceListForm.get('clas').setValue(this.price.clas);
+        // this.priceListForm.get('clas').setValue(this.price.clas);
         this.priceListForm.get('colm1').setValue(this.price.colm1);
         this.priceListForm.get('colm2').setValue(this.price.colm2);
         this.priceListForm.get('colm3').setValue(this.price.colm3);
@@ -73,8 +73,8 @@ export class PriceListFormComponent implements OnInit {
 
   onSubmit() {
     if (this.id = this.priceListForm.get('id').value) {
-      console.log(this.ps.updatePriceList(this.id, this.priceListForm.getRawValue()))
-      console.log('Updated')
+      console.log(this.ps.updatePriceList(this.id, this.priceListForm.getRawValue()));
+      console.log('Updated');
     } else {
       if (this.priceListForm.valid) {
         console.log(this.ps.addPriceList(this.priceListForm.value));

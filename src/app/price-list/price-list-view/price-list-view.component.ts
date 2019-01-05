@@ -24,9 +24,9 @@ export class PriceListViewComponent implements OnInit {
   clasForm: FormGroup;
   clases: Clas[];
 
-  selectedValue: string;//selected value of drop down
+  selectedValue: string; // selected value of drop down
 
-  sel:string;
+  sel: string;
 
   classific: string;
   name: string;
@@ -38,7 +38,7 @@ export class PriceListViewComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.clases = [];
-    
+
   }
 
   ngOnInit(){
@@ -68,12 +68,13 @@ export class PriceListViewComponent implements OnInit {
     this.ps.newSelect(this.selectedValue);    
   } 
 
+
   onDeleteClicked(row) {
     this.ps.deletePriceList(row.id);
   }
 
   onEditClicked(row) {
-    this.router.navigate(['/price-list/price-list-form'], { queryParams: { id: row.id } });
+    this.router.navigate(['/pricelist/form'], { queryParams: { id: row.id } });
   }
 
 }
@@ -88,7 +89,7 @@ export class PriceListDataSource extends DataSource<any> {
   }
 
   disconnect() { }
-  
+
 }
 
 @Component({

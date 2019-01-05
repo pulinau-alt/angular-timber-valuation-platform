@@ -5,29 +5,51 @@ export interface Forest {
     range: string;
     block: number;
     sBlock: number;
+    logs?: LogList;
+    transmissionPoles?: TransmissionPoleList;
+    roundPoles?: RoundPoleList;
+    fencePosts?: FencePostList;
+    firewood: number;
 }
 
 export interface Tree {
-    id?: string
+    id?: string;
     species: string;
+    logs?: Log[];
 }
 
-export interface Logs {
-    girthClass: string;
+export interface LogList {
+    [species: string]: Log[];
+}
+
+export interface Log {
+    mgClass: string;
     volume: number;
 }
 
-export interface TransmissionPoles {
+export interface TransmissionPoleList {
+    [species: string]: TransmissionPole[];
+}
+
+export interface TransmissionPole {
     category: string;
     quantity: number;
 }
 
-export interface RoundPoles {
-    interface: string;
+export interface RoundPoleList {
+    [species: string]: RoundPole[];
+}
+
+export interface RoundPole {
+    class: string;
     quantity: number;
 }
 
-export interface FencePosts {
+export interface FencePostList {
+    [species: string]: FencePost[];
+}
+
+export interface FencePost {
     class: string;
     quantity: number;
 }
