@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { Observable, of } from 'rxjs';
-import { Forest, Tree, Log, LogList } from '../../core/models/forest';
+import { Forest, Tree, Log, TransmissionPole } from '../../core/models/forest';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
@@ -17,12 +17,16 @@ export class SubmissionFormComponent implements OnInit {
 
   // Forms
   forestForm: FormGroup;
-  tpForm: FormGroup;
 
   sub;
   forest: Forest;
   id: String;
   trees: Tree[];
+
+  tpForm: FormGroup;
+  tpFieldArray: Array<any> = [];
+  tpDisplayedColumns: string[] = ['species', 'tpCategory', 'tpQty', 'delete'];
+  tpDataSource: MatTableDataSource<any>;
 
   logForm: FormGroup;
   logsFieldArray: Array<any> = [];
@@ -64,11 +68,11 @@ export class SubmissionFormComponent implements OnInit {
     // Forest form
     this.forestForm = this.fb.group({
       id: new FormControl({ value: '', disabled: true }),
-      division: new FormControl('', Validators.required),
-      beat: new FormControl('', Validators.required),
-      range: new FormControl('', Validators.required),
-      block: new FormControl('', Validators.required),
-      sBlock: new FormControl('', Validators.required),
+      division: ['', Validators.required],
+      beat: ['', Validators.required],
+      range: ['', Validators.required],
+      block: ['', Validators.required],
+      sBlock: ['', Validators.required],
     });
 
     // Log form
@@ -80,6 +84,7 @@ export class SubmissionFormComponent implements OnInit {
 
     // Telephone Posts form
     this.tpForm = this.fb.group({
+      species: ['', Validators.required],
       tpCategory: [''],
       tpQty: [''],
     });
@@ -96,18 +101,32 @@ export class SubmissionFormComponent implements OnInit {
         this.forestForm.get('block').setValue(this.forest.block);
         this.forestForm.get('sBlock').setValue(this.forest.sBlock);
 
-        if (this.forest.trees) {
-          Object.entries(this.forest.trees).forEach(e => {
-            e[1].forEach(log => {
+        if (this.forest.logs) {
+          Object.entries(this.forest.logs).forEach(species => {
+            species[1].forEach(e => {
               this.logsFieldArray.push({
-                species: e[0],
-                mgClass: log.mgClass,
-                volume: log.volume,
+                species: species[0],
+                mgClass: e.mgClass,
+                volume: e.volume,
               });
             });
           });
           this.logsDataSource = this.loadDataSource(this.logsFieldArray);
           console.log(this.logsFieldArray);
+        }
+
+        if (this.forest.tps) {
+          Object.entries(this.forest.tps).forEach(species => {
+            species[1].forEach(e => {
+              this.tpFieldArray.push({
+                species: species[0],
+                tpCategory: e.category,
+                tpQty: e.quantity,
+              });
+            });
+          });
+          this.tpDataSource = this.loadDataSource(this.tpFieldArray);
+          console.log(this.tpFieldArray);
         }
       });
   }
@@ -125,25 +144,45 @@ export class SubmissionFormComponent implements OnInit {
   onSubmit() {
     if (this.forestForm.valid) {
       const data = this.forestForm.getRawValue();
-      const logMap = new Map<string, any[]>();
+      let obj: Object;
+      let objMap: Map<string, any[]>;
 
+      // Add logs
+      objMap = new Map<string, any[]>();
       this.logsDataSource.data.forEach(e => {
         const log: Log = ({
           mgClass: e.mgClass,
           volume: e.volume,
         });
-        if (!logMap.has(e.species)) {
-          logMap.set(e.species, []);
+        if (!objMap.has(e.species)) {
+          objMap.set(e.species, []);
         }
-        logMap.get(e.species).push(log);
+        objMap.get(e.species).push(log);
       });
 
-      const obj = {};
-      logMap.forEach((value, key) => { obj[key] = value; });
+      obj = {};
+      objMap.forEach((value, key) => { obj[key] = value; });
 
-      data['trees'] = obj;
+      data['logs'] = obj;
 
-      console.log(data);
+      // Add transmission poles
+      objMap = new Map<string, any[]>();
+      this.tpDataSource.data.forEach(e => {
+        const tp: TransmissionPole = ({
+          category: e.tpCategory,
+          quantity: e.tpQty,
+        });
+        if (!objMap.has(e.species)) {
+          objMap.set(e.species, []);
+        }
+        objMap.get(e.species).push(tp);
+      });
+
+      obj = {};
+      objMap.forEach((value, key) => { obj[key] = value; });
+
+      data['tps'] = obj;
+
 
       if (this.id === this.forestForm.get('id').value) {
         this.as.updateForest(this.id, data);
@@ -155,12 +194,15 @@ export class SubmissionFormComponent implements OnInit {
     }
   }
 
+  // Log operations
+
   addLogField() {
     if (this.logForm.valid) {
       this.logsFieldArray.push(this.logForm.value);
       this.logsDataSource = this.loadDataSource(this.logsFieldArray);
       // console.log(this.logsFieldArray);
-      this.logForm.reset();
+      this.logForm.get('mgClass').setValue(null);
+      this.logForm.get('volume').setValue(null);
     }
   }
 
@@ -168,5 +210,22 @@ export class SubmissionFormComponent implements OnInit {
     this.logsFieldArray.splice(this.logsFieldArray.indexOf(row), 1);
     this.logsDataSource = this.loadDataSource(this.logsFieldArray);
     // console.log(this.logsFieldArray);
+  }
+
+  // TP Operations
+  addTPField() {
+    if (this.tpForm.valid) {
+      this.tpFieldArray.push(this.tpForm.value);
+      this.tpDataSource = this.loadDataSource(this.tpFieldArray);
+      // console.log(this.tpFieldArray);
+      this.tpForm.get('tpCategory').setValue(null);
+      this.tpForm.get('tpQty').setValue(null);
+    }
+  }
+
+  deleteTPField(row) {
+    this.tpFieldArray.splice(this.tpFieldArray.indexOf(row), 1);
+    this.tpDataSource = this.loadDataSource(this.tpFieldArray);
+    // console.log(this.tpFieldArray);
   }
 }

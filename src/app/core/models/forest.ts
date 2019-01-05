@@ -5,7 +5,8 @@ export interface Forest {
     range: string;
     block: number;
     sBlock: number;
-    trees?: LogList;
+    logs?: LogList;
+    tps?: TransmissionPoleList;
 }
 
 export interface Tree {
@@ -23,17 +24,21 @@ export interface Log {
     volume: number;
 }
 
-export interface TransmissionPoles {
+export interface TransmissionPoleList {
+    [species: string]: TransmissionPole[];
+}
+
+export interface TransmissionPole {
     category: string;
     quantity: number;
 }
 
-export interface RoundPoles {
-    interface: string;
+export interface RoundPole {
+    category: string;
     quantity: number;
 }
 
-export interface FencePosts {
+export interface FencePost {
     class: string;
     quantity: number;
 }
