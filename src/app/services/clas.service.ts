@@ -10,10 +10,11 @@ import { map } from 'rxjs/operators';
 export class ClasService {
 
   private clasCollection: AngularFirestoreCollection<Clas>;
-  clas$: Observable<Clas>;
+  clas$: Observable<Clas[]>;
 
   constructor(private afs: AngularFirestore) { 
     this.clasCollection = this.afs.collection("clas");
+    this.clas$ = this.clasCollection.valueChanges();
   }
 
   public getClas(): Observable<Clas[]> {
@@ -24,6 +25,12 @@ export class ClasService {
         return { id, ...data };
       }))
     );
+  }
+  
+  addClas(name: string){
+    const id = this.afs.createId();
+    const item: Clas = { id, name };
+    this.clasCollection.doc(id).set(item);
   }
 
   public getClases(id) {
