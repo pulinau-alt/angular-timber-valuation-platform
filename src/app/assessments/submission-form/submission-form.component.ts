@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { Observable, of } from 'rxjs';
-import { Forest, Tree, Log, TransmissionPole } from '../../core/models/forest';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
 import { TreeService } from 'src/app/services/tree.service';
 import { MatTableDataSource } from '@angular/material';
+import { Forest, Tree, Log, TransmissionPole, RoundPole, FencePost } from 'src/app/core/models/forest';
 
 @Component({
   selector: 'app-submission-form',
@@ -33,6 +33,16 @@ export class SubmissionFormComponent implements OnInit {
   logsFieldArray: Array<any> = [];
   logsDisplayedColumns: string[] = ['species', 'mgClass', 'volume', 'delete'];
   logsDataSource: MatTableDataSource<any>;
+
+  rpForm: FormGroup;
+  rpFieldArray: Array<any> = [];
+  rpDisplayedColumns: string[] = ['species', 'class', 'qty', 'delete'];
+  rpDataSource: MatTableDataSource<any>;
+
+  fpForm: FormGroup;
+  fpFieldArray: Array<any> = [];
+  fpDisplayedColumns: string[] = ['species', 'class', 'qty', 'delete'];
+  fpDataSource: MatTableDataSource<any>;
 
   constructor(
     private as: AssessmentService,
@@ -87,11 +97,25 @@ export class SubmissionFormComponent implements OnInit {
       volume: ['', Validators.required]
     });
 
-    // Telephone Posts form
+    // Transmission poles form
     this.tpForm = this.fb.group({
       species: ['', Validators.required],
       tpCategory: [''],
       tpQty: [''],
+    });
+
+    // Round poles form
+    this.rpForm = this.fb.group({
+      species: ['', Validators.required],
+      class: [''],
+      qty: [''],
+    });
+
+    // Fence posts form
+    this.fpForm = this.fb.group({
+      species: ['', Validators.required],
+      class: [''],
+      qty: [''],
     });
   }
 
@@ -106,6 +130,7 @@ export class SubmissionFormComponent implements OnInit {
         this.forestForm.get('block').setValue(this.forest.block);
         this.forestForm.get('sBlock').setValue(this.forest.sBlock);
 
+        // Load logs
         if (this.forest.logs) {
           Object.entries(this.forest.logs).forEach(species => {
             species[1].forEach(e => {
@@ -117,11 +142,12 @@ export class SubmissionFormComponent implements OnInit {
             });
           });
           this.logsDataSource = this.loadDataSource(this.logsFieldArray);
-          console.log(this.logsFieldArray);
         }
+        ///
 
-        if (this.forest.tps) {
-          Object.entries(this.forest.tps).forEach(species => {
+        //  Load transmission poles
+        if (this.forest.transmissionPoles) {
+          Object.entries(this.forest.transmissionPoles).forEach(species => {
             species[1].forEach(e => {
               this.tpFieldArray.push({
                 species: species[0],
@@ -131,8 +157,39 @@ export class SubmissionFormComponent implements OnInit {
             });
           });
           this.tpDataSource = this.loadDataSource(this.tpFieldArray);
-          console.log(this.tpFieldArray);
         }
+        ///
+
+        //  Load round poles
+        if (this.forest.roundPoles) {
+          Object.entries(this.forest.roundPoles).forEach(species => {
+            species[1].forEach(e => {
+              this.rpFieldArray.push({
+                species: species[0],
+                class: e.class,
+                qty: e.quantity,
+              });
+            });
+          });
+          this.rpDataSource = this.loadDataSource(this.rpFieldArray);
+        }
+        ///
+
+        //  Load fence posts
+        if (this.forest.fencePosts) {
+          Object.entries(this.forest.fencePosts).forEach(species => {
+            species[1].forEach(e => {
+              this.fpFieldArray.push({
+                species: species[0],
+                class: e.class,
+                qty: e.quantity,
+              });
+            });
+          });
+          this.fpDataSource = this.loadDataSource(this.fpFieldArray);
+        }
+        ///
+
       });
   }
 
@@ -146,48 +203,90 @@ export class SubmissionFormComponent implements OnInit {
     return new MatTableDataSource(rows);
   }
 
+  private mapToObject(source: Map<any, any>): Object {
+    const obj = {};
+
+    source.forEach((value, key) => { obj[key] = value; });
+
+    return obj;
+  }
+
   onSubmit() {
     if (this.forestForm.valid) {
       const data = this.forestForm.getRawValue();
-      let obj: Object;
       let objMap: Map<string, any[]>;
 
       // Add logs
+
       objMap = new Map<string, any[]>();
       this.logsDataSource.data.forEach(e => {
-        const log: Log = ({
+        const element: Log = ({
           mgClass: e.mgClass,
           volume: e.volume,
         });
         if (!objMap.has(e.species)) {
           objMap.set(e.species, []);
         }
-        objMap.get(e.species).push(log);
+        objMap.get(e.species).push(element);
       });
 
-      obj = {};
-      objMap.forEach((value, key) => { obj[key] = value; });
+      data['logs'] = this.mapToObject(objMap);
 
-      data['logs'] = obj;
+      ///
 
       // Add transmission poles
+
       objMap = new Map<string, any[]>();
       this.tpDataSource.data.forEach(e => {
-        const tp: TransmissionPole = ({
+        const element: TransmissionPole = ({
           category: e.tpCategory,
           quantity: e.tpQty,
         });
         if (!objMap.has(e.species)) {
           objMap.set(e.species, []);
         }
-        objMap.get(e.species).push(tp);
+        objMap.get(e.species).push(element);
       });
 
-      obj = {};
-      objMap.forEach((value, key) => { obj[key] = value; });
+      data['transmissionPoles'] = this.mapToObject(objMap);
 
-      data['tps'] = obj;
+      ///
 
+      // Add round poles
+
+      objMap = new Map<string, any[]>();
+      this.rpDataSource.data.forEach(e => {
+        const element: RoundPole = ({
+          class: e.class,
+          quantity: e.qty,
+        });
+        if (!objMap.has(e.species)) {
+          objMap.set(e.species, []);
+        }
+        objMap.get(e.species).push(element);
+      });
+
+      data['roundPoles'] = this.mapToObject(objMap);
+
+      ///
+
+      // Add fence posts
+
+      // objMap = new Map<string, any[]>();
+      // this.fpDataSource.data.forEach(e => {
+      //   const element: FencePost = ({
+      //     class: e.class,
+      //     quantity: e.qty,
+      //   });
+      //   if (!objMap.has(e.species)) {
+      //     objMap.set(e.species, []);
+      //   }
+      //   objMap.get(e.species).push(element);
+      // });
+
+      // data['fencePosts'] = this.mapToObject(objMap);
+
+      ///
 
       if (this.id === this.forestForm.get('id').value) {
         this.as.updateForest(this.id, data);
@@ -211,7 +310,7 @@ export class SubmissionFormComponent implements OnInit {
     if (this.logForm.valid) {
       this.logsFieldArray.push(this.logForm.value);
       this.logsDataSource = this.loadDataSource(this.logsFieldArray);
-      // console.log(this.logsFieldArray);
+
       this.logForm.get('mgClass').setValue(null);
       this.logForm.get('volume').setValue(null);
     }
@@ -220,15 +319,17 @@ export class SubmissionFormComponent implements OnInit {
   deleteLogField(row) {
     this.logsFieldArray.splice(this.logsFieldArray.indexOf(row), 1);
     this.logsDataSource = this.loadDataSource(this.logsFieldArray);
-    // console.log(this.logsFieldArray);
   }
 
-  // TP Operations
+  ///
+
+  // Transmission Poles operations
+
   addTPField() {
     if (this.tpForm.valid) {
       this.tpFieldArray.push(this.tpForm.value);
       this.tpDataSource = this.loadDataSource(this.tpFieldArray);
-      // console.log(this.tpFieldArray);
+
       this.tpForm.get('tpCategory').setValue(null);
       this.tpForm.get('tpQty').setValue(null);
     }
@@ -237,6 +338,45 @@ export class SubmissionFormComponent implements OnInit {
   deleteTPField(row) {
     this.tpFieldArray.splice(this.tpFieldArray.indexOf(row), 1);
     this.tpDataSource = this.loadDataSource(this.tpFieldArray);
-    // console.log(this.tpFieldArray);
   }
+
+  ///
+
+  // Round Pole operations
+
+  addRPField() {
+    if (this.rpForm.valid) {
+      this.rpFieldArray.push(this.rpForm.value);
+      this.rpDataSource = this.loadDataSource(this.rpFieldArray);
+
+      this.rpForm.get('class').setValue(null);
+      this.rpForm.get('qty').setValue(null);
+    }
+  }
+
+  deleteRPField(row) {
+    this.rpFieldArray.splice(this.rpFieldArray.indexOf(row), 1);
+    this.rpDataSource = this.loadDataSource(this.rpFieldArray);
+  }
+
+  ///
+
+  // Fence Post operations
+
+  addFPField() {
+    if (this.fpForm.valid) {
+      this.fpFieldArray.push(this.fpForm.value);
+      this.fpDataSource = this.loadDataSource(this.fpFieldArray);
+
+      this.fpForm.get('class').setValue(null);
+      this.fpForm.get('qty').setValue(null);
+    }
+  }
+
+  deleteFPField(row) {
+    this.fpFieldArray.splice(this.fpFieldArray.indexOf(row), 1);
+    this.fpDataSource = this.loadDataSource(this.fpFieldArray);
+  }
+
+  ///
 }

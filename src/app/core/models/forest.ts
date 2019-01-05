@@ -6,7 +6,9 @@ export interface Forest {
     block: number;
     sBlock: number;
     logs?: LogList;
-    tps?: TransmissionPoleList;
+    transmissionPoles?: TransmissionPoleList;
+    roundPoles?: RoundPoleList;
+    fencePosts?: FencePostList;
 }
 
 export interface Tree {
@@ -33,9 +35,17 @@ export interface TransmissionPole {
     quantity: number;
 }
 
+export interface RoundPoleList {
+    [species: string]: RoundPole[];
+}
+
 export interface RoundPole {
-    category: string;
+    class: string;
     quantity: number;
+}
+
+export interface FencePostList {
+    [species: string]: FencePost[];
 }
 
 export interface FencePost {
