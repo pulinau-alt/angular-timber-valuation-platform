@@ -15,13 +15,14 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class SubmissionFormComponent implements OnInit {
 
-  // Forms
-  forestForm: FormGroup;
-
   sub;
+  editable = true;
   forest: Forest;
   id: String;
   trees: Tree[];
+
+  // Forms
+  forestForm: FormGroup;
 
   tpForm: FormGroup;
   tpFieldArray: Array<any> = [];
@@ -52,7 +53,11 @@ export class SubmissionFormComponent implements OnInit {
       });
 
     // If forest id has been passed, load forest details
-    if (this.id) { this.loadForestDetails(this.id); }
+    if (this.id) {
+      this.loadForestDetails(this.id);
+      this.forestForm.disable();
+      this.editable = false;
+    }
     this.logsDataSource = this.loadDataSource(this.logsFieldArray);
 
     // Populate trees list
@@ -190,8 +195,14 @@ export class SubmissionFormComponent implements OnInit {
       } else {
         this.as.addForest(data).then(value => console.log(value));
       }
-      this.router.navigate(['assessments']);
+      this.forestForm.disable();
+      this.editable = false;
     }
+  }
+
+  onEditClicked() {
+    this.forestForm.enable();
+    this.editable = true;
   }
 
   // Log operations

@@ -1,6 +1,9 @@
 table {
   width: 100%;
 }
+.mat-column-actions {
+  width: 174px;
+}
 mat-icon {
   vertical-align: middle;
   margin-right: 2px;
@@ -11,4 +14,7 @@ a:hover {
 h4 {
   margin-top: 12px;
   margin-bottom: 22px;
+}
+.table-actions > * {
+  margin: 4px;
 }

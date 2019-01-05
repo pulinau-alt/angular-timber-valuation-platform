@@ -1,12 +1,17 @@
-<h3 mat-title>Stumpage Assessment</h3>
-
+<h3 mat-title style="display: inline-block;">Stumpage Assessment</h3>
+<span *ngIf="!editable">
+  <button mat-button style="max-width: 4px; float: right;" (click)="onEditClicked()">
+    <mat-icon>edit</mat-icon>
+  </button>
+</span>
 <mat-card>
 
   <!-- Main Form -->
 
   <form id="forestForm" [formGroup]="forestForm" (ngSubmit)="onSubmit()" class="mat-form">
     <div class="form-field-container">
-      <mat-form-field>
+
+      <mat-form-field hidden>
         <input matInput formControlName="id">
       </mat-form-field>
 
@@ -38,7 +43,7 @@
 <h4>Logs</h4>
 
 <mat-card>
-  <form id="logForm" [formGroup]="logForm">
+  <form *ngIf="editable" id="logForm" [formGroup]="logForm">
 
     <div class="form-field-container">
       <mat-form-field style="width: 12em">
@@ -66,10 +71,11 @@
     <div class="col-sm-12 col-md-7">
       <div class="table-container">
         <table mat-table [dataSource]="logsDataSource" [class.isMobile]="isMobile">
+
           <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let row">
-              <button mat-button color="warn" (click)="deleteLogField(row)">
+              <button *ngIf="editable" mat-button color="warn" (click)="deleteLogField(row)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
@@ -116,7 +122,7 @@
 <h4>Transmission Poles</h4>
 
 <mat-card>
-  <form id="tpForm" [formGroup]="tpForm">
+  <form *ngIf="editable" id="tpForm" [formGroup]="tpForm">
 
     <div class="form-field-container">
       <mat-form-field style="width: 12em">
@@ -143,10 +149,11 @@
     <div class="col-sm-12 col-md-7">
       <div class="table-container">
         <table mat-table [dataSource]="tpDataSource" [class.isMobile]="isMobile">
+
           <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let row">
-              <button mat-button color="warn" (click)="deleteTPField(row)">
+              <button *ngIf="editable" mat-button color="warn" (click)="deleteTPField(row)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
@@ -188,4 +195,5 @@
 
 <!-- Actions -->
 
-<button mat-raised-button color="primary" type="submit" form="forestForm">SUBMIT</button>
+<button *ngIf="editable" mat-raised-button color="primary" type="submit" form="forestForm">save</button>
+<button *ngIf="!editable" mat-raised-button color="primary" routerLink="/assessments">done</button>
