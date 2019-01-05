@@ -8,7 +8,7 @@ export interface Forest {
 }
 
 export interface Tree {
-    id?: string;
+    id?: string
     species: string;
 }
 
