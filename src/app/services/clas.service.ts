@@ -12,8 +12,8 @@ export class ClasService {
   private clasCollection: AngularFirestoreCollection<Clas>;
   clas$: Observable<Clas>;
 
-  constructor(private afs: AngularFirestore) { 
-    this.clasCollection = this.afs.collection("clas");
+  constructor(private afs: AngularFirestore) {
+    this.clasCollection = this.afs.collection('clas');
   }
 
   public getClas(): Observable<Clas[]> {

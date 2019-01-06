@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentSnapshot } from "@angular/fire/firestore";
-import { Price } from "../core/models/price-list";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentSnapshot } from '@angular/fire/firestore';
+import { Price } from '../core/models/price-list';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -8,19 +8,19 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PriceListService {
-  
+
   private priceListCollection: AngularFirestoreCollection<Price>;
   priceList$: Observable<Price>;
 
   constructor(public afs: AngularFirestore) {
-    this.priceListCollection = afs.collection("priceList");
+    this.priceListCollection = afs.collection('priceList');
    }
 
    addPriceList(priceList) {
     return this.priceListCollection.add(priceList);
   }
 
-   getPriceLists(): Observable<Price[]>{
+   getPriceLists(): Observable<Price[]> {
     return this.priceListCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Price;
@@ -40,7 +40,7 @@ export class PriceListService {
 
   updatePriceList(id, data) {
     this.priceListCollection.doc(id).update(data);
-  }  
+  }
 
 }
 
