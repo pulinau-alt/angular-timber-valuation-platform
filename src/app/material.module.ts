@@ -31,6 +31,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatStepperModule,
+  MatIconRegistry,
 } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 
@@ -102,6 +103,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatToolbarModule,
     MatTooltipModule,
     MatStepperModule,
-  ]
+  ],
+  providers: [MatIconRegistry]
 })
 export class MaterialModule { }
