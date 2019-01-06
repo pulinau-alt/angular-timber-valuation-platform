@@ -1,3 +1,5 @@
+import { AdminGuard } from './core/guards/admin.guard';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { LoginComponent } from './login-register/login/login.component';
@@ -39,6 +41,12 @@ const routes: Routes = [
       { path: 'form', component: PriceListFormComponent, data: { breadcrumb: 'form' } }
     ],
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'users/manage',
+    data: { breadcrumb: 'manage users' },
+    component: AdminPanelComponent,
+    canActivate: [AuthGuard, AdminGuard]
   }
 ];
 

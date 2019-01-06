@@ -1,3 +1,7 @@
+import { FieldOfficerGuard } from './core/guards/field-officer.guard';
+import { ManagerGuard } from './core/guards/manager.guard';
+import { AdminGuard } from './core/guards/admin.guard';
+import { AdminModule } from './admin/admin.module';
 import { AuthGuard } from './core/guards/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -17,6 +21,7 @@ import { MaterialModule } from './material.module';
 import { PriceListModule } from './price-list/price-list.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared.module';
+import { DevOfficerGuard } from './core/guards/dev-officer.guard';
 
 @NgModule({
   declarations: [
@@ -37,9 +42,15 @@ import { SharedModule } from './shared.module';
     AssessmentsModule,
     PriceListModule,
     DashboardModule,
+    AdminModule,
   ],
-
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    AdminGuard,
+    DevOfficerGuard,
+    ManagerGuard,
+    FieldOfficerGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
