@@ -10,17 +10,20 @@ import { map } from 'rxjs/operators';
 export class PriceListService {
 
   private priceListCollection: AngularFirestoreCollection<Price>;
-  priceList$: Observable<Price>;
+  priceList$: Observable<Price[]>;
+
+  selectedItem = 'Super Luxury Class(Nadun)';
+  // selectFilter$: BehaviorSubject<string | null>;
 
   constructor(public afs: AngularFirestore) {
     this.priceListCollection = afs.collection('priceList');
    }
 
-   addPriceList(priceList) {
+  addPriceList(priceList) {
     return this.priceListCollection.add(priceList);
   }
 
-   getPriceLists(): Observable<Price[]> {
+  getPriceLists(): Observable<Price[]> {
     return this.priceListCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Price;
@@ -28,9 +31,15 @@ export class PriceListService {
         return { id, ...data };
       }))
     );
-   }
+  }
 
-   getPriceList(id) {
+  newSelect(val: string) {
+    this.selectedItem = val;
+    // this.getPriceLists();
+    // this.priceListCollection.ref.doc(val).delete;
+  }
+
+  getPriceList(id) {
     return this.priceListCollection.doc<Price>(id).get() as Observable<DocumentSnapshot<any>>;
   }
 

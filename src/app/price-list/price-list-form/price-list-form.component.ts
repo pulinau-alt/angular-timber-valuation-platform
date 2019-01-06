@@ -80,6 +80,6 @@ export class PriceListFormComponent implements OnInit {
         console.log(this.ps.addPriceList(this.priceListForm.value));
       }
     }
-    this.router.navigate(['price-list/price-list-view']);
+    this.router.navigate(['pricelist']);
   }
 }

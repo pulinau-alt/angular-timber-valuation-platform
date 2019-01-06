@@ -38,6 +38,7 @@ import { SharedModule } from './shared.module';
     PriceListModule,
     DashboardModule,
   ],
+
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
