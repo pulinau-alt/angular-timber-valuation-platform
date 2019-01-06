@@ -1,3 +1,4 @@
+import { ManagerGuard } from './core/guards/manager.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -10,6 +11,7 @@ import { SubmissionFormComponent } from './assessments/submission-form/submissio
 import { ViewComponent } from './assessments/view/view.component';
 import { PriceListFormComponent } from './price-list/price-list-form/price-list-form.component';
 import { PriceListViewComponent } from './price-list/price-list-view/price-list-view.component';
+import { DevOfficerGuard } from './core/guards/dev-officer.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -28,7 +30,10 @@ const routes: Routes = [
     children: [
       { path: '', component: ViewComponent },
       {
-        path: 'form', component: SubmissionFormComponent, data: { breadcrumb: 'form' }
+        path: 'form',
+        component: SubmissionFormComponent,
+        data: { breadcrumb: 'form' },
+        canActivate: [DevOfficerGuard]
       },
     ],
     canActivate: [AuthGuard]
@@ -38,7 +43,12 @@ const routes: Routes = [
     data: { breadcrumb: 'pricelist' },
     children: [
       { path: '', component: PriceListViewComponent, },
-      { path: 'form', component: PriceListFormComponent, data: { breadcrumb: 'form' } }
+      {
+        path: 'form',
+        component: PriceListFormComponent,
+        data: { breadcrumb: 'form' },
+        canActivate: [ManagerGuard]
+      }
     ],
     canActivate: [AuthGuard]
   },
