@@ -3,7 +3,7 @@
   <!-- Sidebar -->
   <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
     <!-- Sidebar Header -->
-    <div *ngIf="auth.user | async as user">
+    <div *ngIf="auth.user$ | async as user">
       <div class="sidenav-header center" color="warn">
         <div mat-card-avatar class="profile-avatar"></div>
       </div>
@@ -13,16 +13,24 @@
     <!-- Sidebar Content -->
     <div class="sidebar-content">
       <mat-nav-list>
-        <a mat-list-item routerLink="{{ link.route }}" *ngFor="let link of links">
-          <span><i class="{{link.icon}}" matListIcon></i></span>&nbsp;{{ link.name }}
-        </a>
+        <mat-list-item *ngFor="let link of links" routerLink="{{ link.route }}">
+          <mat-icon matListIcon>{{ link.icon }}</mat-icon>
+          <h3 matLine>{{ link.name }}</h3>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <div *ngIf="auth.user$ | async as user">
+          <mat-list-item *ngIf="user.roles.admin" routerLink="/users/manage">
+            <mat-icon matListIcon>person</mat-icon>
+            <h3 matLine>Manage Users</h3>
+          </mat-list-item>
+        </div>
       </mat-nav-list>
     </div>
     <!-- /Sidebar Content -->
 
 
     <!-- Sidebar Footer -->
-    <div *ngIf="auth.user | async" class="sidebar-footer center">
+    <div *ngIf="auth.user$ | async" class="sidebar-footer center">
       <button mat-stroked-button color="primary" (click)="auth.signOut()">LOGOUT</button>
     </div>
   </mat-sidenav>
