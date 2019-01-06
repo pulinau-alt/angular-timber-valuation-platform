@@ -5,14 +5,15 @@
     <!-- Sidebar Header -->
     <div *ngIf="auth.user$ | async as user">
       <div class="sidenav-header center" color="warn">
-        <div mat-card-avatar class="profile-avatar"></div>
+        <img src="{{user.photoURL}}" class="profile-avatar">
       </div>
-      <p mat-title>{{ user.displayName }}</p>
+      <h5 mat-title class="center">{{ user.displayName }}</h5>
     </div>
 
     <!-- Sidebar Content -->
     <div class="sidebar-content">
       <mat-nav-list>
+        <br>
         <mat-list-item *ngFor="let link of links" routerLink="{{ link.route }}">
           <mat-icon matListIcon>{{ link.icon }}</mat-icon>
           <h3 matLine>{{ link.name }}</h3>
@@ -31,7 +32,7 @@
 
     <!-- Sidebar Footer -->
     <div *ngIf="auth.user$ | async" class="sidebar-footer center">
-      <button mat-stroked-button color="primary" (click)="auth.signOut()">LOGOUT</button>
+      <button mat-stroked-button color="primary" (click)="auth.signOut()">logout</button>
     </div>
   </mat-sidenav>
   <!-- /Sidebar -->

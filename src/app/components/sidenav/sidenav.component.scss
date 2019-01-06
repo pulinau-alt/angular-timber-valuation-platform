@@ -7,6 +7,7 @@ mat-sidenav {
     width: 315px;
     padding-top: 42px;
     padding-bottom: 100px;
+    overflow: hidden;
 }
 
 mat-sidenav-content {
@@ -21,14 +22,22 @@ mat-button {
     display: inline-block;
 }
 
+.sidenav-wrapper {
+    position: relative;
+}
+
+.sidenav-header {
+    margin-bottom: 20px;
+}
+
 .menu {
     margin-left: -20px;
     margin-bottom: 12px;
 }
 
 .profile-avatar {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
+    border-radius: 50%;
     margin: 12px auto;
     height: 100px;
     width: 100px;
@@ -45,6 +54,8 @@ mat-button {
 }
 
 .sidebar-footer {
+    position: relative;
+    margin-bottom: 26px;
     bottom: 0;
     width: 100%;
 }
