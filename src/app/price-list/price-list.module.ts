@@ -12,7 +12,6 @@ import { Classification } from './price-list-view/price-list-view.component';
 @NgModule({
   imports: [
     CommonModule,
-    //MDBBootstrapModule.forRoot(),
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,

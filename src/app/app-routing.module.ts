@@ -1,5 +1,5 @@
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AuthGuard } from './core/auth.guard';
+import { AuthGuard } from './core/guards/auth.guard';
 import { LoginComponent } from './login-register/login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';

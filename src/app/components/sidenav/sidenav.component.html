@@ -3,7 +3,7 @@
   <!-- Sidebar -->
   <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
     <!-- Sidebar Header -->
-    <div *ngIf="auth.user | async as user">
+    <div *ngIf="auth.user$ | async as user">
       <div class="sidenav-header center" color="warn">
         <div mat-card-avatar class="profile-avatar"></div>
       </div>
@@ -22,7 +22,7 @@
 
 
     <!-- Sidebar Footer -->
-    <div *ngIf="auth.user | async" class="sidebar-footer center">
+    <div *ngIf="auth.user$ | async" class="sidebar-footer center">
       <button mat-stroked-button color="primary" (click)="auth.signOut()">LOGOUT</button>
     </div>
   </mat-sidenav>

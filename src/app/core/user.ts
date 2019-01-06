@@ -3,5 +3,12 @@ export interface User {
     email: string;
     photoURL?: string;
     displayName?: string;
-    favoriteColor?: string;
+    roles?: Roles;
+}
+
+export interface Roles {
+    admin?: boolean;
+    manager?: boolean;
+    fieldOfficer?: boolean;
+    devOfficer?: boolean;
 }

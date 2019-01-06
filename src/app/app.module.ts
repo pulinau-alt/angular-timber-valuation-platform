@@ -1,4 +1,4 @@
-import { AuthGuard } from './core/auth.guard';
+import { AuthGuard } from './core/guards/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
