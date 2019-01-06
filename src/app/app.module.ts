@@ -15,11 +15,23 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { MaterialModule } from './material.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { NotificationComponent } from './dashboard/notification/notification.component';
+import { EmailService } from './email.service';
+
+import { HttpModule } from '@angular/http';
+// ...
+//   imports: [
+//     BrowserModule,
+//     HttpModule,
+//     IonicModule.forRoot(MyApp),
+//     IonicStorageModule.forRoot()
+//   ]
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +45,16 @@ import { DashboardModule } from './dashboard/dashboard.module';
     CoreModule,
     AssessmentsModule,
     DashboardModule,
+    HttpModule,
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, EmailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// email
+//set the ...
+// providers: [
+//   EmailService
+// ]
+// ...

@@ -1,3 +1,191 @@
-<p>
-  dashboard works!
-</p>
+
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<mat-card>
+  <div *ngIf="auth.user | async as user">
+    <h4 mat-title>{{ user.displayName }}</h4>
+  </div>
+
+  <div *ngIf="auth.user | async as user">
+    <h4 mat-title>{{user.email}}</h4>
+  </div>
+</mat-card>
+
+<!-- Notification -->
+<br>
+<div class="row">
+    <div class="col-4">
+      <h3 mat-title>Notifications</h3>
+    </div>
+
+    <div class="col-5"></div>
+
+    <div class="col-3" style="float: right;">
+        <a mat-raised-button href="home/notify">NEW NOTIFICATION</a>
+          <!-- <a routerLink="home/notify" mat-raised-button>NEW NOTIFICATION</a> -->
+    </div>
+</div>
+
+<div>
+  <mat-card>
+    <div>
+      <h4><strong>Date:</strong> last Notification</h4><br>
+      <h4><strong>Date:</strong>  Notification</h4><br>     
+    </div>
+  </mat-card>
+</div>
+  
+<!-- pricing -->
+<br>
+<div class="row">
+    <div class="col-4">
+      <h3 mat-title>Last Updated Prices</h3>
+    </div>
+
+    <div class="col-5"></div>
+
+    <div class="col-3" style="float: right;">
+        <a mat-raised-button color="primary" href="pricelist">View All</a>
+    </div>
+</div> 
+  
+<!-- Container (Pricing Section) -->
+<mat-card>
+  <div id="pricing" class="container-fluid">
+    <div class="row slideanim">
+
+      <div class="col-sm-4 col-xs-12">
+        <div class="panel panel-default text-center">
+          <div class="panel-heading">
+            <h4>Species 1</h4>
+          </div>
+          <div class="panel-body">
+            <p>price1</p>
+          </div>
+          <div class="panel-footer">
+            <h3>$19</h3>
+            <h4>per month</h4>
+          </div>
+        </div>      
+      </div>   
+
+      <div class="col-sm-4 col-xs-12">
+        <div class="panel panel-default text-center">
+          <div class="panel-heading">
+            <h4>Species 2</h4>
+          </div>
+          <div class="panel-body">
+            <p>price2</p>
+          </div>
+          <div class="panel-footer">
+            <h3>$29</h3>
+            <h4>per month</h4>
+          </div>
+        </div>      
+      </div>       
+
+      <div class="col-sm-4 col-xs-12">
+        <div class="panel panel-default text-center">
+          <div class="panel-heading">
+            <h4>species3</h4>
+          </div>
+          <div class="panel-body">
+            <p>price3</p>
+          </div>
+          <div class="panel-footer">
+            <h3>$49</h3>
+            <h4>per month</h4>
+          </div>
+        </div>      
+      </div>   
+
+    </div>
+  </div>
+</mat-card>
+
+<br>
+<h3 mat-title>Contact</h3>
+<mat-card>
+  <form>
+    <!-- <div class="form-field-container"> -->
+     
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Email">
+        </mat-form-field>
+      </div>
+
+      <div>
+          <mat-form-field>
+            <input matInput placeholder="Subject">
+          </mat-form-field>
+      </div>
+
+      <div>
+          <mat-form-field>
+            <textarea matInput placeholder="Email Body"></textarea>
+          </mat-form-field>
+      </div>
+
+      <br>
+      <button mat-raised-button color="primary" type="button" (click)="onSubmit(name.value, email.value, comment.value)">SEND</button>
+      <!-- <br>
+      <button md-raised-button class="btn btn-default"  type="button" (click)="onSubmit(name.value, email.value, comment.value)">Submit</button> -->
+
+    <!-- </div> -->
+  </form>
+</mat-card>
+
+
+  <!-- <h3>angular 6 send email example</h3>
+<form>
+  
+  <input matInput  type="text" class="form-control"
+        required
+        name="name" #name placeholder="name">
+  
+  <input mdInput type="email" class="form-control"
+        required
+        name="email" #email placeholder="email">
+  
+  <input mdInput  type="text" class="form-control"
+        required
+        name="comment" #comment placeholder="comment">
+  
+  <button md-raised-button class="btn btn-default"  type="button" (click)="onSubmit(name.value, email.value, comment.value)">Submit</button>
+</form> -->
+
+  
+  <!-- Container (Contact Section) -->
+  <!-- <div id="contact" class="container-fluid bg-grey">
+    <h2 class="text-center">CONTACT</h2>
+    <div class="row">
+      <div class="col-sm-5">
+        <p>Contact us and we'll get back to you within 24 hours.</p>
+        <p><span class="glyphicon glyphicon-map-marker"></span> Chicago, US</p>
+        <p><span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>
+        <p><span class="glyphicon glyphicon-envelope"></span> myemail@something.com GET EMAIL OF USER</p>
+      </div>
+      <div class="col-sm-7 slideanim">
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+          </div>
+        </div>
+        <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <button mat-raised-button color="primary" type="submit" form="forestForm">SUBMIT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  </div> -->

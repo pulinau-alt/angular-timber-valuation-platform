@@ -6,10 +6,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SubmissionFormComponent } from './assessments/submission-form/submission-form.component';
 import { ViewComponent } from './assessments/view/view.component';
+import { NotificationComponent } from './dashboard/notification/notification.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  { 
+    path: 'home/notify', 
+    component: NotificationComponent,
+    data: {
+      breadcrumb: 'dashboard  /  notify'
+    }, 
+  },
+  
   {
     path: 'home',
     component: DashboardComponent,
