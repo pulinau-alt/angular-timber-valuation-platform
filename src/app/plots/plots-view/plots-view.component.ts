@@ -58,7 +58,7 @@ export class PlotsViewComponent implements OnInit {
   }
   // update
   onEditClicked(row) {
-      this.router.navigate(['/plots/new'], { queryParams: { id: row.id } });
+      this.router.navigate(['/plots/form'], { queryParams: { id: row.id } });
   }
 
   onViewClicked(row) {
