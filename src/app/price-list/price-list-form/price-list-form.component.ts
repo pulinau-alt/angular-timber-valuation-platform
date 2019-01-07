@@ -42,14 +42,15 @@ export class PriceListFormComponent implements OnInit {
   private initForm() {
     this.priceListForm = this.fb.group({
       id: new FormControl({ value: '', disabled: true }),
-      colm1: new FormControl(''),
-      colm2: new FormControl(''),
-      colm3: new FormControl(''),
-      colm4: new FormControl(''),
-      colm5: new FormControl(''),
-      colm6: new FormControl(''),
-      colm7: new FormControl(''),
-      row: new FormControl(''),
+      species: ['', [Validators.required, Validators.pattern('[a-z0-9]*')]],
+      colm1: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      colm2: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      colm3: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      colm4: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      colm5: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      colm6: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      colm7: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      row: ['', [Validators.required, Validators.pattern('[a-z0-9]*')]],
     });
 
   }
@@ -59,7 +60,7 @@ export class PriceListFormComponent implements OnInit {
       .subscribe(next => {
         this.price = next.data();
         this.priceListForm.get('id').setValue(id);
-        // this.priceListForm.get('clas').setValue(this.price.clas);
+        this.priceListForm.get('species').setValue(this.price.species);
         this.priceListForm.get('colm1').setValue(this.price.colm1);
         this.priceListForm.get('colm2').setValue(this.price.colm2);
         this.priceListForm.get('colm3').setValue(this.price.colm3);

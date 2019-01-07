@@ -13,10 +13,9 @@ export class PriceListService {
   priceList$: Observable<Price[]>;
 
   selectedItem = 'Super Luxury Class(Nadun)';
-  // selectFilter$: BehaviorSubject<string | null>;
 
   constructor(public afs: AngularFirestore) {
-    this.priceListCollection = afs.collection('priceList');
+    this.priceListCollection = afs.collection('priceList', ref => ref.where('class', '==', this.selectedItem));
    }
 
   addPriceList(priceList) {
@@ -35,8 +34,6 @@ export class PriceListService {
 
   newSelect(val: string) {
     this.selectedItem = val;
-    // this.getPriceLists();
-    // this.priceListCollection.ref.doc(val).delete;
   }
 
   getPriceList(id) {
