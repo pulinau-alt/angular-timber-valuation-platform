@@ -1,14 +1,14 @@
-export interface Price {
+export interface PriceList{
     id?: string;
     species: string;
-    row: string;
-    colm1: string;
-    colm2: string;
-    colm3: string;
-    colm4: string;
-    colm5: string;
-    colm6: string;
-    colm7: string;
+    class: string;
+    midGirthClasses?: Girthclass[];
+}
+
+export interface Girthclass{
+    minGirth: number;
+    maxGirth: number;
+    price: number;
 
 }
 
@@ -16,3 +16,5 @@ export interface Clas {
     id?: string;
     name: string;
 }
+
+
