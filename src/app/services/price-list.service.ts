@@ -15,7 +15,8 @@ export class PriceListService {
   selectedItem = 'Super Luxury Class(Nadun)';
 
   constructor(public afs: AngularFirestore) {
-    this.priceListCollection = afs.collection('priceList', ref => ref.where('class', '==', this.selectedItem));
+    //this.priceListCollection = afs.collection('priceList', ref => ref.where('class', '==', this.selectedItem));
+    this.priceListCollection = afs.collection('priceList');
    }
 
   addPriceList(priceList) {
