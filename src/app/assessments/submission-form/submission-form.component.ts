@@ -1,3 +1,5 @@
+import { PriceList, GirthClass } from './../../core/models/price-list';
+import { PriceListService } from './../../services/price-list.service';
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { Observable, of } from 'rxjs';
@@ -19,7 +21,8 @@ export class SubmissionFormComponent implements OnInit {
   editable = true;
   forest: Forest;
   id: String;
-  trees: Tree[];
+  trees: string[];
+  mgClasses: GirthClass[];
 
   // Forms
   forestForm: FormGroup;
@@ -46,6 +49,7 @@ export class SubmissionFormComponent implements OnInit {
 
   constructor(
     private as: AssessmentService,
+    private pls: PriceListService,
     private ts: TreeService,
     private route: ActivatedRoute,
     private router: Router,
@@ -71,12 +75,11 @@ export class SubmissionFormComponent implements OnInit {
     this.loadDataSources();
 
     // Populate trees list
-    this.ts.getTrees()
-      .subscribe(trees => {
-        trees.forEach(tree => {
-          this.trees.push(tree);
-        });
+    this.pls.getPriceLists().subscribe(next => {
+      next.forEach(e => {
+        this.trees.push(e.species);
       });
+    });
   }
 
   private initForm() {
@@ -363,6 +366,20 @@ export class SubmissionFormComponent implements OnInit {
   deleteLogField(row) {
     this.logsFieldArray.splice(this.logsFieldArray.indexOf(row), 1);
     this.logsDataSource = this.loadDataSource(this.logsFieldArray);
+  }
+
+  // Populate girth classes list
+  loadMidGirthClasses() {
+    const species = this.logForm.get('species').value;
+    this.mgClasses = [];
+    this.pls.getPriceLists(species).subscribe(next => {
+      next.forEach(e => {
+        console.log(e.midGirthClasses);
+        e.midGirthClasses.forEach(mgClass => {
+          this.mgClasses.push(mgClass);
+        });
+      });
+    });
   }
 
   ///

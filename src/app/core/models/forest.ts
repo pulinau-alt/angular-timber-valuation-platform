@@ -1,3 +1,5 @@
+import { GirthClass } from './price-list';
+
 export interface Forest {
     id?: string;
     division: string;
@@ -23,7 +25,7 @@ export interface LogList {
 }
 
 export interface Log {
-    mgClass: string;
+    mgClass: GirthClass;
     volume: number;
 }
 
