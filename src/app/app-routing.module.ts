@@ -12,6 +12,8 @@ import { ViewComponent } from './assessments/view/view.component';
 import { PriceListFormComponent } from './price-list/price-list-form/price-list-form.component';
 import { PriceListViewComponent } from './price-list/price-list-view/price-list-view.component';
 import { DevOfficerGuard } from './core/guards/dev-officer.guard';
+import { CreationFormComponent } from './plots/creation-form/creation-form.component';
+import { PlotsViewComponent } from './plots/plots-view/plots-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -57,6 +59,21 @@ const routes: Routes = [
     data: { breadcrumb: 'manage users' },
     component: AdminPanelComponent,
     canActivate: [AuthGuard, AdminGuard]
+  },
+  {
+    path: 'plots',
+    data: { breadcrumb: 'plots'},
+    children: [
+      {
+        path: '',
+        component: PlotsViewComponent,
+      },
+      {
+        path: 'form',
+        component: CreationFormComponent,
+        data: { breadcrumb: 'form' },
+      }
+    ]
   }
 ];
 

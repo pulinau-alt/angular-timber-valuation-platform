@@ -1,3 +1,4 @@
+import { PlotsModule } from './plots/plots.module';
 import { FieldOfficerGuard } from './core/guards/field-officer.guard';
 import { ManagerGuard } from './core/guards/manager.guard';
 import { AdminGuard } from './core/guards/admin.guard';
@@ -43,6 +44,7 @@ import { DevOfficerGuard } from './core/guards/dev-officer.guard';
     PriceListModule,
     DashboardModule,
     AdminModule,
+    PlotsModule,
   ],
   providers: [
     AuthGuard,
