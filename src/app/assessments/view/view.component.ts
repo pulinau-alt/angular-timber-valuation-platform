@@ -16,7 +16,7 @@ export class ViewComponent implements OnInit {
 
   // dataSource = new AssessmentDataSource(this.as);
   forestList: Forest[];
-  displayedColumns: string[] = ['division', 'beat', 'range', 'block', 'sBlock', 'edit', 'delete'];
+  displayedColumns: string[] = ['division', 'beat', 'range', 'block', 'sBlock', 'actions'];
   dataSource: MatTableDataSource<Forest>;
   numItems: number;
 
@@ -43,7 +43,7 @@ export class ViewComponent implements OnInit {
   }
 
   onEditClicked(row) {
-    this.router.navigate(['/assessments/submit'], { queryParams: { id: row.id } });
+    this.router.navigate(['/assessments/form'], { queryParams: { id: row.id } });
   }
 
   applyFilter(filterValue: string) {

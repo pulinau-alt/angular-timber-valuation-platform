@@ -18,7 +18,7 @@ export const LINKS: Link[] = [
   },
   {
     name: 'Pricelist',
-    route: '/',
+    route: 'pricelist',
     icon: 'fas fa-dollar-sign'
   },
   {

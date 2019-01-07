@@ -14,6 +14,7 @@ import { CoreModule } from './core/core.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { MaterialModule } from './material.module';
+import { PriceListModule } from './price-list/price-list.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { NotificationComponent } from './dashboard/notification/notification.component';
 import { EmailService } from './email.service';
@@ -27,6 +28,7 @@ import { HttpModule } from '@angular/http';
 //     IonicStorageModule.forRoot()
 //   ]
 
+import { SharedModule } from './shared.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { HttpModule } from '@angular/http';
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
+    SharedModule,
     AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ComponentsModule,
@@ -44,6 +47,7 @@ import { HttpModule } from '@angular/http';
     LoginRegisterModule,
     CoreModule,
     AssessmentsModule,
+    PriceListModule,
     DashboardModule,
     HttpModule,
   ],

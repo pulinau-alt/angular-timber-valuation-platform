@@ -1,0 +1,84 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content class="card-content">
+      <h3>Price List</h3>
+
+      <form>
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedValue" name="clas" (selectionChange)="changeSelect()" style="width:250px"
+            placeholder="Select Classification Type">
+            <mat-option *ngFor='let clas of clases' [value]="clas.name">{{ clas.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p>Selected option: {{ selectedValue }}</p>
+        <p>option: {{ sel }}</p>
+      </form>
+
+      <button mat-raised-button (click)="openDialog()">Add new Classification type</button>
+      <p>You chose: {{classific}}</p>
+
+
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 110px;"></th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-flat-button color="primary" (click)="onEditClicked(row)">Edit</button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 90px;"></th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-flat-button color="warn" (click)="onDeleteClicked(row)">Delete</button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="row">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 0px;">Stumpage Percentage for each Timber
+          </th>
+          <td mat-cell *matCellDef="let priceList"> {{priceList.row}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colm1">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 50px;">species </th>
+          <td mat-cell *matCellDef="let priceList"> {{priceList.colm1}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colm2">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 90px;"> </th>
+          <td mat-cell *matCellDef="let priceList"> {{priceList.colm2}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colm3">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 90px;"> </th>
+          <td mat-cell *matCellDef="let priceList"> {{priceList.colm3}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colm4">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 90px;"> </th>
+          <td mat-cell *matCellDef="let priceList"> {{priceList.colm4}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colm5">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 90px;"> </th>
+          <td mat-cell *matCellDef="let priceList"> {{priceList.colm5}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colm6">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 90px;"> </th>
+          <td mat-cell *matCellDef="let priceList"> {{priceList.colm6}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="colm7">
+          <th mat-header-cell *matHeaderCellDef style="padding-right: 90px;"> </th>
+          <td mat-cell *matCellDef="let priceList"> {{priceList.colm7}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -7,6 +7,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SubmissionFormComponent } from './assessments/submission-form/submission-form.component';
 import { ViewComponent } from './assessments/view/view.component';
 import { NotificationComponent } from './dashboard/notification/notification.component';
+import { PriceListViewComponent } from './price-list/price-list-view/price-list-view.component';
+import { PriceListFormComponent } from './price-list/price-list-form/price-list-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -29,24 +31,24 @@ const routes: Routes = [
   },
   {
     path: 'assessments',
-    data: {
-      breadcrumb: 'assessments'
-    },
+    data: { breadcrumb: 'assessments' },
     children: [
+      { path: '', component: ViewComponent },
       {
-        path: '',
-        component: ViewComponent
-      },
-      {
-        path: 'submit',
-        component: SubmissionFormComponent,
-        data: {
-          breadcrumb: 'submit'
-        }
+        path: 'form', component: SubmissionFormComponent, data: { breadcrumb: 'form' }
       },
     ],
     canActivate: [AuthGuard]
   },
+  {
+    path: 'pricelist',
+    data: { breadcrumb: 'pricelist' },
+    children: [
+      { path: '', component: PriceListViewComponent, },
+      { path: 'form', component: PriceListFormComponent, data: { breadcrumb: 'form' } }
+    ],
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
