@@ -1,18 +1,11 @@
-export interface Price {
-    id?: string;
+export interface PriceList {
     species: string;
-    row: string;
-    colm1: string;
-    colm2: string;
-    colm3: string;
-    colm4: string;
-    colm5: string;
-    colm6: string;
-    colm7: string;
-
+    class: string; // Luxury, super luxury etc.
+    midGirthClasses?: GirthClass[];
 }
 
-export interface Clas {
-    id?: string;
-    name: string;
+export interface GirthClass {
+    minGirth: number;
+    maxGirth: number;
+    price: number;
 }
