@@ -15,6 +15,12 @@
         <input matInput formControlName="id">
       </mat-form-field>
 
+      <mat-form-field style="width: 7em">
+        <input matInput formControlName="date" [matDatepicker]="picker" placeholder="Date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
       <mat-form-field>
         <input formControlName="division" matInput placeholder="Division">
       </mat-form-field>

@@ -2,6 +2,7 @@ import { GirthClass } from './price-list';
 
 export interface Forest {
     id?: string;
+    date: any;
     division: string;
     beat: string;
     range: string;

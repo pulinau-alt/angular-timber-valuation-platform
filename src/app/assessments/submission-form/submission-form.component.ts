@@ -85,7 +85,8 @@ export class SubmissionFormComponent implements OnInit {
   private initForm() {
     // Forest form
     this.forestForm = this.fb.group({
-      id: new FormControl({ value: '', disabled: true }),
+      id: [''],
+      date: [(new Date()).toISOString(), Validators.required],
       division: ['', Validators.required],
       beat: ['', Validators.required],
       range: ['', Validators.required],
@@ -128,6 +129,7 @@ export class SubmissionFormComponent implements OnInit {
       .subscribe(next => {
         this.forest = next.data();
         this.forestForm.get('id').setValue(id);
+        this.forestForm.get('date').setValue(new Date(this.forest.date).toISOString());
         this.forestForm.get('division').setValue(this.forest.division);
         this.forestForm.get('beat').setValue(this.forest.beat);
         this.forestForm.get('range').setValue(this.forest.range);
