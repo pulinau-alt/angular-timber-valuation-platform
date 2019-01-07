@@ -1,0 +1,71 @@
+<div class="header">
+  <div class="row">
+    <div class="col-4">
+      <mat-icon matPrefix>search</mat-icon>
+      <mat-form-field floatLabel="never">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <h2 class="mat-title" style="display: inline-block">Users</h2>
+  <span style="margin: 14px">{{ numItems }} items</span>
+</div>
+
+<div class="table-container mat-card">
+  <table mat-table [dataSource]="dataSource" [class.isMobile]="isMobile">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="mobile-label">Name</span>
+        {{ row.displayName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>e-mail</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="mobile-label">e-mail</span>
+        {{ row.email }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="manager">
+      <th mat-header-cell *matHeaderCellDef>Manager</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="mobile-label">Manager</span>
+        <mat-slide-toggle
+          [checked]="row.roles.manager ? 'checked' : null"
+          (change)="onToggle(row,'manager')"
+        ></mat-slide-toggle>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="devOfficer">
+      <th mat-header-cell *matHeaderCellDef>Dev. Officer</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="mobile-label">Dev. Officer</span>
+        <mat-slide-toggle
+          [checked]="row.roles.devOfficer ? 'checked' : null"
+          (change)="onToggle(row,'devOfficer')"
+        ></mat-slide-toggle>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fieldOfficer">
+      <th mat-header-cell *matHeaderCellDef>Field Officer</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="mobile-label">Field Officer</span>
+        <mat-slide-toggle
+          [checked]="row.roles.fieldOfficer ? 'checked' : null"
+          (change)="onToggle(row,'fieldOfficer')"
+        ></mat-slide-toggle>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+  </table>
+</div>
