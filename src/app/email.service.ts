@@ -15,11 +15,11 @@ export class EmailService {
 
   constructor(private http:  Http) { }
   sendEmail(argparam) {
-    return this.http.post('httpspakainfo.com/email/', argparam)
-    .map(res => res.json())
-    //  map((response: any) => response.json())
-    //  .pipe(map((response: any) => response.json()));
-    .catch(this._errorHandler);
+    // return this.http.post('httpspakainfo.com/email/', argparam)
+    // .map(res => res.json())
+    // //  map((response: any) => response.json())
+    // //  .pipe(map((response: any) => response.json()));
+    // .catch(this._errorHandler);
   }
   private _errorHandler(error: Response) {
     console.error(error);

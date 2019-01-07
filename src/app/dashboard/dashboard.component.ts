@@ -18,16 +18,16 @@ export class DashboardComponent implements OnInit {
   // email
 
 onSubmit(name, email, comment) {
-  this._emailService.sendEmail({
-    from: 'Mailgun Sandbox <postmaster@sandboxyourapikeysetXXXXXX.mailgun.org>',
-    to: email,
-    name: name,
-    text: comment,
-  })
-  .subscribe(
-    () => {},
-    err => console.log(err)
-  );
+  // this._emailService.sendEmail({
+  //   from: 'Mailgun Sandbox <postmaster@sandboxyourapikeysetXXXXXX.mailgun.org>',
+  //   to: email,
+  //   name: name,
+  //   text: comment,
+  // })
+  // .subscribe(
+  //   () => {},
+  //   err => console.log(err)
+  // );
 } 
 //email end
 
