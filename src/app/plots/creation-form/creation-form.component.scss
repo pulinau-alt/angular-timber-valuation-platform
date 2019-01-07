@@ -1,0 +1,38 @@
+mat-form-field {
+  margin-right: 10px;
+
+}
+.mat-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.field-width {
+  width: 80px;
+  margin-right: 15px;
+}
+mat-card-title {
+  color: rgb(90, 90, 90);
+  font: 1em sans-serif;
+}
+table {
+  width: 65%;
+}
+
+mat-icon {
+  font-size: 15px;
+}
+.back {
+  margin-right: 50px;
+}
+.container {
+  // overflow: auto;
+}
+.table-plot-data {
+  overflow: auto;
+}
+// mat-card {
+//   width: 80%;
+// }
+
