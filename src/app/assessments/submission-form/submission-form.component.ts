@@ -21,6 +21,7 @@ export class SubmissionFormComponent implements OnInit {
   editable = true;
   forest: Forest;
   id: String;
+  date: FormControl;
   trees: string[];
   mgClasses: GirthClass[];
 
@@ -60,6 +61,7 @@ export class SubmissionFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.date = new FormControl('', Validators.required);
 
     this.sub = this.route.queryParams
       .subscribe(params => {
@@ -86,7 +88,6 @@ export class SubmissionFormComponent implements OnInit {
     // Forest form
     this.forestForm = this.fb.group({
       id: [''],
-      date: [(new Date()).toISOString(), Validators.required],
       division: ['', Validators.required],
       beat: ['', Validators.required],
       range: ['', Validators.required],
@@ -128,8 +129,11 @@ export class SubmissionFormComponent implements OnInit {
     this.as.getForest(id)
       .subscribe(next => {
         this.forest = next.data();
+
+        this.date.setValue(new Date(this.forest.date).toISOString());
+        this.date.disable();
+
         this.forestForm.get('id').setValue(id);
-        this.forestForm.get('date').setValue(new Date(this.forest.date).toISOString());
         this.forestForm.get('division').setValue(this.forest.division);
         this.forestForm.get('beat').setValue(this.forest.beat);
         this.forestForm.get('range').setValue(this.forest.range);
@@ -315,6 +319,7 @@ export class SubmissionFormComponent implements OnInit {
 
       ///
 
+      data['date'] = this.date.value.toISOString();
       console.log(data);
 
       if (!data['firewood']) {
@@ -325,15 +330,21 @@ export class SubmissionFormComponent implements OnInit {
         this.as.updateForest(this.id, data);
         console.log('Updated');
       } else {
-        this.as.addForest(data).then(value => console.log(value));
+        this.as.addForest(data).then(value => {
+          console.log(value);
+          data['id'] = value.id;
+          this.as.updateForest(value.id, data);
+        });
       }
       this.forestForm.disable();
+      this.date.disable();
       this.editable = false;
     }
   }
 
   onEditClicked() {
     this.forestForm.enable();
+    this.date.enable();
     this.editable = true;
   }
 
