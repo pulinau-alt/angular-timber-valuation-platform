@@ -37,6 +37,13 @@ export class PlotsService {
   plotDelete(id) {
     this.plotDocs.ref.doc(id).delete();
   }
+
+  plotDltObj(id, row) {
+
+    // console.log(row);
+    // console.log(id);
+
+  }
  // update doc
   plotUpdate(id, item) {
     this.plotDocs.doc(id).update(item);
