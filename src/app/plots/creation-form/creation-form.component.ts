@@ -23,7 +23,8 @@ export class CreationFormComponent implements OnInit {
 
   plotData: Array<PlotData> = [];
   plotDataTable: MatTableDataSource<PlotData>;
-  plotDisplayedColumns: string[] = ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'delete'];
+  plotDisplayedColumns: string[] = ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'blA', 'slA', 'bsA', 'tpA', 'blB', 'slB', 'bsB', 'tpB' , 'delete'];
+  //  ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'delete'];
 
  // ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'blA', 'slA', 'bsA', 'tpA', 'blB', 'slB', 'bsB', 'tpB' , 'delete'];
   tree: number;
