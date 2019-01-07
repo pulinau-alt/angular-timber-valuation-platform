@@ -1,0 +1,279 @@
+<div class="container">
+    <mat-card>
+      <!-- Header -->
+      <mat-card-header class="block">
+        <mat-card-title>Plot Creation</mat-card-title>
+      </mat-card-header>
+      <!--plots detail Form -->
+      <mat-card-content class="card-content">
+          <mat-accordion>
+              <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>Plots Data</mat-panel-title>
+                      <mat-panel-description>enter plots data</mat-panel-description>
+                  </mat-expansion-panel-header>
+                    <form id="plotForm" [formGroup]="plotForm" (ngSubmit)="onSubmit()" class="mat-form">
+                      <section [style.width]="'100%'">
+                        <div class="line">
+                          <mat-form-field>
+                            <input formControlName="division" matInput placeholder="Division">
+                          </mat-form-field>
+
+                          <mat-form-field>
+                            <input formControlName="beat" matInput placeholder="Beat">
+                          </mat-form-field>
+
+                          <mat-form-field>
+                            <input formControlName="range" matInput placeholder="Range">
+                          </mat-form-field>
+                        </div>
+
+                        <div class="line">
+                          <mat-form-field class="field-width">
+                            <input formControlName="block" matInput placeholder="Block">
+                          </mat-form-field>
+
+                          <mat-form-field class="field-width">
+                            <input formControlName="sBlock" matInput placeholder="Sub Block">
+                          </mat-form-field>
+
+                          <mat-form-field class="field-width">
+                              <input formControlName="plot" matInput placeholder="Plot">
+                          </mat-form-field >
+
+                          <mat-form-field class="field-width">
+                            <input formControlName="plotSize" matInput placeholder="Plot Size">
+                          </mat-form-field>
+
+                          <mat-form-field class="field-width">
+                            <input formControlName="mainSP" matInput placeholder="Main SP">
+                          </mat-form-field>
+
+                          <mat-form-field class="field-width">
+                            <input formControlName="minorSP" matInput placeholder="Minor SP">
+                          </mat-form-field >
+                        </div>
+
+                        <div class="line">
+                            <mat-form-field class="field-width">
+                              <input formControlName="pYear" matInput placeholder="Plant Year">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                              <input formControlName="nStanding" matInput placeholder="No.Standing">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                              <input formControlName="nRemoved" matInput placeholder="No.Removed">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                              <input formControlName="slope" matInput placeholder="Slope %">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                              <input formControlName="slopePos" matInput placeholder="Slope Pos">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                              <input formControlName="aspect" matInput placeholder="Aspect">
+                            </mat-form-field>
+                          </div>
+
+                          <div class="line">
+                            <mat-form-field class="field-width">
+                              <input formControlName="date" matInput placeholder="Date">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                              <input formControlName="groundVeg" matInput placeholder="Ground Veg">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                                <input formControlName="underStr" matInput placeholder="Understorey">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                              <input formControlName="soilDp" matInput placeholder="Soil Depth">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                              <input formControlName="soilTxt" matInput placeholder="Soil Texture">
+                            </mat-form-field>
+
+                            <mat-form-field class="field-width">
+                                <input formControlName="humus" matInput placeholder="Humus">
+                            </mat-form-field>
+                          </div>
+                      </section>
+                    </form>
+                  <mat-action-row>
+                      <button mat-button color="primary" (click)="nextStep()">Next</button>
+                  </mat-action-row>
+        </mat-expansion-panel>
+        <!--End plots detail Form -->
+
+        <!--plot data Form -->
+        <mat-expansion-panel  [expanded]="step === 1" (opened)="setStep(1)" >
+          <mat-expansion-panel-header>
+            <mat-panel-title>Plot's Details</mat-panel-title>
+            <mat-panel-description>enter plot's details</mat-panel-description>
+          </mat-expansion-panel-header>
+            <form >
+              <div class="line">
+                <mat-form-field class="field-width">
+                    <input [(ngModel)]="tree" matInput name="tree" placeholder="Trees" required>
+                  </mat-form-field>
+
+                  <mat-form-field class="field-width">
+                    <input [(ngModel)]="species" matInput name="species" placeholder="Species" required>
+                  </mat-form-field>
+
+                <mat-form-field class="field-width">
+                  <input [(ngModel)]="dbh" matInput name="dbh" placeholder="dbh" required>
+                </mat-form-field>
+
+                <mat-form-field class="field-width">
+                  <input [(ngModel)]="dh" matInput name="dh" placeholder="Dom/Health" required>
+                </mat-form-field>
+
+                <mat-form-field class="field-width">
+                  <input [(ngModel)]="boForm" matInput  name="boForm" placeholder="Bole Form" required>
+                </mat-form-field>
+
+                <mat-form-field class="field-width">
+                  <input [(ngModel)]="dmg" matInput name="dmg" placeholder="Damage" required>
+                </mat-form-field>
+              </div>
+
+              <div class="line">
+                <mat-form-field class="field-width">
+                  <input [(ngModel)]="blA" matInput name="blA" placeholder="Baseline a">
+                </mat-form-field>
+
+                <mat-form-field class="field-width">
+                  <input [(ngModel)]="slA" matInput name="slA" placeholder="Slope a">
+                </mat-form-field>
+
+                <mat-form-field class="field-width">
+                  <input [(ngModel)]="bsA" matInput name="bsA" placeholder="Base a">
+                </mat-form-field>
+
+                <mat-form-field class="field-width">
+                  <input [(ngModel)]="tpA" matInput name="tpA" placeholder="Tip a">
+                </mat-form-field>
+
+                  <mat-form-field class="field-width">
+                    <input [(ngModel)]="blB" matInput  name="blB" placeholder="Baseline b">
+                  </mat-form-field>
+
+                  <mat-form-field class="field-width">
+                    <input [(ngModel)]="slB" matInput name="slB" placeholder="Slope b">
+                  </mat-form-field>
+
+                  <mat-form-field class="field-width">
+                    <input [(ngModel)]="bsB" matInput  name="bsB" placeholder="Base b">
+                  </mat-form-field>
+
+                  <mat-form-field class="field-width">
+                    <input [(ngModel)]="tpB" matInput name="tpB" placeholder="Tip b">
+                  </mat-form-field>
+
+                  <button mat-mini-fab color="warn" (click)="addPlotData()" type="submit">+</button>
+                </div>
+            </form>
+        <div *ngIf="show" class="table-plot-data">
+            <table mat-table  [dataSource]="plotDataTable" >
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let row">
+                      <button mat-icon-button (click)="deletePlotData(row)"><mat-icon>delete</mat-icon></button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tree">
+                  <th mat-header-cell *matHeaderCellDef> Tree </th>
+                  <td mat-cell *matCellDef="let pData"> {{pData.tree}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="species">
+                    <th mat-header-cell *matHeaderCellDef> Species </th>
+                    <td mat-cell *matCellDef="let pData"> {{pData.species}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="dbh">
+                    <th mat-header-cell *matHeaderCellDef> DBH </th>
+                    <td mat-cell *matCellDef="let pData"> {{pData.dbh}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="dh">
+                    <th mat-header-cell *matHeaderCellDef> DOM/Health </th>
+                    <td mat-cell *matCellDef="let pData"> {{pData.dh}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="boForm">
+                    <th mat-header-cell *matHeaderCellDef> B. Form </th>
+                    <td mat-cell *matCellDef="let pData"> {{pData.boForm}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="dmg">
+                      <th mat-header-cell *matHeaderCellDef> Damage </th>
+                      <td mat-cell *matCellDef="let pData"> {{pData.dmg}} </td>
+                  </ng-container>
+
+                  <!-- <ng-container matColumnDef="blA">
+                      <th mat-header-cell *matHeaderCellDef> Baseline a </th>
+                      <td mat-cell *matCellDef="let pData"> {{pData.blA}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="slA">
+                      <th mat-header-cell *matHeaderCellDef> Slope a </th>
+                      <td mat-cell *matCellDef="let pData"> {{pData.slA}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="bsA">
+                      <th mat-header-cell *matHeaderCellDef> Base a </th>
+                      <td mat-cell *matCellDef="let pData"> {{pData.bsA}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="tpA">
+                      <th mat-header-cell *matHeaderCellDef> Tip a </th>
+                      <td mat-cell *matCellDef="let pData"> {{pData.tpA}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="blB">
+                      <th mat-header-cell *matHeaderCellDef> Baseline b </th>
+                      <td mat-cell *matCellDef="let pData"> {{pData.blA}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="slB">
+                      <th mat-header-cell *matHeaderCellDef> Slope b </th>
+                      <td mat-cell *matCellDef="let pData"> {{pData.slA}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="bsB">
+                      <th mat-header-cell *matHeaderCellDef> Base b </th>
+                      <td mat-cell *matCellDef="let pData"> {{pData.bsA}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="tpB">
+                      <th mat-header-cell *matHeaderCellDef> Tip b </th>
+                      <td mat-cell *matCellDef="let pData"> {{pData.tpA}} </td>
+                  </ng-container> -->
+
+                  <tr mat-header-row *matHeaderRowDef="plotDisplayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: plotDisplayedColumns;"></tr>
+            </table>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+        <!--End plot data Form -->
+
+      <!-- Actions -->
+      <mat-card-actions>
+        <button mat-raised-button (click)="viewPlot()" class="back">view plot</button>
+        <button mat-raised-button color="primary" type="submit" form="plotForm">submit</button>
+      </mat-card-actions>
+    </mat-card-content>
+    </mat-card>
+  </div>

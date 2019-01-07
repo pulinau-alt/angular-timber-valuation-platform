@@ -23,12 +23,12 @@ export const LINKS: Link[] = [
   },
   {
     name: 'Plots',
-    route: '/',
+    route: 'plots',
     icon: 'pie_chart'
   },
   {
     name: 'Reports',
-    route: '/',
+    route: '/', 
     icon: 'library_books'
   },
 ];
