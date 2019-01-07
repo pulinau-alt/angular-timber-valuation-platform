@@ -1,0 +1,36 @@
+table {
+  width: 100%;
+}
+button {
+  size: 23px;
+}
+mat-icon {
+  vertical-align: middle;
+  margin-right: 2px;
+}
+
+th {
+  font-size: 14px;
+  // color: rgb(255, 102, 0);
+}
+
+mat-card {
+  align-content: center;
+}
+
+.add-btn {
+  margin-right: 75px;
+}
+.header {
+  float: right;
+}
+.table-plots {
+  //  height: 400px;
+   width: 100%;
+  overflow: auto;
+}
+
+.container {
+  // overflow: auto;
+}
+

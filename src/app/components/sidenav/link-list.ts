@@ -2,33 +2,33 @@ import { Link } from './link';
 
 export const LINKS: Link[] = [
   {
-    name: 'Home',
+    name: 'Dashboard',
     route: '/',
-    icon: 'fas fa-home'
+    icon: 'dashboard'
   },
   {
     name: 'Assessments',
     route: 'assessments',
-    icon: 'fas fa-clipboard-list'
+    icon: 'file_copy'
   },
   {
     name: 'Forests',
     route: '/',
-    icon: 'fas fa-tree'
+    icon: 'spa'
   },
   {
     name: 'Pricelist',
     route: 'pricelist',
-    icon: 'fas fa-dollar-sign'
+    icon: 'list_alt'
   },
   {
     name: 'Plots',
-    route: '/',
-    icon: 'fas fa-chart-pie'
+    route: 'plots',
+    icon: 'pie_chart'
   },
   {
     name: 'Reports',
-    route: '/',
-    icon: 'fas fa-file-signature'
+    route: '/', 
+    icon: 'library_books'
   },
 ];

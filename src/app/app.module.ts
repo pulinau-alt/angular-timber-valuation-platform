@@ -1,4 +1,9 @@
-import { AuthGuard } from './core/auth.guard';
+import { PlotsModule } from './plots/plots.module';
+import { FieldOfficerGuard } from './core/guards/field-officer.guard';
+import { ManagerGuard } from './core/guards/manager.guard';
+import { AdminGuard } from './core/guards/admin.guard';
+import { AdminModule } from './admin/admin.module';
+import { AuthGuard } from './core/guards/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,6 +34,7 @@ import { HttpModule } from '@angular/http';
 //   ]
 
 import { SharedModule } from './shared.module';
+import { DevOfficerGuard } from './core/guards/dev-officer.guard';
 
 @NgModule({
   declarations: [
@@ -49,9 +55,17 @@ import { SharedModule } from './shared.module';
     AssessmentsModule,
     PriceListModule,
     DashboardModule,
-    HttpModule,
+    AdminModule,
+    PlotsModule,
   ],
-  providers: [AuthGuard, EmailService],
+  providers: [
+    AuthGuard,
+    AdminGuard,
+    DevOfficerGuard,
+    ManagerGuard,
+    FieldOfficerGuard,
+    EmailService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

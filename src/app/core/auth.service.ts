@@ -15,7 +15,7 @@ import { User } from './user';
 })
 export class AuthService {
 
-  user: Observable<User>;
+  user$: Observable<User>;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -23,7 +23,7 @@ export class AuthService {
     private router: Router
   ) {
     //// Get auth data, then get firestore user document || null
-    this.user = this.afAuth.authState.pipe(
+    this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
@@ -33,6 +33,8 @@ export class AuthService {
       })
     );
   }
+
+  /// Authentication
 
   public googleLogin() {
     const provider = new auth.GoogleAuthProvider();
@@ -63,12 +65,45 @@ export class AuthService {
 
   public signOut() {
     this.afAuth.auth.signOut().then(() => {
-        this.router.navigate(['login']);
+      this.router.navigate(['login']);
     });
   }
 
   public isAuthenticated(): Boolean {
-    if (this.user) { return true; }
+    if (this.user$) { return true; }
     return false;
   }
+
+  /// Role-based Authorization
+
+  public canRead(
+    user: User,
+    allowed = ['admin', 'manager', 'devOfficer', 'fieldOfficer']
+  ): boolean {
+    return this.checkAuthorizaion(user, allowed);
+  }
+
+  public canWrite(
+    user: User,
+    allowed = ['admin', 'devOfficer']
+  ): boolean {
+    return this.checkAuthorizaion(user, allowed);
+  }
+
+  public canDelete(
+    user: User,
+    allowed = ['admin', 'devOfficer']
+  ): boolean {
+    return this.checkAuthorizaion(user, allowed);
+  }
+
+  private checkAuthorizaion(user: User, allowedRoles: string[]): boolean {
+    if (!user) { return false; }
+    for (const role of allowedRoles) {
+      if (user.roles[role]) {
+        return true;
+      }
+    }
+  }
+
 }
