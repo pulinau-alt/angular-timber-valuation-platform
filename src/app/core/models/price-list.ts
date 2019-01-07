@@ -1,6 +1,6 @@
 export interface Price {
     id?: string;
-    clas: string;
+    species: string;
     row: string;
     colm1: string;
     colm2: string;
