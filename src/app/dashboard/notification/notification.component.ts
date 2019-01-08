@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Notification } from '../../core/models/notification';
+import { NotificationService } from '../../services/notification.service';
 
 
 @Component({
@@ -9,12 +11,26 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 })
 export class NotificationComponent implements OnInit {
 
-  forestForm: FormGroup;
-  tpForm: FormGroup;
+  notificationForm: FormGroup;
+  notification: Notification;
+  
 
-  constructor() { }
+  constructor(private notifyService: NotificationService) {  }
 
   ngOnInit() {
+    this.notificationForm = new FormGroup({
+      subject: new FormControl(),
+      body: new FormControl(),
+   });
+  }
+  
+  
+  onSubmit(){
+    this.notifyService.addNotification();
+    // this.notification.subject = '';
+    // this.notification.body = '';
   }
 
+
+  
 }

@@ -21,11 +21,14 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'home',
-    component: DashboardComponent,
     data: {
       breadcrumb: 'dashboard'
     },
     children: [
+      {
+        path: '',
+        component: DashboardComponent
+      },
       {
         path: 'notify',
         component: NotificationComponent,

@@ -57,6 +57,7 @@ import { DevOfficerGuard } from './core/guards/dev-officer.guard';
     DashboardModule,
     AdminModule,
     PlotsModule,
+    HttpModule,
   ],
   providers: [
     AuthGuard,
