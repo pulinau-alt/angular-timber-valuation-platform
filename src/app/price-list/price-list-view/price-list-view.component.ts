@@ -1,6 +1,6 @@
 import { PriceListService } from './../../services/price-list.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import { Price, Clas } from '../../core/models/price-list';
+import { Clas } from '../../core/models/price-list';
 import { DataSource } from '@angular/cdk/table';
 import { Router } from '@angular/router';
 import { ClasService } from 'src/app/services/clas.service';
