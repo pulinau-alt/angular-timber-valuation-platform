@@ -1,3 +1,4 @@
+import { GirthClass } from './../../core/models/price-list';
 import { PriceListService } from './../../services/price-list.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Clas } from '../../core/models/price-list';
@@ -6,6 +7,8 @@ import { Router } from '@angular/router';
 import { ClasService } from 'src/app/services/clas.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatTableDataSource } from '@angular/material';
+
 
 
 export interface DialogData {
@@ -19,10 +22,15 @@ export interface DialogData {
 })
 export class PriceListViewComponent implements OnInit {
   dataSource = new PriceListDataSource(this.ps);
-  displayedColumns: string[] = ['row', 'colm1', 'colm2', 'colm3', 'colm4', 'colm5', 'colm6', 'colm7', 'edit', 'delete'];
+  displayedColumns: string[] = ['species', 'clas', 'view', 'edit', 'delete'];
 
   clasForm: FormGroup;
   clases: Clas[];
+  // gClass: GirthClass[];
+  show: boolean;
+  githClassTable: MatTableDataSource<any>;
+  girthclassColums: String[] = ['minGirth', 'price', 'otherCost', 'overHeadCost',
+    'stumpageVal', 'profit', 'stumpage'];
 
   selectedValue: string; // selected value of drop down
 
@@ -49,7 +57,7 @@ export class PriceListViewComponent implements OnInit {
         clases.forEach(clas => {
           this.clases.push(clas);
         });
-      })
+      });
   }
 
   openDialog(): void {
@@ -63,6 +71,9 @@ export class PriceListViewComponent implements OnInit {
       this.classific = result;
     });
   }
+  addPlist() {
+    this.router.navigate(['/pricelist/form']);
+  }
 
   changeSelect() {
     this.ps.newSelect(this.selectedValue);
@@ -75,6 +86,13 @@ export class PriceListViewComponent implements OnInit {
 
   onEditClicked(row) {
     this.router.navigate(['/pricelist/form'], { queryParams: { id: row.id } });
+  }
+
+  onViewClicked(row) {
+    this.show = true;
+    console.log(row.midGirthClasses);
+    const gClass: GirthClass[] = row.midGirthClasses;
+    this.githClassTable = new MatTableDataSource(gClass);
   }
 
 }
@@ -93,9 +111,11 @@ export class PriceListDataSource extends DataSource<any> {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'classification',
   templateUrl: 'classification.html',
 })
+// tslint:disable-next-line:component-class-suffix
 export class Classification {
 
   constructor(
