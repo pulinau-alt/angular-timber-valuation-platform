@@ -59,16 +59,17 @@ export class AuthService {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      roles: user.roles ? user.roles :      
-      {
-        admin: false,
-        manager: false,
-        devOfficer: false,
-        fieldOfficer: false,
-      }
+      // roles: user.roles ? user.roles : (
+      //   {
+      //     admin: false,
+      //     manager: false,
+      //     devOfficer: false,
+      //     fieldOfficer: false,
+      //   }
+      // )
     };
 
-    return userRef.set(data);
+    return userRef.set(data, {merge: true});
   }
 
   public signOut() {
