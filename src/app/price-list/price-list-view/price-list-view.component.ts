@@ -1,7 +1,8 @@
 import { GirthClass } from './../../core/models/price-list';
 import { PriceListService } from './../../services/price-list.service';
+import { MatTableDataSource } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
-import { Clas } from '../../core/models/price-list';
+import { Clas, PriceList } from '../../core/models/price-list';
 import { DataSource } from '@angular/cdk/table';
 import { Router } from '@angular/router';
 import { ClasService } from 'src/app/services/clas.service';
@@ -76,7 +77,12 @@ export class PriceListViewComponent implements OnInit {
   }
 
   changeSelect() {
-    this.ps.newSelect(this.selectedValue);
+    // this.ps.newSelect(this.selectedValue);
+    //this.dataSources.filter = this.selectedValue.trim().toLowerCase();
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSources.filter = filterValue.trim().toLowerCase();
   }
 
 
