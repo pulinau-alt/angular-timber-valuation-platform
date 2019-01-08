@@ -2,7 +2,7 @@ import { PriceListService } from '../../services/price-list.service';
 import { Component, OnInit } from '@angular/core';
 import { ClasService } from '../../services/clas.service';
 import { Observable } from 'rxjs';
-import { PriceList, Girthclass } from '../../core/models/price-list';
+import { PriceList, GirthClass } from '../../core/models/price-list';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
@@ -18,18 +18,26 @@ export class PriceListFormComponent implements OnInit {
 
   priceListForm: FormGroup;
   prices: PriceList;
-  midGirthClasses: Girthclass[];
+  midGirthClasses: GirthClass[];
   sub;
   id: String;
-  show: boolean ;
+  show: boolean;
 
-  girthData: Array<Girthclass> = [];
-  girthDataTable: MatTableDataSource<Girthclass>;
-  girthDispalayedClumns: string[] = ['minGirth', 'maxGirth', 'price', 'delete'];
+  girthData: Array<GirthClass> = [];
+  girthDataTable: MatTableDataSource<GirthClass>;
+  girthDispalayedClumns: string[] = ['minGirth', 'maxGirth', 'price', 'otherCost', 'overHeadCost',
+    'stumpageVal', 'profit', 'stumpage', 'delete'];
+  //  ['minGirth', 'maxGirth', 'price', 'delete'];
 
   minGirth: number;
   maxGirth: number;
   price: number;
+  otherCost: string;
+  overHeadCost: string;
+  stumpageVal: string;
+  profit: string;
+  stumpage: string;
+
 
   constructor(
     private ps: PriceListService,
@@ -38,7 +46,7 @@ export class PriceListFormComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.midGirthClasses = [];
-   }
+  }
 
   ngOnInit() {
     this.initForm();
@@ -61,20 +69,21 @@ export class PriceListFormComponent implements OnInit {
       class: ['', [Validators.required]],
       midGirthClasses: new FormControl(this.girthData),
     });
+    // , Validators.pattern('[a-z0-9]*')
 
   }
 
   private loadPriceDetails(id) {
     this.ps.getPriceList(id)
-    .subscribe(item => {
-      this.prices = item.data();
-      this.priceListForm.get('id').setValue(id);
-      this.priceListForm.get('species').setValue(this.prices.species);
-      this.priceListForm.get('class').setValue(this.prices.class);
-    });
+      .subscribe(item => {
+        this.prices = item.data();
+        this.priceListForm.get('id').setValue(id);
+        this.priceListForm.get('species').setValue(this.prices.species);
+        this.priceListForm.get('class').setValue(this.prices.class);
+      });
   }
 
-  private getPriceData(){
+  private getPriceData() {
     of(this.girthData).subscribe(midGirthClasses => {
       const rows = [];
       midGirthClasses.forEach(data => {
@@ -99,19 +108,30 @@ export class PriceListFormComponent implements OnInit {
     this.priceListForm.reset();
   }
 
-  addGirthData(){
+  addGirthData() {
+    this.show = true;
     this.girthData.push({
       minGirth: this.minGirth,
       maxGirth: this.maxGirth,
       price: this.price,
+      otherCost: this.otherCost,
+      overHeadCost: this.overHeadCost,
+      stumpageVal: this.stumpageVal,
+      profit: this.profit,
+      stumpage: this.stumpage,
     });
     this.getPriceData();
 
-    if (this.girthData[0].minGirth !== undefined) {this.show = true; } else {alert('price\'s data can\'t be empty'); }
+    if (this.girthData[0].minGirth !== undefined) { this.show = true; } else { alert('price\'s data can\'t be empty'); }
     console.log(this.girthData);
-      this.minGirth = null;
-      this.maxGirth = null;
-      this.price = null;
+    this.minGirth = null;
+    this.maxGirth = null;
+    this.price = null;
+    this.otherCost = null;
+    this.overHeadCost = null;
+    this.stumpageVal = null;
+    this.profit = null;
+    this.stumpage = null;
   }
 
   deletePlotData(item) {
