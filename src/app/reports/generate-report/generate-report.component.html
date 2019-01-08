@@ -1,6 +1,6 @@
 <mat-card>
 
-  <form [formGroup]="generateForm" (ngSumbit)="onSubmit">
+  <form [formGroup]="generateForm">
     <div class="form-field-container">
       <mat-form-field>
         <input matInput formControlName="startDate" [matDatepicker]="startPicker" placeholder="Start date">
@@ -18,11 +18,11 @@
 
       <mat-form-field>
         <mat-select matInput formControlName="region" placeholder="Region">
-          <mat-option>--</mat-option>
+          <mat-option *ngFor="let region of regions"  value="{{ region }}">{{ region }}</mat-option>
         </mat-select>
       </mat-form-field>
   
-      <button mat-raised-button class="generate-button" color="primary" form="">generate</button>
+      <button mat-raised-button class="generate-button" type="submit" color="primary" (click)="onSubmit()">generate</button>
     </div>
 
   </form>

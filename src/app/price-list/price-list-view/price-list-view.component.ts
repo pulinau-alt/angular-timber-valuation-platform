@@ -5,7 +5,7 @@ import { DataSource } from '@angular/cdk/table';
 import { Router } from '@angular/router';
 import { ClasService } from 'src/app/services/clas.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 export interface DialogData {
@@ -30,7 +30,7 @@ export class PriceListViewComponent implements OnInit {
 
   classific: string;
   name: string;
-  
+
   constructor(
     private ps: PriceListService,
     private cs: ClasService,
@@ -41,7 +41,7 @@ export class PriceListViewComponent implements OnInit {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
     // Populate class list
     this.cs.getClas()
@@ -55,7 +55,7 @@ export class PriceListViewComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(Classification, {
       width: '270px',
-      data: {name: this.name, classific: this.classific}
+      data: { name: this.name, classific: this.classific }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -64,9 +64,9 @@ export class PriceListViewComponent implements OnInit {
     });
   }
 
-  changeSelect(){
-    this.ps.newSelect(this.selectedValue);    
-  } 
+  changeSelect() {
+    this.ps.newSelect(this.selectedValue);
+  }
 
 
   onDeleteClicked(row) {
@@ -101,7 +101,7 @@ export class Classification {
   constructor(
     private cs: ClasService,
     public dialogRef: MatDialogRef<Classification>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -110,5 +110,5 @@ export class Classification {
   save(newName: string) {
     this.cs.addClas(newName);
   }
-    
+
 }
