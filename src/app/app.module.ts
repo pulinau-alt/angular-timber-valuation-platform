@@ -21,7 +21,6 @@ import { AssessmentsModule } from './assessments/assessments.module';
 import { MaterialModule } from './material.module';
 import { PriceListModule } from './price-list/price-list.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { NotificationComponent } from './dashboard/notification/notification.component';
 import { EmailService } from './email.service';
 
 import { HttpModule } from '@angular/http';
@@ -58,7 +57,6 @@ import { ReportsModule } from './reports/reports.module';
     DashboardModule,
     AdminModule,
     PlotsModule,
-    notifications
     HttpModule,
     ReportsModule,
   ],
@@ -68,7 +66,6 @@ import { ReportsModule } from './reports/reports.module';
     DevOfficerGuard,
     ManagerGuard,
     FieldOfficerGuard,
-    notifications
     EmailService,
   ],
   bootstrap: [AppComponent]
