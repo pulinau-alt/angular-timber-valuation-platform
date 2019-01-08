@@ -1,4 +1,4 @@
-import { PriceList, GirthClass } from './../../core/models/price-list';
+import { PriceList, Girthclass } from './../../core/models/price-list';
 import { PriceListService } from './../../services/price-list.service';
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
@@ -23,7 +23,7 @@ export class SubmissionFormComponent implements OnInit {
   id: String;
   date: FormControl;
   trees: string[];
-  mgClasses: GirthClass[];
+  mgClasses: Girthclass[];
 
   // Forms
   forestForm: FormGroup;
@@ -91,37 +91,55 @@ export class SubmissionFormComponent implements OnInit {
       division: ['', Validators.required],
       beat: ['', Validators.required],
       range: ['', Validators.required],
-      block: ['', Validators.required],
-      sBlock: ['', Validators.required],
-      firewood: [''],
+      block: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
+      sBlock: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
+      firewood: ['', Validators.pattern('[0-9]*\.?[0-9]+')],
     });
 
     // Log form
     this.logForm = this.fb.group({
       species: ['', Validators.required],
       mgClass: ['', Validators.required],
-      volume: ['', Validators.required]
+      volume: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]*\.?[0-9]+')
+      ])],
     });
 
     // Transmission poles form
     this.tpForm = this.fb.group({
       species: ['', Validators.required],
-      tpCategory: [''],
-      tpQty: [''],
+      tpCategory: ['', Validators.required],
+      tpQty: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
     });
 
     // Round poles form
     this.rpForm = this.fb.group({
       species: ['', Validators.required],
-      class: [''],
-      qty: [''],
+      class: ['', Validators.required],
+      qty: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
     });
 
     // Fence posts form
     this.fpForm = this.fb.group({
       species: ['', Validators.required],
-      class: [''],
-      qty: [''],
+      class: ['', Validators.required],
+      qty: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
     });
   }
 
@@ -232,6 +250,12 @@ export class SubmissionFormComponent implements OnInit {
     this.rpFieldArray = [];
     this.fpFieldArray = [];
     this.forestForm.get('firewood').reset();
+  }
+
+  getErrorMessage(fc: FormControl) {
+    return fc.hasError('required') ? 'This field is required' :
+      fc.hasError('pattern') ? 'Invalid input' :
+        '';
   }
 
   onSubmit() {
@@ -373,6 +397,8 @@ export class SubmissionFormComponent implements OnInit {
 
       this.logForm.get('mgClass').setValue(null);
       this.logForm.get('volume').setValue(null);
+      this.logForm.get('mgClass').setValidators(null);
+      this.logForm.get('volume').setValidators(null);
     }
   }
 
