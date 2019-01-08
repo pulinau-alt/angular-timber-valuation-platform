@@ -14,6 +14,7 @@ import { PriceListViewComponent } from './price-list/price-list-view/price-list-
 import { DevOfficerGuard } from './core/guards/dev-officer.guard';
 import { CreationFormComponent } from './plots/creation-form/creation-form.component';
 import { PlotsViewComponent } from './plots/plots-view/plots-view.component';
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -74,7 +75,14 @@ const routes: Routes = [
         data: { breadcrumb: 'form' },
       }
     ]
-  }
+  },
+  {
+    path: 'reports',
+    component: ReportsComponent,
+    data: { breadcrumb: 'reports' },
+    children: [],
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

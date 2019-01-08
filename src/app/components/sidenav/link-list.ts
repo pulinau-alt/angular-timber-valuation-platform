@@ -28,7 +28,7 @@ export const LINKS: Link[] = [
   },
   {
     name: 'Reports',
-    route: '/', 
+    route: 'reports',
     icon: 'library_books'
   },
 ];

@@ -1,0 +1,30 @@
+<mat-card>
+
+  <form [formGroup]="generateForm">
+    <div class="form-field-container">
+      <mat-form-field>
+        <input matInput formControlName="startDate" [matDatepicker]="startPicker" placeholder="Start date">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+  
+      <span>to </span>
+  
+      <mat-form-field>
+        <input matInput formControlName="endDate" [matDatepicker]="endPicker" placeholder="End date">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select matInput formControlName="region" placeholder="Region">
+          <mat-option *ngFor="let region of regions"  value="{{ region }}">{{ region }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <button mat-raised-button class="generate-button" type="submit" color="primary" (click)="onSubmit()">generate</button>
+    </div>
+
+  </form>
+
+</mat-card>

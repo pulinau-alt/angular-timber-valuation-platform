@@ -1,6 +1,6 @@
+import { PriceList } from './../core/models/price-list';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentSnapshot } from '@angular/fire/firestore';
-import { PriceList } from '../core/models/price-list';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,16 +15,21 @@ export class PriceListService {
   selectedItem = 'Super Luxury Class(Nadun)';
 
   constructor(public afs: AngularFirestore) {
-    //this.priceListCollection = afs.collection('priceList', ref => ref.where('class', '==', this.selectedItem));
     this.priceListCollection = afs.collection('priceList');
-   }
+  }
 
   addPriceList(priceList) {
     return this.priceListCollection.add(priceList);
   }
 
-  getPriceLists(): Observable<PriceList[]> {
-    return this.priceListCollection.snapshotChanges().pipe(
+  getPriceLists(species?: string): Observable<PriceList[]> {
+    const collectionSnapshot = species ?
+      this.afs.collection(
+        'priceList',
+        ref => ref.where('species', '==', species)
+      ).snapshotChanges() :
+      this.priceListCollection.snapshotChanges();
+    return collectionSnapshot.pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as PriceList;
         const id = a.payload.doc.id;

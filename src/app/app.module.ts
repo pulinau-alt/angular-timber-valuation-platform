@@ -23,6 +23,7 @@ import { PriceListModule } from './price-list/price-list.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared.module';
 import { DevOfficerGuard } from './core/guards/dev-officer.guard';
+import { ReportsModule } from './reports/reports.module';
 
 @NgModule({
   declarations: [
@@ -45,13 +46,14 @@ import { DevOfficerGuard } from './core/guards/dev-officer.guard';
     DashboardModule,
     AdminModule,
     PlotsModule,
+    ReportsModule,
   ],
   providers: [
     AuthGuard,
     AdminGuard,
     DevOfficerGuard,
     ManagerGuard,
-    FieldOfficerGuard
+    FieldOfficerGuard,
   ],
   bootstrap: [AppComponent]
 })
