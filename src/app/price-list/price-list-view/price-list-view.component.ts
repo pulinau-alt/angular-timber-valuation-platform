@@ -1,6 +1,7 @@
 import { PriceListService } from './../../services/price-list.service';
+import { MatTableDataSource } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
-import { Clas } from '../../core/models/price-list';
+import { Clas, PriceList } from '../../core/models/price-list';
 import { DataSource } from '@angular/cdk/table';
 import { Router } from '@angular/router';
 import { ClasService } from 'src/app/services/clas.service';
@@ -19,7 +20,9 @@ export interface DialogData {
 })
 export class PriceListViewComponent implements OnInit {
   dataSource = new PriceListDataSource(this.ps);
-  displayedColumns: string[] = ['row', 'colm1', 'colm2', 'colm3', 'colm4', 'colm5', 'colm6', 'colm7', 'edit', 'delete'];
+  priceList: PriceList[];
+  displayedColumns: string[] = ['species', 'clas', 'edit', 'delete'];
+  dataSources: MatTableDataSource<PriceList>;
 
   clasForm: FormGroup;
   clases: Clas[];
@@ -49,7 +52,8 @@ export class PriceListViewComponent implements OnInit {
         clases.forEach(clas => {
           this.clases.push(clas);
         });
-      })
+        this.dataSources = new MatTableDataSource(this.priceList);
+      });
   }
 
   openDialog(): void {
@@ -64,8 +68,13 @@ export class PriceListViewComponent implements OnInit {
     });
   }
 
-  changeSelect() {
-    this.ps.newSelect(this.selectedValue);
+  changeSelect(){
+    // this.ps.newSelect(this.selectedValue);  
+    //this.dataSources.filter = this.selectedValue.trim().toLowerCase();
+  } 
+
+  applyFilter(filterValue: string) {
+    this.dataSources.filter = filterValue.trim().toLowerCase();
   }
 
 

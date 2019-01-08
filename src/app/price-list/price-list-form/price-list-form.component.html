@@ -43,34 +43,34 @@
   </form>
 
   <div *ngIf="show">
-    <table mat-table  [dataSource]="girthDataTable" >
-        <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef></th>
+      <table mat-table [dataSource]="girthDataTable">
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef style="width: 47%"></th>
             <td mat-cell *matCellDef="let row">
               <button mat-button color="warn" (click)="deletePlotData(row)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
-        </ng-container>
-
-        <ng-container matColumnDef="minGirth">
-          <th mat-header-cell *matHeaderCellDef> Min Girth </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.minGirth}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="maxGirth">
-            <th mat-header-cell *matHeaderCellDef> Max Girth </th>
+          </ng-container>
+    
+          <ng-container matColumnDef="minGirth">
+            <th mat-header-cell *matHeaderCellDef style="width: 47%"> Min Girth </th>
+            <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.minGirth}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="maxGirth">
+            <th mat-header-cell *matHeaderCellDef style="width: 47%"> Max Girth </th>
             <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.maxGirth}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef> Price </th>
+          </ng-container>
+    
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef style="width: 47%"> Price </th>
             <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.price}} </td>
-        </ng-container>
-
+          </ng-container>
+    
           <tr mat-header-row *matHeaderRowDef="girthDispalayedClumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: girthDispalayedClumns;"></tr>
-    </table>
+        </table>
   </div>
 
   <!-- Actions -->

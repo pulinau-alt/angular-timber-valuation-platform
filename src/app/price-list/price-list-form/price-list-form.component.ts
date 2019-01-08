@@ -57,8 +57,8 @@ export class PriceListFormComponent implements OnInit {
   private initForm() {
     this.priceListForm = this.fb.group({
       id: new FormControl({ value: '', disabled: true }),
-      species: ['', [Validators.required, Validators.pattern('[a-z0-9]*')]],
-      class: ['', [Validators.required, Validators.pattern('[a-z0-9]*')]],
+      species: ['', [Validators.required]],
+      class: ['', [Validators.required]],
       midGirthClasses: new FormControl(this.girthData),
     });
 
