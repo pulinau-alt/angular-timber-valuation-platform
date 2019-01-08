@@ -35,6 +35,7 @@ import { HttpModule } from '@angular/http';
 
 import { SharedModule } from './shared.module';
 import { DevOfficerGuard } from './core/guards/dev-officer.guard';
+import { ReportsModule } from './reports/reports.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,9 @@ import { DevOfficerGuard } from './core/guards/dev-officer.guard';
     DashboardModule,
     AdminModule,
     PlotsModule,
+    notifications
     HttpModule,
+    ReportsModule,
   ],
   providers: [
     AuthGuard,
@@ -65,6 +68,7 @@ import { DevOfficerGuard } from './core/guards/dev-officer.guard';
     DevOfficerGuard,
     ManagerGuard,
     FieldOfficerGuard,
+    notifications
     EmailService,
   ],
   bootstrap: [AppComponent]

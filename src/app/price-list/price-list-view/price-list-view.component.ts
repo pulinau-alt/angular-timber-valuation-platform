@@ -1,11 +1,12 @@
 import { PriceListService } from './../../services/price-list.service';
+import { MatTableDataSource } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
-import { Price, Clas } from '../../core/models/price-list';
+import { Clas, PriceList } from '../../core/models/price-list';
 import { DataSource } from '@angular/cdk/table';
 import { Router } from '@angular/router';
 import { ClasService } from 'src/app/services/clas.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
 export interface DialogData {
@@ -19,7 +20,9 @@ export interface DialogData {
 })
 export class PriceListViewComponent implements OnInit {
   dataSource = new PriceListDataSource(this.ps);
-  displayedColumns: string[] = ['row', 'colm1', 'colm2', 'colm3', 'colm4', 'colm5', 'colm6', 'colm7', 'edit', 'delete'];
+  priceList: PriceList[];
+  displayedColumns: string[] = ['species', 'clas', 'edit', 'delete'];
+  dataSources: MatTableDataSource<PriceList>;
 
   clasForm: FormGroup;
   clases: Clas[];
@@ -30,7 +33,7 @@ export class PriceListViewComponent implements OnInit {
 
   classific: string;
   name: string;
-  
+
   constructor(
     private ps: PriceListService,
     private cs: ClasService,
@@ -41,7 +44,7 @@ export class PriceListViewComponent implements OnInit {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
     // Populate class list
     this.cs.getClas()
@@ -49,13 +52,14 @@ export class PriceListViewComponent implements OnInit {
         clases.forEach(clas => {
           this.clases.push(clas);
         });
-      })
+        this.dataSources = new MatTableDataSource(this.priceList);
+      });
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(Classification, {
       width: '270px',
-      data: {name: this.name, classific: this.classific}
+      data: { name: this.name, classific: this.classific }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -65,8 +69,13 @@ export class PriceListViewComponent implements OnInit {
   }
 
   changeSelect(){
-    this.ps.newSelect(this.selectedValue);    
+    // this.ps.newSelect(this.selectedValue);  
+    //this.dataSources.filter = this.selectedValue.trim().toLowerCase();
   } 
+
+  applyFilter(filterValue: string) {
+    this.dataSources.filter = filterValue.trim().toLowerCase();
+  }
 
 
   onDeleteClicked(row) {
@@ -101,7 +110,7 @@ export class Classification {
   constructor(
     private cs: ClasService,
     public dialogRef: MatDialogRef<Classification>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -110,5 +119,5 @@ export class Classification {
   save(newName: string) {
     this.cs.addClas(newName);
   }
-    
+
 }

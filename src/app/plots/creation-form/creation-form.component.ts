@@ -23,7 +23,8 @@ export class CreationFormComponent implements OnInit {
 
   plotData: Array<PlotData> = [];
   plotDataTable: MatTableDataSource<PlotData>;
-  plotDisplayedColumns: string[] = ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'delete'];
+  plotDisplayedColumns: string[] = ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'blA', 'slA', 'bsA', 'tpA', 'blB', 'slB', 'bsB', 'tpB' , 'delete'];
+  //  ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'delete'];
 
  // ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'blA', 'slA', 'bsA', 'tpA', 'blB', 'slB', 'bsB', 'tpB' , 'delete'];
   tree: number;
@@ -119,6 +120,31 @@ export class CreationFormComponent implements OnInit {
       this.plotForm.get('soilDp').setValue(this.plot.soilDp);
       this.plotForm.get('soilTxt').setValue(this.plot.soilTxt);
       this.plotForm.get('humus').setValue(this.plot.humus);
+
+      // load plot's data
+      if (this.plot.pData) {
+        this.plot.pData.forEach(e => {
+          this.plotData.push({
+            tree: e.tree,
+            species: e.species,
+            dbh: e.dbh,
+            dh: e.dh,
+            boForm: e.boForm,
+            dmg: e.dmg,
+            blA: e.blA,
+            slA: e.slA,
+            bsA: e.bsA,
+            tpA: e.tpA,
+            blB: e.blB,
+            slB: e.slB,
+            bsB: e.bsB,
+            tpB: e.tpB,
+          });
+        });
+      }
+      this.getPlotData();
+      // this.show = true;
+      if (this.plotData[0].tree !== undefined) {this.show = true; }
     });
   }
   // get plot's data
@@ -186,7 +212,7 @@ export class CreationFormComponent implements OnInit {
     });
     this.getPlotData();
     // this.show = true;
-    if (this.plotData[0].tree !== undefined) {this.show = true; } else {alert('plot\'s data can\'t be empty'); }
+     if (this.plotData[0].tree !== undefined) {this.show = true; } else {alert('plot\'s data can\'t be empty'); }
     console.log(this.plotData);
       this.tree = null;
       this.species = null;

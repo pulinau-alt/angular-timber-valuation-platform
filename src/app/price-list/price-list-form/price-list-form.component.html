@@ -1,57 +1,77 @@
-<h3>Change Price List Table</h3>
+<h3 mat-title style="display: inline-block;">Change Price List Table</h3>
+<span *ngIf="!editable">
+  <button mat-button style="max-width: 4px; float: right;" (click)="onEditClicked()">
+    <mat-icon>edit</mat-icon>
+  </button>
+</span>
 
 <mat-card>
 
   <!-- Main Form -->
-  <mat-card-content class="card-content">
-    <form id="priceListForm" [formGroup]="priceListForm" (ngSubmit)="onSubmit()" class="mat-form">
 
-      <mat-divider></mat-divider>
-      <section [style.width]="'100%'">
+  <form id="priceListForm" [formGroup]="priceListForm" (ngSubmit)="onSubmit()" class="mat-form">
+      <div class="line">
+          <mat-form-field>
+              <input formControlName="species" matInput placeholder="Species">
+            </mat-form-field>
 
-        <mat-form-field>
-          <input formControlName="id" matInput>
-        </mat-form-field>
+            <mat-form-field>
+              <input formControlName="class" matInput placeholder="Class">
+            </mat-form-field>
 
-        <div class="row">
-          <mat-form-field appearance="outline">
-            <input formControlName="row" matInput placeholder="Row Name">
-          </mat-form-field>
+      </div>
 
-          <mat-form-field appearance="outline">
-            <input formControlName="colm1" matInput placeholder="column 1">
-          </mat-form-field>
+  </form>
 
-          <mat-form-field appearance="outline">
-            <input formControlName="colm2" matInput placeholder="column 2">
-          </mat-form-field>
+  <form>
 
-          <mat-form-field appearance="outline">
-            <input formControlName="colm3" matInput placeholder="column 3">
-          </mat-form-field>
+    <div class="line">
+      <mat-form-field>
+        <input [(ngModel)]="minGirth" matInput name="minGirth" placeholder="Min Girth" required>
+      </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <input formControlName="colm4" matInput placeholder="column 4">
-          </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="maxGirth" matInput name="maxGirth" placeholder="Max Girth" required>
+      </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <input formControlName="colm5" matInput placeholder="column 5">
-          </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="price" matInput name="price" placeholder="price" required>
+      </mat-form-field>
+      
+      <button mat-mini-fab color="primary" (click)="addGirthData()" type="submit">+</button>
+    </div>
+  </form>
 
-          <mat-form-field appearance="outline">
-            <input formControlName="colm6" matInput placeholder="column 6">
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <input formControlName="colm7" matInput placeholder="column 7">
-          </mat-form-field>
-        </div>
-      </section>
-
-
-    </form>
-
-  </mat-card-content>
+  <div *ngIf="show">
+      <table mat-table [dataSource]="girthDataTable">
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef style="width: 47%"></th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-button color="warn" (click)="deletePlotData(row)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="minGirth">
+            <th mat-header-cell *matHeaderCellDef style="width: 47%"> Min Girth </th>
+            <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.minGirth}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="maxGirth">
+            <th mat-header-cell *matHeaderCellDef style="width: 47%"> Max Girth </th>
+            <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.maxGirth}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef style="width: 47%"> Price </th>
+            <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.price}} </td>
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="girthDispalayedClumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: girthDispalayedClumns;"></tr>
+        </table>
+  </div>
 
   <!-- Actions -->
   <mat-card-actions>

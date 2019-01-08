@@ -27,6 +27,7 @@ export class PlotsViewComponent implements OnInit {
   show: boolean;
   showBtn1 = true;
   showBtn2: boolean;
+  pDataId: String[];
   // items: number;
 
 
@@ -58,24 +59,34 @@ export class PlotsViewComponent implements OnInit {
   }
   // update
   onEditClicked(row) {
-      this.router.navigate(['/plots/new'], { queryParams: { id: row.id } });
+      this.router.navigate(['/plots/form'], { queryParams: { id: row.id } });
   }
-
+  // view plot data
   onViewClicked(row) {
      this.show = true;
      this.showBtn1 = false;
      this.showBtn2 = true;
-    // console.log(row.pData);
+     this.pDataId = row.id;
+    // console.log(row);
     const pDataD: PlotData[] = row.pData;
     this.plotDataTable = new MatTableDataSource(pDataD);
   }
-
-  onViewOff(row) {
+  // view off plot data
+  onViewOff() {
     this.showBtn1 = true;
     this.showBtn2 = false;
     this.show = false;
-
   }
+
+  // delete plot's data
+
+  /*deletePlotData(row) {
+    if (confirm('Are you sure?')) {
+      console.log(row.tree);
+       console.log(this.pDataId);
+   }
+  }*/
+
   // new plot
   addPlot() {
     this.router.navigate(['/plots/form']);

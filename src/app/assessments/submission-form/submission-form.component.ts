@@ -1,3 +1,5 @@
+import { PriceList, Girthclass } from './../../core/models/price-list';
+import { PriceListService } from './../../services/price-list.service';
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { Observable, of } from 'rxjs';
@@ -19,7 +21,9 @@ export class SubmissionFormComponent implements OnInit {
   editable = true;
   forest: Forest;
   id: String;
-  trees: Tree[];
+  date: FormControl;
+  trees: string[];
+  mgClasses: Girthclass[];
 
   // Forms
   forestForm: FormGroup;
@@ -46,6 +50,7 @@ export class SubmissionFormComponent implements OnInit {
 
   constructor(
     private as: AssessmentService,
+    private pls: PriceListService,
     private ts: TreeService,
     private route: ActivatedRoute,
     private router: Router,
@@ -56,6 +61,7 @@ export class SubmissionFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.date = new FormControl('', Validators.required);
 
     this.sub = this.route.queryParams
       .subscribe(params => {
@@ -71,52 +77,69 @@ export class SubmissionFormComponent implements OnInit {
     this.loadDataSources();
 
     // Populate trees list
-    this.ts.getTrees()
-      .subscribe(trees => {
-        trees.forEach(tree => {
-          this.trees.push(tree);
-        });
+    this.pls.getPriceLists().subscribe(next => {
+      next.forEach(e => {
+        this.trees.push(e.species);
       });
+    });
   }
 
   private initForm() {
     // Forest form
     this.forestForm = this.fb.group({
-      id: new FormControl({ value: '', disabled: true }),
+      id: [''],
       division: ['', Validators.required],
       beat: ['', Validators.required],
       range: ['', Validators.required],
-      block: ['', Validators.required],
-      sBlock: ['', Validators.required],
-      firewood: [''],
+      block: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
+      sBlock: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
+      firewood: ['', Validators.pattern('[0-9]*\.?[0-9]+')],
     });
 
     // Log form
     this.logForm = this.fb.group({
       species: ['', Validators.required],
       mgClass: ['', Validators.required],
-      volume: ['', Validators.required]
+      volume: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]*\.?[0-9]+')
+      ])],
     });
 
     // Transmission poles form
     this.tpForm = this.fb.group({
       species: ['', Validators.required],
-      tpCategory: [''],
-      tpQty: [''],
+      tpCategory: ['', Validators.required],
+      tpQty: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
     });
 
     // Round poles form
     this.rpForm = this.fb.group({
       species: ['', Validators.required],
-      class: [''],
-      qty: [''],
+      class: ['', Validators.required],
+      qty: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
     });
 
     // Fence posts form
     this.fpForm = this.fb.group({
       species: ['', Validators.required],
-      class: [''],
-      qty: [''],
+      class: ['', Validators.required],
+      qty: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+')
+      ])],
     });
   }
 
@@ -124,6 +147,10 @@ export class SubmissionFormComponent implements OnInit {
     this.as.getForest(id)
       .subscribe(next => {
         this.forest = next.data();
+
+        this.date.setValue(new Date(this.forest.date).toISOString());
+        this.date.disable();
+
         this.forestForm.get('id').setValue(id);
         this.forestForm.get('division').setValue(this.forest.division);
         this.forestForm.get('beat').setValue(this.forest.beat);
@@ -225,6 +252,12 @@ export class SubmissionFormComponent implements OnInit {
     this.forestForm.get('firewood').reset();
   }
 
+  getErrorMessage(fc: FormControl) {
+    return fc.hasError('required') ? 'This field is required' :
+      fc.hasError('pattern') ? 'Invalid input' :
+        '';
+  }
+
   onSubmit() {
     if (this.forestForm.valid) {
       const data = Object(this.forestForm.value);
@@ -310,6 +343,7 @@ export class SubmissionFormComponent implements OnInit {
 
       ///
 
+      data['date'] = this.date.value.toISOString();
       console.log(data);
 
       if (!data['firewood']) {
@@ -320,15 +354,21 @@ export class SubmissionFormComponent implements OnInit {
         this.as.updateForest(this.id, data);
         console.log('Updated');
       } else {
-        this.as.addForest(data).then(value => console.log(value));
+        this.as.addForest(data).then(value => {
+          console.log(value);
+          data['id'] = value.id;
+          this.as.updateForest(value.id, data);
+        });
       }
       this.forestForm.disable();
+      this.date.disable();
       this.editable = false;
     }
   }
 
   onEditClicked() {
     this.forestForm.enable();
+    this.date.enable();
     this.editable = true;
   }
 
@@ -357,12 +397,28 @@ export class SubmissionFormComponent implements OnInit {
 
       this.logForm.get('mgClass').setValue(null);
       this.logForm.get('volume').setValue(null);
+      this.logForm.get('mgClass').setValidators(null);
+      this.logForm.get('volume').setValidators(null);
     }
   }
 
   deleteLogField(row) {
     this.logsFieldArray.splice(this.logsFieldArray.indexOf(row), 1);
     this.logsDataSource = this.loadDataSource(this.logsFieldArray);
+  }
+
+  // Populate girth classes list
+  loadMidGirthClasses() {
+    const species = this.logForm.get('species').value;
+    this.mgClasses = [];
+    this.pls.getPriceLists(species).subscribe(next => {
+      next.forEach(e => {
+        console.log(e.midGirthClasses);
+        e.midGirthClasses.forEach(mgClass => {
+          this.mgClasses.push(mgClass);
+        });
+      });
+    });
   }
 
   ///

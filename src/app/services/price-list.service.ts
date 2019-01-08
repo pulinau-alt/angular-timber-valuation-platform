@@ -1,6 +1,6 @@
+import { PriceList } from './../core/models/price-list';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentSnapshot } from '@angular/fire/firestore';
-import { Price } from '../core/models/price-list';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -9,24 +9,29 @@ import { map } from 'rxjs/operators';
 })
 export class PriceListService {
 
-  private priceListCollection: AngularFirestoreCollection<Price>;
-  priceList$: Observable<Price[]>;
+  private priceListCollection: AngularFirestoreCollection<PriceList>;
+  priceList$: Observable<PriceList[]>;
 
   selectedItem = 'Super Luxury Class(Nadun)';
-  // selectFilter$: BehaviorSubject<string | null>;
 
   constructor(public afs: AngularFirestore) {
     this.priceListCollection = afs.collection('priceList');
-   }
+  }
 
   addPriceList(priceList) {
     return this.priceListCollection.add(priceList);
   }
 
-  getPriceLists(): Observable<Price[]> {
-    return this.priceListCollection.snapshotChanges().pipe(
+  getPriceLists(species?: string): Observable<PriceList[]> {
+    const collectionSnapshot = species ?
+      this.afs.collection(
+        'priceList',
+        ref => ref.where('species', '==', species)
+      ).snapshotChanges() :
+      this.priceListCollection.snapshotChanges();
+    return collectionSnapshot.pipe(
       map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Price;
+        const data = a.payload.doc.data() as PriceList;
         const id = a.payload.doc.id;
         return { id, ...data };
       }))
@@ -35,12 +40,10 @@ export class PriceListService {
 
   newSelect(val: string) {
     this.selectedItem = val;
-    // this.getPriceLists();
-    // this.priceListCollection.ref.doc(val).delete;
   }
 
   getPriceList(id) {
-    return this.priceListCollection.doc<Price>(id).get() as Observable<DocumentSnapshot<any>>;
+    return this.priceListCollection.doc<PriceList>(id).get() as Observable<DocumentSnapshot<any>>;
   }
 
   deletePriceList(priceId) {

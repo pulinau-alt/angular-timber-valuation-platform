@@ -1,12 +1,12 @@
-<div *ngIf="auth.user | async; then authenticated else guest"></div>
+<div *ngIf="auth.user$ | async; then authenticated else guest"></div>
 
 <ng-template #guest>
   <mat-card>
     <mat-card-title>Login</mat-card-title>
-    <mat-card-subtitle>You are about to access a secure area. Please enter your credentials to continue.</mat-card-subtitle>
+    <mat-card-subtitle>You are about to access a secure area. Please sign in to continue.</mat-card-subtitle>
 
     <!-- Login Form -->
-    <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mat-form">
+    <!-- <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mat-form">
       <div class="wrapper">
         <div class="flex-container center">
           <mat-form-field>
@@ -22,12 +22,12 @@
       <div class="wrapper">
         <button mat-raised-button color="primary" type="submit" form="forestForm">LOGIN</button>
       </div>
-    </form>
+    </form> -->
     <!-- /Login Form -->
 
-    <div class="divider">
+    <!-- <div class="divider">
       <mat-divider [inset]="true"></mat-divider>
-    </div>
+    </div> -->
 
     <div class="wrapper">
       <button mat-raised-button color="warn" (click)="googleLogin()">
@@ -39,8 +39,8 @@
 </ng-template>
 
 <ng-template #authenticated>
-  <div *ngIf="auth.user | async as user">
-    <h3>Hello, {{ user.displayName }}</h3>
+  <div *ngIf="auth.user$ | async as user">
+    <h3>Welcome back, {{ user.displayName }}</h3>
     <p>UID: {{ user.uid }}</p>
     <button mat-button color="primary" routerLink="/home">Continue</button>
   </div>

@@ -9,11 +9,6 @@ export const LINKS: Link[] = [
   {
     name: 'Assessments',
     route: 'assessments',
-    icon: 'file_copy'
-  },
-  {
-    name: 'Forests',
-    route: '/',
     icon: 'spa'
   },
   {
@@ -28,7 +23,7 @@ export const LINKS: Link[] = [
   },
   {
     name: 'Reports',
-    route: '/', 
+    route: 'reports',
     icon: 'library_books'
   },
 ];
