@@ -9,8 +9,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SubmissionFormComponent } from './assessments/submission-form/submission-form.component';
 import { ViewComponent } from './assessments/view/view.component';
-import { PriceListFormComponent } from './price-list/price-list-form/price-list-form.component';
+import { NotificationComponent } from './dashboard/notification/notification.component';
 import { PriceListViewComponent } from './price-list/price-list-view/price-list-view.component';
+import { PriceListFormComponent } from './price-list/price-list-form/price-list-form.component';
 import { DevOfficerGuard } from './core/guards/dev-officer.guard';
 import { CreationFormComponent } from './plots/creation-form/creation-form.component';
 import { PlotsViewComponent } from './plots/plots-view/plots-view.component';
@@ -21,10 +22,22 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'home',
-    component: DashboardComponent,
     data: {
       breadcrumb: 'dashboard'
     },
+    children: [
+      {
+        path: '',
+        component: DashboardComponent
+      },
+      {
+        path: 'notify',
+        component: NotificationComponent,
+        data: {
+          breadcrumb: 'notify'
+        },
+      },
+    ],
     canActivate: [AuthGuard]
   },
   {
@@ -63,7 +76,7 @@ const routes: Routes = [
   },
   {
     path: 'plots',
-    data: { breadcrumb: 'plots'},
+    data: { breadcrumb: 'plots' },
     children: [
       {
         path: '',

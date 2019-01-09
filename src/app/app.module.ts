@@ -21,6 +21,17 @@ import { AssessmentsModule } from './assessments/assessments.module';
 import { MaterialModule } from './material.module';
 import { PriceListModule } from './price-list/price-list.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { EmailService } from './email.service';
+
+import { HttpModule } from '@angular/http';
+// ...
+//   imports: [
+//     BrowserModule,
+//     HttpModule,
+//     IonicModule.forRoot(MyApp),
+//     IonicStorageModule.forRoot()
+//   ]
+
 import { SharedModule } from './shared.module';
 import { DevOfficerGuard } from './core/guards/dev-officer.guard';
 import { ReportsModule } from './reports/reports.module';
@@ -28,7 +39,7 @@ import { ReportsModule } from './reports/reports.module';
 @NgModule({
   declarations: [
     AppComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +57,7 @@ import { ReportsModule } from './reports/reports.module';
     DashboardModule,
     AdminModule,
     PlotsModule,
+    HttpModule,
     ReportsModule,
   ],
   providers: [
@@ -54,7 +66,15 @@ import { ReportsModule } from './reports/reports.module';
     DevOfficerGuard,
     ManagerGuard,
     FieldOfficerGuard,
+    EmailService,
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// email
+//set the ...
+// providers: [
+//   EmailService
+// ]
+// ...

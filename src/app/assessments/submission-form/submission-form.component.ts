@@ -1,4 +1,4 @@
-import { PriceList, Girthclass } from './../../core/models/price-list';
+import { PriceList, GirthClass } from './../../core/models/price-list';
 import { PriceListService } from './../../services/price-list.service';
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
@@ -23,7 +23,7 @@ export class SubmissionFormComponent implements OnInit {
   id: String;
   date: FormControl;
   trees: string[];
-  mgClasses: Girthclass[];
+  mgClasses: GirthClass[];
 
   // Forms
   forestForm: FormGroup;
