@@ -61,7 +61,7 @@ export class SubmissionFormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.date = new FormControl('', Validators.required);
+    this.date = new FormControl((new Date()), Validators.required);
 
     this.sub = this.route.queryParams
       .subscribe(params => {
@@ -344,7 +344,6 @@ export class SubmissionFormComponent implements OnInit {
       ///
 
       data['date'] = this.date.value.toISOString();
-      console.log(data);
 
       if (!data['firewood']) {
         delete data['firewood'];
@@ -352,11 +351,10 @@ export class SubmissionFormComponent implements OnInit {
 
       if (this.id === this.forestForm.get('id').value) {
         this.as.updateForest(this.id, data);
-        console.log('Updated');
       } else {
         this.as.addForest(data).then(value => {
-          console.log(value);
           data['id'] = value.id;
+          this.forestForm.get('id').setValue(value.id);
           this.as.updateForest(value.id, data);
         });
       }
