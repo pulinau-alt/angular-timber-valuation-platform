@@ -148,7 +148,7 @@ export class SubmissionFormComponent implements OnInit {
       .subscribe(next => {
         this.forest = next.data();
 
-        this.date.setValue(new Date(this.forest.date).toISOString());
+        this.date.setValue(new Date(this.forest.date));
         this.date.disable();
 
         this.forestForm.get('id').setValue(id);
