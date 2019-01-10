@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
 import { MatTableDataSource } from '@angular/material';
 import { of } from 'rxjs';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-price-list-form',
@@ -44,7 +45,8 @@ export class PriceListFormComponent implements OnInit {
     private pls: PriceListService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public snackBar: MatSnackBar
   ) {
     this.midGirthClasses = [];
   }
@@ -67,8 +69,8 @@ export class PriceListFormComponent implements OnInit {
   private initForm() {
     this.priceListForm = this.fb.group({
       id: new FormControl({ value: '', disabled: true }),
-      species: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*')])],
-      class: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*')])],
+      species: ['', Validators.compose([Validators.required, Validators.pattern('[A-Z][a-z ]*')])],
+      class: ['', Validators.compose([Validators.required, Validators.pattern('[A-Z][a-z ]*')])],
       midGirthClasses: new FormControl(this.girthData),
     });
 
@@ -122,9 +124,18 @@ export class PriceListFormComponent implements OnInit {
     if (this.id = this.priceListForm.get('id').value) {
       console.log(this.pls.updatePriceList(this.id, this.priceListForm.getRawValue()));
       console.log('Updated');
+
+      this.snackBar.open('Successfully Updated', 'OK', {
+        duration: 3000,
+      });
+
     } else {
       if (this.priceListForm.valid) {
         console.log(this.pls.addPriceList(this.priceListForm.value));
+
+        this.snackBar.open('Successfully Saved', 'OK', {
+          duration: 3000,
+        });
       }
     }
     this.router.navigate(['pricelist']);

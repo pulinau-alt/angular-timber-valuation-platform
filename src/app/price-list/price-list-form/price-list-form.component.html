@@ -137,6 +137,6 @@
 
 <!-- Actions -->
 <div class="page-actions">
-  <button mat-raised-button color="primary" type="submit" form="priceListForm" style="margin-right: 15px;">save</button>
+  <button mat-raised-button color="primary" type="submit" form="priceListForm" [disabled]="!priceListForm.valid" style="margin-right: 15px;">save</button>
   <button mat-raised-button (click)="onCancelClicked()">cancel</button>
 </div>
