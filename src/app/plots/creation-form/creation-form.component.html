@@ -143,61 +143,61 @@
             <form >
               <div class="line">
                 <mat-form-field class="field-width">
-                    <input [(ngModel)]="tree" matInput name="tree" placeholder="Trees" required pattern="[0-9]*">
+                    <input [(ngModel)]="tree" matInput name="tree" placeholder="Trees" required pattern="[0-9]+">
                   </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="species" matInput name="species" placeholder="Species" required pattern="[0-9]*">
+                    <input [(ngModel)]="species" matInput name="species" placeholder="Species" required pattern="[0-9]+">
                   </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="dbh" matInput name="dbh" placeholder="dbh" required pattern="[0-9]*">
+                  <input [(ngModel)]="dbh" matInput name="dbh" placeholder="dbh" required pattern="[0-9]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="dh" matInput name="dh" placeholder="Dom/Health" required pattern="[A-Z]*">
+                  <input [(ngModel)]="dh" matInput name="dh" placeholder="Dom/Health" required pattern="[A-Z]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="boForm" matInput  name="boForm" placeholder="Bole Form" required pattern="[A-Z]*">
+                  <input [(ngModel)]="boForm" matInput  name="boForm" placeholder="Bole Form" required pattern="[A-Z]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="dmg" matInput name="dmg" placeholder="Damage" required pattern="[A-Z]*">
+                  <input [(ngModel)]="dmg" matInput name="dmg" placeholder="Damage" required pattern="[A-Z]+">
                 </mat-form-field>
               </div>
 
               <div class="line">
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="blA" matInput name="blA" placeholder="Baseline a" pattern="[0-9]*">
+                  <input [(ngModel)]="blA" matInput name="blA" placeholder="Baseline a" pattern="[0-9]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="slA" matInput name="slA" placeholder="Slope a" pattern="[0-9]*">
+                  <input [(ngModel)]="slA" matInput name="slA" placeholder="Slope a" pattern="[0-9]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="bsA" matInput name="bsA" placeholder="Base a" pattern="[0-9]*">
+                  <input [(ngModel)]="bsA" matInput name="bsA" placeholder="Base a" pattern="[0-9]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="tpA" matInput name="tpA" placeholder="Tip a" pattern="[0-9]*">
+                  <input [(ngModel)]="tpA" matInput name="tpA" placeholder="Tip a" pattern="[0-9]+">
                 </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="blB" matInput  name="blB" placeholder="Baseline b" pattern="[0-9]*">
+                    <input [(ngModel)]="blB" matInput  name="blB" placeholder="Baseline b" pattern="[0-9]+">
                   </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="slB" matInput name="slB" placeholder="Slope b" pattern="[0-9]*">
+                    <input [(ngModel)]="slB" matInput name="slB" placeholder="Slope b" pattern="[0-9]+">
                   </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="bsB" matInput  name="bsB" placeholder="Base b" pattern="[0-9]*">
+                    <input [(ngModel)]="bsB" matInput  name="bsB" placeholder="Base b" pattern="[0-9]+">
                   </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="tpB" matInput name="tpB" placeholder="Tip b" pattern="[0-9]*">
+                    <input [(ngModel)]="tpB" matInput name="tpB" placeholder="Tip b" pattern="[0-9]+">
                   </mat-form-field>
 
                   <button mat-mini-fab color="primary" (click)="addPlotData()" type="submit">+</button>
