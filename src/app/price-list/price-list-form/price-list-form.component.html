@@ -1,141 +1,142 @@
+<h3 mat-title style="display: inline-block;">Change Price List Table</h3>
+<span *ngIf="!editable">
+  <button mat-button style="max-width: 4px; float: right;" (click)="onEditClicked()">
+    <mat-icon>edit</mat-icon>
+  </button>
+</span>
 
-  <h3 mat-title style="display: inline-block;">Change Price List Table</h3>
-  <span *ngIf="!editable">
-    <button mat-button style="max-width: 4px; float: right;" (click)="onEditClicked()">
-      <mat-icon>edit</mat-icon>
-    </button>
-  </span>
+<mat-card>
 
-  <mat-card>
+  <!-- Main Form class and species-->
+  <form id="priceListForm" [formGroup]="priceListForm" (ngSubmit)="onSubmit()" class="mat-form">
+    <div class="line">
 
-    <!-- Main Form class and species-->
-    <form id="priceListForm" [formGroup]="priceListForm" (ngSubmit)="onSubmit()" class="mat-form">
-      <div class="line">
+      <mat-form-field>
+        <input formControlName="class" matInput placeholder="Class">
+        <mat-error *ngIf="priceListForm.get('class').invalid">{{ getErrorMessage(priceListForm.get('class')) }}</mat-error>
+      </mat-form-field>
 
-        <mat-form-field>
-          <input formControlName="species" matInput placeholder="Species">
-        </mat-form-field>
+      <mat-form-field>
+        <input formControlName="species" matInput placeholder="Species">
+        <mat-error *ngIf="priceListForm.get('species').invalid">{{ getErrorMessage(priceListForm.get('species')) }}</mat-error>
+      </mat-form-field>
 
-        <mat-form-field>
-          <input formControlName="class" matInput placeholder="Class">
-        </mat-form-field>
-
-      </div>
-    </form>
-    <br>
-    <mat-divider></mat-divider>
-    <br>
-    <!-- girth classes and prices form -->
-    <form>
-      <div class="line">
-
-        <mat-form-field>
-          <input [(ngModel)]="minGirth" matInput name="minGirth" placeholder="Min Girth" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input [(ngModel)]="maxGirth" matInput name="maxGirth" placeholder="Max Girth" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input [(ngModel)]="price" matInput name="price" placeholder="Avg.Selling price" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input [(ngModel)]="operationCost" matInput name="operationCost" placeholder="Operation Cost" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input [(ngModel)]="otherCost" matInput name="otherCost" placeholder="Other Cost" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input [(ngModel)]="overHeadCost" matInput name="overHeadCost" placeholder="Over Head Cost" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input [(ngModel)]="stumpageVal" matInput name="stumpageVal" placeholder="stumpage Value" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input [(ngModel)]="profit" matInput name="profit" placeholder="Profit" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input [(ngModel)]="stumpage" matInput name="stumpage" placeholder="Stumpage" required>
-        </mat-form-field>
-
-        <button mat-mini-fab color="primary" (click)="addGirthData()" type="submit">+</button>
-      </div>
-    </form>
-
-    <!-- showin newly added items for girth class  -->
-    <div *ngIf="show">
-      <table mat-table [dataSource]="girthDataTable" style="width: 100%">
-        
-        <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let row">
-            <button mat-button color="warn" (click)="deletePlotData(row)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="minGirth">
-          <th mat-header-cell *matHeaderCellDef> Min Girth </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.minGirth}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="maxGirth">
-          <th mat-header-cell *matHeaderCellDef> Max Girth </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.maxGirth}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef> Avg.price </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.price}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="otherCost">
-          <th mat-header-cell *matHeaderCellDef> Other Cost </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.otherCost}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="overHeadCost">
-          <th mat-header-cell *matHeaderCellDef> Over Head Cost </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.overHeadCost}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="operationCost">
-          <th mat-header-cell *matHeaderCellDef> Operation Cost </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.operationCost}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="stumpageVal">
-          <th mat-header-cell *matHeaderCellDef> Stumpage Val </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.stumpageVal}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="profit">
-          <th mat-header-cell *matHeaderCellDef> Profit </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.profit}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="stumpage">
-          <th mat-header-cell *matHeaderCellDef> Stumpage </th>
-          <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.stumpage}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="girthDispalayedClumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: girthDispalayedClumns;"></tr>
-      </table>
     </div>
+  </form>
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <!-- girth classes and prices form -->
+  <form>
+    <div class="line">
 
-  </mat-card>
+      <mat-form-field>
+        <input [(ngModel)]="minGirth" matInput name="minGirth" placeholder="Min Girth" required pattern="[0-9]+">
+      </mat-form-field>
 
-  <!-- Actions -->
-  <div class="page-actions">
-    <button mat-raised-button color="primary" type="submit" form="priceListForm" style="margin-right: 15px;">save</button>
-    <button mat-raised-button (click)="onCancelClicked()">cancel</button>
+      <mat-form-field>
+        <input [(ngModel)]="maxGirth" matInput name="maxGirth" placeholder="Max Girth" required pattern="[0-9]+">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input [(ngModel)]="price" matInput name="price" placeholder="Avg.Selling price" required pattern="[0-9]+">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input [(ngModel)]="operationCost" matInput name="operationCost" placeholder="Operation Cost" required pattern="[0-9]+">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input [(ngModel)]="otherCost" matInput name="otherCost" placeholder="Other Cost" required pattern="[0-9]+">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input [(ngModel)]="overHeadCost" matInput name="overHeadCost" placeholder="Over Head Cost" required pattern="[0-9]+">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input [(ngModel)]="stumpageVal" matInput name="stumpageVal" placeholder="stumpage Value" required pattern="[0-9]+">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input [(ngModel)]="profit" matInput name="profit" placeholder="Profit" required pattern="[0-9]+">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input [(ngModel)]="stumpage" matInput name="stumpage" placeholder="Stumpage" required pattern="[0-9]+">
+      </mat-form-field>
+
+      <button mat-mini-fab color="primary" (click)="addGirthData()" type="submit">+</button>
+    </div>
+  </form>
+
+  <!-- showin newly added items for girth class  -->
+  <div *ngIf="show">
+    <table mat-table [dataSource]="girthDataTable" style="width: 100%">
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-button color="warn" (click)="deletePlotData(row)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="minGirth">
+        <th mat-header-cell *matHeaderCellDef> Min Girth </th>
+        <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.minGirth}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="maxGirth">
+        <th mat-header-cell *matHeaderCellDef> Max Girth </th>
+        <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.maxGirth}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Avg.price </th>
+        <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.price}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="otherCost">
+        <th mat-header-cell *matHeaderCellDef> Other Cost </th>
+        <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.otherCost}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="overHeadCost">
+        <th mat-header-cell *matHeaderCellDef> Over Head Cost </th>
+        <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.overHeadCost}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="operationCost">
+        <th mat-header-cell *matHeaderCellDef> Operation Cost </th>
+        <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.operationCost}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stumpageVal">
+        <th mat-header-cell *matHeaderCellDef> Stumpage Val </th>
+        <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.stumpageVal}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="profit">
+        <th mat-header-cell *matHeaderCellDef> Profit </th>
+        <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.profit}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stumpage">
+        <th mat-header-cell *matHeaderCellDef> Stumpage </th>
+        <td mat-cell *matCellDef="let midGirthClasses"> {{midGirthClasses.stumpage}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="girthDispalayedClumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: girthDispalayedClumns;"></tr>
+    </table>
   </div>
+
+</mat-card>
+
+<!-- Actions -->
+<div class="page-actions">
+  <button mat-raised-button color="primary" type="submit" form="priceListForm" style="margin-right: 15px;">save</button>
+  <button mat-raised-button (click)="onCancelClicked()">cancel</button>
+</div>

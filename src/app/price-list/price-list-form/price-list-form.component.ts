@@ -67,8 +67,8 @@ export class PriceListFormComponent implements OnInit {
   private initForm() {
     this.priceListForm = this.fb.group({
       id: new FormControl({ value: '', disabled: true }),
-      species: ['', [Validators.required, Validators.pattern('[a-z]*')]],
-      class: ['', [Validators.required, Validators.pattern('[a-z]*')]],
+      species: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*')])],
+      class: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*')])],
       midGirthClasses: new FormControl(this.girthData),
     });
 
@@ -170,5 +170,10 @@ export class PriceListFormComponent implements OnInit {
   onCancelClicked() {
     this.router.navigate(['pricelist']);
     this.priceListForm.reset();
+  }
+
+  getErrorMessage(fc: FormControl) {
+    return fc.hasError('required') ? 'This field is required' :
+      fc.hasError('pattern') ? 'Invalid input' :'';
   }
 }
