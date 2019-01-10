@@ -1,4 +1,6 @@
-<mat-card>
+<mat-expansion-panel [expanded]="!report">
+
+  <mat-expansion-panel-header>Generate Report</mat-expansion-panel-header>
 
   <form [formGroup]="generateForm">
     <div class="form-field-container">
@@ -24,7 +26,6 @@
   
       <button mat-raised-button class="generate-button" type="submit" color="primary" (click)="onSubmit()">generate</button>
     </div>
-
   </form>
 
-</mat-card>
+</mat-expansion-panel>

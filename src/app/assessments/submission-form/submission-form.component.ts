@@ -7,7 +7,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentSnapshot } from '@angular/fire/firestore';
 import { TreeService } from '../../services/tree.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Forest, Tree, Log, TransmissionPole, RoundPole, FencePost } from '../../core/models/forest';
 
 @Component({
@@ -55,13 +55,14 @@ export class SubmissionFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
+    public snackBar: MatSnackBar,
   ) {
     this.trees = [];
   }
 
   ngOnInit() {
     this.initForm();
-    this.date = new FormControl('', Validators.required);
+    this.date = new FormControl((new Date()), Validators.required);
 
     this.sub = this.route.queryParams
       .subscribe(params => {
@@ -97,7 +98,7 @@ export class SubmissionFormComponent implements OnInit {
       ])],
       sBlock: ['', Validators.compose([
         Validators.required,
-        Validators.pattern('[0-9]+')
+        Validators.pattern('[0-9]+[A-Z]?')
       ])],
       firewood: ['', Validators.pattern('[0-9]*\.?[0-9]+')],
     });
@@ -148,8 +149,8 @@ export class SubmissionFormComponent implements OnInit {
       .subscribe(next => {
         this.forest = next.data();
 
-        this.date.setValue(new Date(this.forest.date).toISOString());
         this.date.disable();
+        this.date.setValue(new Date(this.forest.date));
 
         this.forestForm.get('id').setValue(id);
         this.forestForm.get('division').setValue(this.forest.division);
@@ -259,6 +260,8 @@ export class SubmissionFormComponent implements OnInit {
   }
 
   onSubmit() {
+    let message: string;
+
     if (this.forestForm.valid) {
       const data = Object(this.forestForm.value);
       let objMap: Map<string, any[]>;
@@ -344,7 +347,6 @@ export class SubmissionFormComponent implements OnInit {
       ///
 
       data['date'] = this.date.value.toISOString();
-      console.log(data);
 
       if (!data['firewood']) {
         delete data['firewood'];
@@ -352,18 +354,28 @@ export class SubmissionFormComponent implements OnInit {
 
       if (this.id === this.forestForm.get('id').value) {
         this.as.updateForest(this.id, data);
-        console.log('Updated');
+        message = 'Successfully updated';
       } else {
         this.as.addForest(data).then(value => {
-          console.log(value);
           data['id'] = value.id;
+          this.forestForm.get('id').setValue(value.id);
           this.as.updateForest(value.id, data);
+          message = 'Successfully added';
         });
       }
       this.forestForm.disable();
       this.date.disable();
       this.editable = false;
+    } else {
+      message = 'Please check your entries and try again';
     }
+    this.openSnackBar(message);
+  }
+
+  private openSnackBar(message: string, action: string = 'Close') {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
   onEditClicked() {
@@ -388,23 +400,31 @@ export class SubmissionFormComponent implements OnInit {
     this.loadDataSources();
   }
 
-  // Log operations
+  private addField(form: FormGroup, fieldArray: any[]) {
+    if (form.valid) {
+      fieldArray.push(form.value);
+      return this.loadDataSource(fieldArray);
+    }
+  }
+
+  private deleteField(fieldArray, row) {
+    fieldArray.splice(fieldArray.indexOf(row), 1);
+    return this.loadDataSource(fieldArray);
+  }
+
+  /// Log operations
 
   addLogField() {
     if (this.logForm.valid) {
-      this.logsFieldArray.push(this.logForm.value);
-      this.logsDataSource = this.loadDataSource(this.logsFieldArray);
+      this.logsDataSource = this.addField(this.logForm, this.logsFieldArray);
 
       this.logForm.get('mgClass').setValue(null);
       this.logForm.get('volume').setValue(null);
-      this.logForm.get('mgClass').setValidators(null);
-      this.logForm.get('volume').setValidators(null);
     }
   }
 
   deleteLogField(row) {
-    this.logsFieldArray.splice(this.logsFieldArray.indexOf(row), 1);
-    this.logsDataSource = this.loadDataSource(this.logsFieldArray);
+    this.logsDataSource = this.deleteField(this.logsFieldArray, row);
   }
 
   // Populate girth classes list
@@ -423,12 +443,11 @@ export class SubmissionFormComponent implements OnInit {
 
   ///
 
-  // Transmission Poles operations
+  /// Transmission Poles operations
 
   addTPField() {
     if (this.tpForm.valid) {
-      this.tpFieldArray.push(this.tpForm.value);
-      this.tpDataSource = this.loadDataSource(this.tpFieldArray);
+      this.tpDataSource = this.addField(this.tpForm, this.tpFieldArray);
 
       this.tpForm.get('tpCategory').setValue(null);
       this.tpForm.get('tpQty').setValue(null);
@@ -436,18 +455,16 @@ export class SubmissionFormComponent implements OnInit {
   }
 
   deleteTPField(row) {
-    this.tpFieldArray.splice(this.tpFieldArray.indexOf(row), 1);
-    this.tpDataSource = this.loadDataSource(this.tpFieldArray);
+    this.tpDataSource = this.deleteField(this.tpFieldArray, row);
   }
 
   ///
 
-  // Round Pole operations
+  /// Round Pole operations
 
   addRPField() {
     if (this.rpForm.valid) {
-      this.rpFieldArray.push(this.rpForm.value);
-      this.rpDataSource = this.loadDataSource(this.rpFieldArray);
+      this.rpDataSource = this.addField(this.rpForm, this.rpFieldArray);
 
       this.rpForm.get('class').setValue(null);
       this.rpForm.get('qty').setValue(null);
@@ -455,18 +472,16 @@ export class SubmissionFormComponent implements OnInit {
   }
 
   deleteRPField(row) {
-    this.rpFieldArray.splice(this.rpFieldArray.indexOf(row), 1);
-    this.rpDataSource = this.loadDataSource(this.rpFieldArray);
+    this.rpDataSource = this.deleteField(this.rpFieldArray, row);
   }
 
   ///
 
-  // Fence Post operations
+  /// Fence Post operations
 
   addFPField() {
     if (this.fpForm.valid) {
-      this.fpFieldArray.push(this.fpForm.value);
-      this.fpDataSource = this.loadDataSource(this.fpFieldArray);
+      this.fpDataSource = this.addField(this.fpForm, this.fpFieldArray);
 
       this.fpForm.get('class').setValue(null);
       this.fpForm.get('qty').setValue(null);
@@ -474,8 +489,7 @@ export class SubmissionFormComponent implements OnInit {
   }
 
   deleteFPField(row) {
-    this.fpFieldArray.splice(this.fpFieldArray.indexOf(row), 1);
-    this.fpDataSource = this.loadDataSource(this.fpFieldArray);
+    this.fpDataSource = this.deleteField(this.fpFieldArray, row);
   }
 
   ///

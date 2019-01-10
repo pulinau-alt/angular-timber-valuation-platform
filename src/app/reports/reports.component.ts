@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Report } from '../core/models/report';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-reports',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportsComponent implements OnInit {
 
+  report$: Observable<Report>;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  recieveReport($event) {
+    this.report$ = $event;
   }
 
 }

@@ -10,27 +10,16 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
-
   constructor(private fb: FormBuilder, private auth: AuthService, private route: Router) {
-    this.initForm();
+  }
+
+  ngOnInit() {
+    if (this.auth.isAuthenticated()) { this.route.navigate(['']); }
   }
 
   public googleLogin() {
     this.auth.googleLogin();
-
-    this.route.navigate(['home']);
-  }
-
-  async ngOnInit() {
-    if (this.auth.isAuthenticated()) { this.route.navigate(['']); }
-  }
-
-  private initForm() {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+    this.auth.user$.subscribe(user => console.log(user.roles));
   }
 
 }

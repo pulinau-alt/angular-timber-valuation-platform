@@ -9,10 +9,21 @@
   margin: auto 8px;
 }
 
-.page-actions > * {
-  margin-right: 6px;
+.page-actions {
+  > * {
+    margin-right: 8px;
+  }
+  > .left-button {
+    margin-right: 16px;
+  }
 }
+
 
 .hidden {
   display: none;
+}
+
+.add-button {
+  margin-top: 6.75px;
+  margin-left: 8px;
 }

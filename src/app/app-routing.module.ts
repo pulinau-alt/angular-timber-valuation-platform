@@ -1,3 +1,4 @@
+import { ViewReportComponent } from './reports/view-report/view-report.component';
 import { ManagerGuard } from './core/guards/manager.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
@@ -93,7 +94,9 @@ const routes: Routes = [
     path: 'reports',
     component: ReportsComponent,
     data: { breadcrumb: 'reports' },
-    children: [],
+    children: [
+      { path: '', component: ViewReportComponent, }
+    ],
     canActivate: [AuthGuard],
   },
 ];

@@ -10,29 +10,18 @@ import { map } from 'rxjs/operators';
 export class ReportsService {
 
   private reportsCollection: AngularFirestoreCollection<Report>;
-  report$: Observable<Report>;
+  forest$: Observable<Report>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(afs: AngularFirestore) {
     this.reportsCollection = afs.collection('reports');
   }
 
-  addReport(report) {
-    return this.reportsCollection.add(report);
+  addReport(forest) {
+    return this.reportsCollection.add(forest);
   }
 
-  getReport(id) {
-    return this.reportsCollection.doc<Report>(id).get() as Observable<DocumentSnapshot<any>>;
-  }
-
-  getReports(region?: string) {
-    const collectionSnapshot = region ?
-      this.afs.collection(
-        'reports',
-        ref => ref.where('region', '==', region)
-      ).snapshotChanges() :
-      this.reportsCollection.snapshotChanges();
-
-    return collectionSnapshot.pipe(
+  getReports(): Observable<Report[]> {
+    return this.reportsCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Report;
         const id = a.payload.doc.id;
@@ -41,11 +30,16 @@ export class ReportsService {
     );
   }
 
-  updateReport(id, data) {
-    this.reportsCollection.doc(id).update(data);
+  getForest(id) {
+    return this.reportsCollection.doc<Report>(id).get() as Observable<DocumentSnapshot<any>>;
   }
 
   deleteReport(id) {
     this.reportsCollection.ref.doc(id).delete();
   }
+
+  updateReport(id, data) {
+    this.reportsCollection.doc(id).update(data);
+  }
+
 }

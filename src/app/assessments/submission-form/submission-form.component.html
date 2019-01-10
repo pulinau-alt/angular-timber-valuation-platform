@@ -51,342 +51,347 @@
   </form>
 </mat-card>
 
-<!-- Logs -->
-<h4>Logs</h4>
+<mat-accordion multi="true">
+  <!-- Logs -->
+  <mat-expansion-panel [expanded]="forest">
+    <mat-expansion-panel-header>Logs</mat-expansion-panel-header>
 
-<mat-card>
-  <form *ngIf="editable" id="logForm" [formGroup]="logForm">
+    <form *ngIf="editable" id="logForm" [formGroup]="logForm">
 
-    <div class="form-field-container">
-      <mat-form-field style="width: 12em">
-        <mat-select formControlName="species" placeholder="Species" (selectionChange)="loadMidGirthClasses()">
-          <mat-option *ngFor='let tree of trees' [value]="tree">{{ tree }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="logForm.get('species').invalid">{{ getErrorMessage(logForm.get('species')) }}</mat-error>
-      </mat-form-field>
+      <div class="form-field-container">
+        <mat-form-field style="width: 12em">
+          <mat-select formControlName="species" placeholder="Species" (selectionChange)="loadMidGirthClasses()">
+            <mat-option *ngFor='let tree of trees' [value]="tree">{{ tree }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="logForm.get('species').invalid">{{ getErrorMessage(logForm.get('species')) }}</mat-error>
+        </mat-form-field>
 
-      <mat-form-field style="width: 7.5em">
-        <mat-select formControlName="mgClass" placeholder="Mid-Girth Class">
-          <mat-option *ngFor='let class of mgClasses' [value]="class">{{ class.minGirth }} - {{ class.maxGirth }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="logForm.get('mgClass').invalid">{{ getErrorMessage(logForm.get('mgClass')) }}</mat-error>
-      </mat-form-field>
+        <mat-form-field style="width: 7.5em">
+          <mat-select formControlName="mgClass" placeholder="Mid-Girth Class">
+            <mat-option *ngFor='let class of mgClasses' [value]="class">{{ class.minGirth }} - {{ class.maxGirth }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="logForm.get('mgClass').invalid">{{ getErrorMessage(logForm.get('mgClass')) }}</mat-error>
+        </mat-form-field>
 
-      <mat-form-field style="width: 8.3em;">
-        <input matInput formControlName="volume" placeholder="Felled Volume">
+        <mat-form-field style="width: 8.3em;">
+          <input matInput formControlName="volume" type="number" placeholder="Felled Volume">
+          <span matSuffix>m<sup>3</sup></span>
+          <mat-error *ngIf="logForm.get('volume').invalid">{{ getErrorMessage(logForm.get('volume')) }}</mat-error>
+        </mat-form-field>
+
+        <button mat-mini-fab color="primary" class="add-button" (click)="addLogField()" form="logForm">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    </form>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-7">
+        <div class="table-container">
+          <table mat-table [dataSource]="logsDataSource" [class.isMobile]="isMobile">
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row">
+                <button *ngIf="editable" mat-button color="warn" (click)="deleteLogField(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="species">
+              <th mat-header-cell *matHeaderCellDef> Species </th>
+              <td mat-cell *matCellDef="let log">
+                <span class="mobile-label">Species:</span>
+                {{ log.species }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="mgClass">
+              <th mat-header-cell *matHeaderCellDef> Mid-Girth Class </th>
+              <td mat-cell *matCellDef="let log">
+                <span class="mobile-label">Mid-Girth Class:</span>
+                {{ log.mgClass.minGirth }} - {{ log.mgClass.maxGirth }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="volume">
+              <th mat-header-cell *matHeaderCellDef>
+                Felled Volume
+              </th>
+              <td mat-cell *matCellDef="let log">
+                <span class="mobile-label">Volume:<br></span>
+                {{ log.volume }}
+                <span matSuffix>m<sup>3</sup></span>
+                <br class="mobile-label">
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="logsDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: logsDisplayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <!-- /Logs -->
+
+  <!-- Transmission Poles -->
+  <mat-expansion-panel [expanded]="forest">
+    <mat-expansion-panel-header>Transmission Poles</mat-expansion-panel-header>
+
+    <form *ngIf="editable" id="tpForm" [formGroup]="tpForm">
+
+      <div class="form-field-container">
+        <mat-form-field style="width: 12em">
+          <mat-select formControlName="species" placeholder="Species">
+            <mat-option *ngFor='let tree of trees' [value]="tree">{{ tree }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="tpForm.get('species').invalid">{{ getErrorMessage(tpForm.get('species')) }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 7.5em">
+          <input matInput formControlName="tpCategory" placeholder="Category">
+          <mat-error *ngIf="tpForm.get('tpCategory').invalid">{{ getErrorMessage(tpForm.get('tpCategory')) }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 8.3em;">
+          <input matInput formControlName="tpQty" type="number" placeholder="Quantity">
+          <mat-error *ngIf="tpForm.get('tpQty').invalid">{{ getErrorMessage(tpForm.get('tpQty')) }}</mat-error>
+        </mat-form-field>
+        <button mat-mini-fab color="primary" class="add-button" (click)="addTPField()" form="tpForm">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    </form>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-7">
+        <div class="table-container">
+          <table mat-table [dataSource]="tpDataSource" [class.isMobile]="isMobile">
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row">
+                <button *ngIf="editable" mat-button color="warn" (click)="deleteTPField(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="species">
+              <th mat-header-cell *matHeaderCellDef> Species </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">Species:</span>
+                {{ row.species }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tpCategory">
+              <th mat-header-cell *matHeaderCellDef> Category </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">Category:</span>
+                {{ row.tpCategory }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tpQty">
+              <th mat-header-cell *matHeaderCellDef>Quantity</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">Quantity:<br></span>
+                {{ row.tpQty }}
+                <br class="mobile-label">
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="tpDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: tpDisplayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <!-- /Transmission Poles -->
+
+  <!-- Round Poles -->
+  <mat-expansion-panel [expanded]="forest">
+    <mat-expansion-panel-header>Round Poles</mat-expansion-panel-header>
+
+    <form *ngIf="editable" id="rpForm" [formGroup]="rpForm">
+
+      <div class="form-field-container">
+        <mat-form-field style="width: 12em">
+          <mat-select formControlName="species" placeholder="Species">
+            <mat-option *ngFor='let tree of trees' [value]="tree">{{ tree }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="rpForm.get('species').invalid">{{ getErrorMessage(rpForm.get('species')) }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 7.5em">
+          <input matInput formControlName="class" placeholder="Class">
+          <mat-error *ngIf="rpForm.get('class').invalid">{{ getErrorMessage(rpForm.get('class')) }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 8.3em;">
+          <input matInput formControlName="qty" type="number" placeholder="Quantity">
+          <mat-error *ngIf="rpForm.get('qty').invalid">{{ getErrorMessage(rpForm.get('qty')) }}</mat-error>
+        </mat-form-field>
+        <button mat-mini-fab color="primary" class="add-button" (click)="addRPField()" form="rpForm">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    </form>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-7">
+        <div class="table-container">
+          <table mat-table [dataSource]="rpDataSource" [class.isMobile]="isMobile">
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row">
+                <button *ngIf="editable" mat-button color="warn" (click)="deleteRPField(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="species">
+              <th mat-header-cell *matHeaderCellDef> Species </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">Species:</span>
+                {{ row.species }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="class">
+              <th mat-header-cell *matHeaderCellDef> Class </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">Class:</span>
+                {{ row.class }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="qty">
+              <th mat-header-cell *matHeaderCellDef>Quantity</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">Quantity:<br></span>
+                {{ row.qty }}
+                <br class="mobile-label">
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="rpDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: rpDisplayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <!-- /Round Poles -->
+
+  <!-- Fence Posts -->
+
+  <mat-expansion-panel [expanded]="forest">
+    <mat-expansion-panel-header>Fence Posts</mat-expansion-panel-header>
+    <form *ngIf="editable" id="fpForm" [formGroup]="fpForm">
+
+      <div class="form-field-container">
+        <mat-form-field style="width: 12em">
+          <mat-select formControlName="species" placeholder="Species">
+            <mat-option *ngFor='let tree of trees' [value]="tree">{{ tree }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="fpForm.get('species').invalid">{{ getErrorMessage(fpForm.get('species')) }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 7.5em">
+          <input matInput formControlName="class" placeholder="Class">
+          <mat-error *ngIf="fpForm.get('class').invalid">{{ getErrorMessage(fpForm.get('class')) }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 8.3em;">
+          <input matInput formControlName="qty" type="number" placeholder="Quantity">
+          <mat-error *ngIf="fpForm.get('qty').invalid">{{ getErrorMessage(fpForm.get('qty')) }}</mat-error>
+        </mat-form-field>
+        <button mat-mini-fab color="primary" class="add-button" (click)="addFPField()" form="fpForm">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    </form>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-7">
+        <div class="table-container">
+          <table mat-table [dataSource]="fpDataSource" [class.isMobile]="isMobile">
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row">
+                <button *ngIf="editable" mat-button color="warn" (click)="deleteFPField(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="species">
+              <th mat-header-cell *matHeaderCellDef> Species </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">Species:</span>
+                {{ row.species }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="class">
+              <th mat-header-cell *matHeaderCellDef> Class </th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">Class:</span>
+                {{ row.class }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="qty">
+              <th mat-header-cell *matHeaderCellDef>Quantity</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="mobile-label">Quantity:<br></span>
+                {{ row.qty }}
+                <br class="mobile-label">
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="fpDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: fpDisplayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <!-- /Fence Posts -->
+
+  <!-- Firewood -->
+  <mat-expansion-panel [expanded]="forest">
+    <mat-expansion-panel-header>
+      Firewood
+    </mat-expansion-panel-header>
+    <div [formGroup]="forestForm">
+      <mat-form-field>
+        <input matInput formControlName="firewood" type="number" placeholder="Volume" form="forestForm">
+        <mat-error *ngIf="forestForm.get('firewood').invalid">{{ getErrorMessage(forestForm.get('firewood')) }}</mat-error>
         <span matSuffix>m<sup>3</sup></span>
-        <mat-error *ngIf="logForm.get('volume').invalid">{{ getErrorMessage(logForm.get('volume')) }}</mat-error>
       </mat-form-field>
-      <button mat-mini-fab color="primary" (click)="addLogField()" form="logForm">
-        <mat-icon>add</mat-icon>
-      </button>
     </div>
+  </mat-expansion-panel>
+  <!-- /Firewood -->
 
-  </form>
+  <!-- Actions -->
+  <mat-action-row class="page-actions">
+    <button *ngIf="editable" mat-raised-button class="left-button" color="warn" style="float: left;" (click)="onResetClicked()">clear values</button>
+    <button *ngIf="editable" mat-raised-button color="primary" type="submit" form="forestForm">save</button>
+    <button *ngIf="!editable" mat-raised-button color="primary" routerLink="/assessments">done</button>
+    <button *ngIf="editable" mat-raised-button (click)="onCancelClicked()">cancel</button>
+  </mat-action-row>
 
-  <div class="row">
-    <div class="col-sm-12 col-md-7">
-      <div class="table-container">
-        <table mat-table [dataSource]="logsDataSource" [class.isMobile]="isMobile">
-
-          <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let row">
-              <button *ngIf="editable" mat-button color="warn" (click)="deleteLogField(row)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="species">
-            <th mat-header-cell *matHeaderCellDef> Species </th>
-            <td mat-cell *matCellDef="let log">
-              <span class="mobile-label">Species:</span>
-              {{ log.species }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="mgClass">
-            <th mat-header-cell *matHeaderCellDef> Mid-Girth Class </th>
-            <td mat-cell *matCellDef="let log">
-              <span class="mobile-label">Mid-Girth Class:</span>
-              {{ log.mgClass.minGirth }} - {{ log.mgClass.maxGirth }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="volume">
-            <th mat-header-cell *matHeaderCellDef>
-              Felled Volume
-            </th>
-            <td mat-cell *matCellDef="let log">
-              <span class="mobile-label">Volume:<br></span>
-              {{ log.volume }}
-              <span matSuffix>m<sup>3</sup></span>
-              <br class="mobile-label">
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="logsDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: logsDisplayedColumns;"></tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</mat-card>
-<!-- /Logs -->
-
-<!-- Transmission Poles -->
-<h4>Transmission Poles</h4>
-
-<mat-card>
-  <form *ngIf="editable" id="tpForm" [formGroup]="tpForm">
-
-    <div class="form-field-container">
-      <mat-form-field style="width: 12em">
-        <mat-select formControlName="species" placeholder="Species">
-          <mat-option *ngFor='let tree of trees' [value]="tree">{{ tree }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="tpForm.get('species').invalid">{{ getErrorMessage(tpForm.get('species')) }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field style="width: 7.5em">
-        <input matInput formControlName="tpCategory" placeholder="Category">
-        <mat-error *ngIf="tpForm.get('tpCategory').invalid">{{ getErrorMessage(tpForm.get('tpCategory')) }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field style="width: 8.3em;">
-        <input matInput formControlName="tpQty" placeholder="Quantity">
-        <mat-error *ngIf="tpForm.get('tpQty').invalid">{{ getErrorMessage(tpForm.get('tpQty')) }}</mat-error>
-      </mat-form-field>
-      <button mat-mini-fab color="primary" (click)="addTPField()" form="tpForm">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-
-  </form>
-
-  <div class="row">
-    <div class="col-sm-12 col-md-7">
-      <div class="table-container">
-        <table mat-table [dataSource]="tpDataSource" [class.isMobile]="isMobile">
-
-          <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let row">
-              <button *ngIf="editable" mat-button color="warn" (click)="deleteTPField(row)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="species">
-            <th mat-header-cell *matHeaderCellDef> Species </th>
-            <td mat-cell *matCellDef="let row">
-              <span class="mobile-label">Species:</span>
-              {{ row.species }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="tpCategory">
-            <th mat-header-cell *matHeaderCellDef> Category </th>
-            <td mat-cell *matCellDef="let row">
-              <span class="mobile-label">Category:</span>
-              {{ row.tpCategory }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="tpQty">
-            <th mat-header-cell *matHeaderCellDef>Quantity</th>
-            <td mat-cell *matCellDef="let row">
-              <span class="mobile-label">Quantity:<br></span>
-              {{ row.tpQty }}
-              <br class="mobile-label">
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="tpDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: tpDisplayedColumns;"></tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</mat-card>
-<!-- /Transmission Poles -->
-
-<!-- Round Poles -->
-<h4>Round Poles</h4>
-
-<mat-card>
-  <form *ngIf="editable" id="rpForm" [formGroup]="rpForm">
-
-    <div class="form-field-container">
-      <mat-form-field style="width: 12em">
-        <mat-select formControlName="species" placeholder="Species">
-          <mat-option *ngFor='let tree of trees' [value]="tree">{{ tree }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="rpForm.get('species').invalid">{{ getErrorMessage(rpForm.get('species')) }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field style="width: 7.5em">
-        <input matInput formControlName="class" placeholder="Class">
-        <mat-error *ngIf="rpForm.get('class').invalid">{{ getErrorMessage(rpForm.get('class')) }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field style="width: 8.3em;">
-        <input matInput formControlName="qty" placeholder="Quantity">
-        <mat-error *ngIf="rpForm.get('qty').invalid">{{ getErrorMessage(rpForm.get('qty')) }}</mat-error>
-      </mat-form-field>
-      <button mat-mini-fab color="primary" (click)="addRPField()" form="rpForm">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-
-  </form>
-
-  <div class="row">
-    <div class="col-sm-12 col-md-7">
-      <div class="table-container">
-        <table mat-table [dataSource]="rpDataSource" [class.isMobile]="isMobile">
-
-          <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let row">
-              <button *ngIf="editable" mat-button color="warn" (click)="deleteRPField(row)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="species">
-            <th mat-header-cell *matHeaderCellDef> Species </th>
-            <td mat-cell *matCellDef="let row">
-              <span class="mobile-label">Species:</span>
-              {{ row.species }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="class">
-            <th mat-header-cell *matHeaderCellDef> Class </th>
-            <td mat-cell *matCellDef="let row">
-              <span class="mobile-label">Class:</span>
-              {{ row.class }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="qty">
-            <th mat-header-cell *matHeaderCellDef>Quantity</th>
-            <td mat-cell *matCellDef="let row">
-              <span class="mobile-label">Quantity:<br></span>
-              {{ row.qty }}
-              <br class="mobile-label">
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="rpDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: rpDisplayedColumns;"></tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</mat-card>
-<!-- /Round Poles -->
-
-<!-- Fence Posts -->
-<h4>Fence Posts</h4>
-
-<mat-card>
-  <form *ngIf="editable" id="fpForm" [formGroup]="fpForm">
-
-    <div class="form-field-container">
-      <mat-form-field style="width: 12em">
-        <mat-select formControlName="species" placeholder="Species">
-          <mat-option *ngFor='let tree of trees' [value]="tree">{{ tree }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="fpForm.get('species').invalid">{{ getErrorMessage(fpForm.get('species')) }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field style="width: 7.5em">
-        <input matInput formControlName="class" placeholder="Class">
-        <mat-error *ngIf="fpForm.get('class').invalid">{{ getErrorMessage(fpForm.get('class')) }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field style="width: 8.3em;">
-        <input matInput formControlName="qty" placeholder="Quantity">
-        <mat-error *ngIf="fpForm.get('qty').invalid">{{ getErrorMessage(fpForm.get('qty')) }}</mat-error>
-      </mat-form-field>
-      <button mat-mini-fab color="primary" (click)="addFPField()" form="fpForm">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-
-  </form>
-
-  <div class="row">
-    <div class="col-sm-12 col-md-7">
-      <div class="table-container">
-        <table mat-table [dataSource]="fpDataSource" [class.isMobile]="isMobile">
-
-          <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let row">
-              <button *ngIf="editable" mat-button color="warn" (click)="deleteFPField(row)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="species">
-            <th mat-header-cell *matHeaderCellDef> Species </th>
-            <td mat-cell *matCellDef="let row">
-              <span class="mobile-label">Species:</span>
-              {{ row.species }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="class">
-            <th mat-header-cell *matHeaderCellDef> Class </th>
-            <td mat-cell *matCellDef="let row">
-              <span class="mobile-label">Class:</span>
-              {{ row.class }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="qty">
-            <th mat-header-cell *matHeaderCellDef>Quantity</th>
-            <td mat-cell *matCellDef="let row">
-              <span class="mobile-label">Quantity:<br></span>
-              {{ row.qty }}
-              <br class="mobile-label">
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="fpDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: fpDisplayedColumns;"></tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</mat-card>
-<!-- /Fence Posts -->
-
-<!-- Firewood -->
-<h4>Firewood</h4>
-<mat-card>
-  <div [formGroup]="forestForm">
-    <mat-form-field>
-      <input matInput formControlName="firewood" placeholder="Volume" form="forestForm">
-      <mat-error *ngIf="forestForm.get('firewood').invalid">{{ getErrorMessage(forestForm.get('firewood')) }}</mat-error>
-      <span matSuffix>m<sup>3</sup></span>
-    </mat-form-field>
-  </div>
-</mat-card>
-<!-- /Firewood -->
-
-<!-- Actions -->
-
-<div class="page-actions">
-  <button *ngIf="editable" mat-raised-button color="primary" type="submit" form="forestForm">save</button>
-  <button *ngIf="!editable" mat-raised-button color="primary" routerLink="/assessments">done</button>
-  <button *ngIf="editable" mat-raised-button (click)="onCancelClicked()">cancel</button>
-  <button *ngIf="editable" mat-raised-button style="float: right;" (click)="onResetClicked()">clear values</button>
-</div>
+</mat-accordion>
