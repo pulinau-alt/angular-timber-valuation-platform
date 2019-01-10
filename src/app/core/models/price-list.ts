@@ -6,10 +6,11 @@ export interface PriceList {
 }
 
 export interface GirthClass {
-  minGirth: number;
-  maxGirth: number;
-  price: number;
+  minGirth: string;
+  maxGirth: string;
+  price: string;
   otherCost: string;
+  operationCost: string;
   overHeadCost: string;
   stumpageVal: string;
   profit: string;

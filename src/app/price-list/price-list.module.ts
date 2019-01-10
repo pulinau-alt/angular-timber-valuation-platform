@@ -7,7 +7,7 @@ import { PriceListFormComponent } from './price-list-form/price-list-form.compon
 import { PriceListViewComponent } from './price-list-view/price-list-view.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
-import { Classification } from './price-list-view/price-list-view.component';
+//import { Classification } from './price-list-view/price-list-view.component';
 
 @NgModule({
   imports: [
@@ -18,10 +18,10 @@ import { Classification } from './price-list-view/price-list-view.component';
     MatDialogModule,
     SharedModule,
   ],
-  declarations: [PriceListFormComponent, PriceListViewComponent, Classification ],
+  declarations: [PriceListFormComponent, PriceListViewComponent], //Classification
   providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
-  exports: [PriceListFormComponent, PriceListViewComponent, Classification],
-  entryComponents: [Classification],
+  exports: [PriceListFormComponent, PriceListViewComponent], //Classification
+  //entryComponents: [Classification],
   bootstrap: [PriceListViewComponent]
 })
 export class PriceListModule { }

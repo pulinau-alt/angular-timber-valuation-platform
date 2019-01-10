@@ -408,18 +408,18 @@ export class SubmissionFormComponent implements OnInit {
   }
 
   // Populate girth classes list
-  loadMidGirthClasses() {
-    const species = this.logForm.get('species').value;
-    this.mgClasses = [];
-    this.pls.getPriceLists(species).subscribe(next => {
-      next.forEach(e => {
-        console.log(e.midGirthClasses);
-        e.midGirthClasses.forEach(mgClass => {
-          this.mgClasses.push(mgClass);
-        });
-      });
-    });
-  }
+  // loadMidGirthClasses() {
+  //   const species = this.logForm.get('species').value;
+  //   this.mgClasses = [];
+  //   this.pls.getPriceLists(species).subscribe(next => {
+  //     next.forEach(e => {
+  //       console.log(e.midGirthClasses);
+  //       e.midGirthClasses.forEach(mgClass => {
+  //         this.mgClasses.push(mgClass);
+  //       });
+  //     });
+  //   });
+  // }
 
   ///
 

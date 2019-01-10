@@ -25,22 +25,23 @@ export class PriceListFormComponent implements OnInit {
 
   girthData: Array<GirthClass> = [];
   girthDataTable: MatTableDataSource<GirthClass>;
-  girthDispalayedClumns: string[] = ['minGirth', 'maxGirth', 'price', 'otherCost', 'overHeadCost',
+  girthDispalayedClumns: string[] = ['minGirth', 'maxGirth', 'price', 'operationCost', 'otherCost', 'overHeadCost',
     'stumpageVal', 'profit', 'stumpage', 'delete'];
-  //  ['minGirth', 'maxGirth', 'price', 'delete'];
 
-  minGirth: number;
-  maxGirth: number;
-  price: number;
+  // implement variables for girthcalsses and prices
+  minGirth: string;
+  maxGirth: string;
+  price: string;
   otherCost: string;
   overHeadCost: string;
+  operationCost: string;
   stumpageVal: string;
   profit: string;
   stumpage: string;
 
 
   constructor(
-    private ps: PriceListService,
+    private pls: PriceListService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder
@@ -62,52 +63,75 @@ export class PriceListFormComponent implements OnInit {
 
   }
 
+  // getting data from text boxes of class and species and build form
   private initForm() {
     this.priceListForm = this.fb.group({
       id: new FormControl({ value: '', disabled: true }),
-      species: ['', [Validators.required]],
-      class: ['', [Validators.required]],
+      species: ['', [Validators.required, Validators.pattern('[a-z]*')]],
+      class: ['', [Validators.required, Validators.pattern('[a-z]*')]],
       midGirthClasses: new FormControl(this.girthData),
     });
-    // , Validators.pattern('[a-z0-9]*')
 
   }
 
+
+  // loading data in species and class to edit
   private loadPriceDetails(id) {
-    this.ps.getPriceList(id)
+    this.pls.getPriceList(id)
       .subscribe(item => {
         this.prices = item.data();
         this.priceListForm.get('id').setValue(id);
         this.priceListForm.get('species').setValue(this.prices.species);
         this.priceListForm.get('class').setValue(this.prices.class);
+
+        // load data to girth class table to edit
+        if (this.prices.midGirthClasses) {
+          this.prices.midGirthClasses.forEach(e => {
+            this.girthData.push({
+              minGirth: e.minGirth,
+              maxGirth: e.maxGirth,
+              price: e.price,
+              otherCost: e.otherCost,
+              overHeadCost: e.overHeadCost,
+              operationCost: e.operationCost,
+              stumpageVal: e.stumpageVal,
+              profit: e.profit,
+              stumpage: e.stumpage,
+            });
+          });
+        }
+        this.getPriceData();
+        if (this.girthData[0].minGirth !== undefined) { this.show = true; }
       });
   }
 
+  // get data from grith class and price data
   private getPriceData() {
     of(this.girthData).subscribe(midGirthClasses => {
       const rows = [];
       midGirthClasses.forEach(data => {
         rows.push(data);
-        console.log('Added log: ' + data);
       });
       this.girthDataTable = new MatTableDataSource(rows);
     });
 
   }
 
+  // when save button clicked
   onSubmit() {
     if (this.id = this.priceListForm.get('id').value) {
-      console.log(this.ps.updatePriceList(this.id, this.priceListForm.getRawValue()));
+      console.log(this.pls.updatePriceList(this.id, this.priceListForm.getRawValue()));
       console.log('Updated');
     } else {
       if (this.priceListForm.valid) {
-        console.log(this.ps.addPriceList(this.priceListForm.value));
+        console.log(this.pls.addPriceList(this.priceListForm.value));
       }
     }
     this.router.navigate(['pricelist']);
     this.priceListForm.reset();
   }
 
+  // when "+" button clicked 
   addGirthData() {
     this.show = true;
     this.girthData.push({
@@ -116,27 +140,35 @@ export class PriceListFormComponent implements OnInit {
       price: this.price,
       otherCost: this.otherCost,
       overHeadCost: this.overHeadCost,
+      operationCost: this.operationCost,
       stumpageVal: this.stumpageVal,
       profit: this.profit,
       stumpage: this.stumpage,
     });
     this.getPriceData();
 
-    if (this.girthData[0].minGirth !== undefined) { this.show = true; } else { alert('price\'s data can\'t be empty'); }
-    console.log(this.girthData);
+    if (this.girthData[0].minGirth !== undefined) { this.show = true; } else { alert('You Enterd empty value'); }
+    
     this.minGirth = null;
     this.maxGirth = null;
     this.price = null;
     this.otherCost = null;
     this.overHeadCost = null;
+    this.operationCost = null;
     this.stumpageVal = null;
     this.profit = null;
     this.stumpage = null;
   }
 
+  // when delete icon clicked in girth table
   deletePlotData(item) {
     this.girthData.splice(item, 1);
     this.getPriceData();
-    console.log(this.girthData);
+  }
+
+  // when cancel button clicked
+  onCancelClicked() {
+    this.router.navigate(['pricelist']);
+    this.priceListForm.reset();
   }
 }
