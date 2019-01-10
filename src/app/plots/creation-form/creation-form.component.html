@@ -12,38 +12,46 @@
                     <form id="plotForm" [formGroup]="plotForm" (ngSubmit)="onSubmit()" class="mat-form">
                       <section [style.width]="'100%'">
                         <div class="line">
-                          <mat-form-field>
+                         <mat-form-field>
                             <input formControlName="division" matInput placeholder="Division">
+                            <mat-error *ngIf="plotForm.get('division').invalid">{{ getErrorMessage(plotForm.get('division')) }}</mat-error>
                           </mat-form-field>
 
                           <mat-form-field>
                             <input formControlName="beat" matInput placeholder="Beat">
+                            <mat-error *ngIf="plotForm.get('beat').invalid">{{ getErrorMessage(plotForm.get('beat')) }}</mat-error>
                           </mat-form-field>
 
                           <mat-form-field>
                             <input formControlName="range" matInput placeholder="Range">
+                            <mat-error *ngIf="plotForm.get('range').invalid">{{ getErrorMessage(plotForm.get('range')) }}</mat-error>
                           </mat-form-field>
                         </div>
 
                         <div class="line">
                           <mat-form-field class="field-width">
                             <input formControlName="block" matInput placeholder="Block">
+                            <mat-error *ngIf="plotForm.get('block').invalid">{{ getErrorMessage(plotForm.get('block')) }}</mat-error>
                           </mat-form-field>
 
                           <mat-form-field class="field-width">
                             <input formControlName="sBlock" matInput placeholder="Sub Block">
+                            <mat-error *ngIf="plotForm.get('sBlock').invalid">{{ getErrorMessage(plotForm.get('sBlock')) }}</mat-error>
                           </mat-form-field>
 
                           <mat-form-field class="field-width">
                               <input formControlName="plot" matInput placeholder="Plot">
+                              <mat-error *ngIf="plotForm.get('plot').invalid">{{ getErrorMessage(plotForm.get('plot')) }}</mat-error>
                           </mat-form-field >
 
                           <mat-form-field class="field-width">
                             <input formControlName="plotSize" matInput placeholder="Plot Size">
+                            <mat-error *ngIf="plotForm.get('plotSize').invalid">{{ getErrorMessage(plotForm.get('plotSize')) }}</mat-error>
                           </mat-form-field>
 
                           <mat-form-field class="field-width">
                             <input formControlName="mainSP" matInput placeholder="Main SP">
+                            <mat-error *ngIf="plotForm.get('mainSP').invalid">{{ getErrorMessage(plotForm.get('mainSP')) }}</mat-error>
                           </mat-form-field>
 
                           <mat-form-field class="field-width">
@@ -54,52 +62,68 @@
                         <div class="line">
                             <mat-form-field class="field-width">
                               <input formControlName="pYear" matInput placeholder="Plant Year">
+                              <mat-error *ngIf="plotForm.get('pYear').invalid">{{ getErrorMessage(plotForm.get('pYear')) }}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                               <input formControlName="nStanding" matInput placeholder="No.Standing">
+                              <mat-error *ngIf="plotForm.get('nStanding').invalid">{{ getErrorMessage(plotForm.get('nStanding')) }}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                               <input formControlName="nRemoved" matInput placeholder="No.Removed">
+                              <mat-error *ngIf="plotForm.get('nRemoved').invalid">{{ getErrorMessage(plotForm.get('nRemoved')) }}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                               <input formControlName="slope" matInput placeholder="Slope %">
+                              <mat-error *ngIf="plotForm.get('slope').invalid">{{ getErrorMessage(plotForm.get('slope')) }}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                               <input formControlName="slopePos" matInput placeholder="Slope Pos">
+                              <mat-error *ngIf="plotForm.get('slopePos').invalid">{{ getErrorMessage(plotForm.get('slopePos')) }}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                               <input formControlName="aspect" matInput placeholder="Aspect">
+                              <mat-error *ngIf="plotForm.get('aspect').invalid">{{ getErrorMessage(plotForm.get('aspect')) }}</mat-error>
                             </mat-form-field>
                           </div>
 
                           <div class="line">
-                            <mat-form-field class="field-width">
+                            <!-- <mat-form-field class="field-width">
                               <input formControlName="date" matInput placeholder="Date">
+                            </mat-form-field> -->
+                            <mat-form-field class="field-width" >
+                              <input matInput formControlName="date" [matDatepicker]="picker" placeholder="Date">
+                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                              <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                               <input formControlName="groundVeg" matInput placeholder="Ground Veg">
+                              <mat-error *ngIf="plotForm.get('groundVeg').invalid">{{ getErrorMessage(plotForm.get('groundVeg')) }}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                                 <input formControlName="underStr" matInput placeholder="Understorey">
+                                <mat-error *ngIf="plotForm.get('underStr').invalid">{{ getErrorMessage(plotForm.get('underStr')) }}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                               <input formControlName="soilDp" matInput placeholder="Soil Depth">
+                              <mat-error *ngIf="plotForm.get('soilDp').invalid">{{ getErrorMessage(plotForm.get('soilDp')) }}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                               <input formControlName="soilTxt" matInput placeholder="Soil Texture">
+                              <mat-error *ngIf="plotForm.get('soilTxt').invalid">{{ getErrorMessage(plotForm.get('soilTxt')) }}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="field-width">
                                 <input formControlName="humus" matInput placeholder="Humus">
+                                <mat-error *ngIf="plotForm.get('humus').invalid">{{ getErrorMessage(plotForm.get('humus')) }}</mat-error>
                             </mat-form-field>
                           </div>
                       </section>
@@ -113,67 +137,67 @@
         <!--plot data Form -->
         <mat-expansion-panel  [expanded]="step === 1" (opened)="setStep(1)" >
           <mat-expansion-panel-header>
-            <mat-panel-title>Plot's Details</mat-panel-title>
-            <mat-panel-description>enter plot's details</mat-panel-description>
+            <mat-panel-title>Trees Details</mat-panel-title>
+            <mat-panel-description>enter Trees details</mat-panel-description>
           </mat-expansion-panel-header>
             <form >
               <div class="line">
                 <mat-form-field class="field-width">
-                    <input [(ngModel)]="tree" matInput name="tree" placeholder="Trees" required>
+                    <input [(ngModel)]="tree" matInput name="tree" placeholder="Trees" required pattern="[0-9]+">
                   </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="species" matInput name="species" placeholder="Species" required>
+                    <input [(ngModel)]="species" matInput name="species" placeholder="Species" required pattern="[0-9]+">
                   </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="dbh" matInput name="dbh" placeholder="dbh" required>
+                  <input [(ngModel)]="dbh" matInput name="dbh" placeholder="dbh" required pattern="[0-9]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="dh" matInput name="dh" placeholder="Dom/Health" required>
+                  <input [(ngModel)]="dh" matInput name="dh" placeholder="Dom/Health" required pattern="[A-Z]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="boForm" matInput  name="boForm" placeholder="Bole Form" required>
+                  <input [(ngModel)]="boForm" matInput  name="boForm" placeholder="Bole Form" required pattern="[A-Z]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="dmg" matInput name="dmg" placeholder="Damage" required>
+                  <input [(ngModel)]="dmg" matInput name="dmg" placeholder="Damage" required pattern="[A-Z]+">
                 </mat-form-field>
               </div>
 
               <div class="line">
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="blA" matInput name="blA" placeholder="Baseline a">
+                  <input [(ngModel)]="blA" matInput name="blA" placeholder="Baseline a" pattern="[0-9]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="slA" matInput name="slA" placeholder="Slope a">
+                  <input [(ngModel)]="slA" matInput name="slA" placeholder="Slope a" pattern="[0-9]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="bsA" matInput name="bsA" placeholder="Base a">
+                  <input [(ngModel)]="bsA" matInput name="bsA" placeholder="Base a" pattern="[0-9]+">
                 </mat-form-field>
 
                 <mat-form-field class="field-width">
-                  <input [(ngModel)]="tpA" matInput name="tpA" placeholder="Tip a">
+                  <input [(ngModel)]="tpA" matInput name="tpA" placeholder="Tip a" pattern="[0-9]+">
                 </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="blB" matInput  name="blB" placeholder="Baseline b">
+                    <input [(ngModel)]="blB" matInput  name="blB" placeholder="Baseline b" pattern="[0-9]+">
                   </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="slB" matInput name="slB" placeholder="Slope b">
+                    <input [(ngModel)]="slB" matInput name="slB" placeholder="Slope b" pattern="[0-9]+">
                   </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="bsB" matInput  name="bsB" placeholder="Base b">
+                    <input [(ngModel)]="bsB" matInput  name="bsB" placeholder="Base b" pattern="[0-9]+">
                   </mat-form-field>
 
                   <mat-form-field class="field-width">
-                    <input [(ngModel)]="tpB" matInput name="tpB" placeholder="Tip b">
+                    <input [(ngModel)]="tpB" matInput name="tpB" placeholder="Tip b" pattern="[0-9]+">
                   </mat-form-field>
 
                   <button mat-mini-fab color="primary" (click)="addPlotData()" type="submit">+</button>

@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.page-actions {
+  margin-top: 16px;
+  padding-right: 8px;
+  > * {
+    float: right;
+    margin: auto 2px;
+  }
+}

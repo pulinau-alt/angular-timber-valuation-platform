@@ -1,16 +1,12 @@
-import { PlotsModule } from './plots/plots.module';
-import { FieldOfficerGuard } from './core/guards/field-officer.guard';
-import { ManagerGuard } from './core/guards/manager.guard';
-import { AdminGuard } from './core/guards/admin.guard';
-import { AdminModule } from './admin/admin.module';
-import { AuthGuard } from './core/guards/auth.guard';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule, Title } from '@angular/platform-browser';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule } from '@angular/fire';
+import { EmailService } from './email.service';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,11 +20,17 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared.module';
 import { DevOfficerGuard } from './core/guards/dev-officer.guard';
 import { ReportsModule } from './reports/reports.module';
+import { PlotsModule } from './plots/plots.module';
+import { FieldOfficerGuard } from './core/guards/field-officer.guard';
+import { ManagerGuard } from './core/guards/manager.guard';
+import { AdminGuard } from './core/guards/admin.guard';
+import { AdminModule } from './admin/admin.module';
+import { AuthGuard } from './core/guards/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,14 +48,18 @@ import { ReportsModule } from './reports/reports.module';
     DashboardModule,
     AdminModule,
     PlotsModule,
+    HttpModule,
     ReportsModule,
   ],
   providers: [
+    Title,
+    { provide: LOCALE_ID, useValue: 'en-SL' },
     AuthGuard,
     AdminGuard,
     DevOfficerGuard,
     ManagerGuard,
     FieldOfficerGuard,
+    EmailService,
   ],
   bootstrap: [AppComponent]
 })
