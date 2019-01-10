@@ -69,7 +69,6 @@ export class ViewReportComponent implements OnChanges, OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       this.report.name = result;
       this.rs.addReport(this.report).then(value => {
         this.openSnackBar('\"' + result + '\" was saved successfully');

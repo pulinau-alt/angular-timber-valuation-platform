@@ -3,7 +3,7 @@ import { ForestReport, Report } from './../../core/models/report';
 import { Forest, Log } from './../../core/models/forest';
 import { AssessmentService } from './../../services/assessment.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ReportsService } from 'src/app/services/reports.service';
 import { PriceListService } from 'src/app/services/price-list.service';
 import { of } from 'rxjs';
@@ -18,6 +18,7 @@ export class GenerateReportComponent implements OnInit {
   generateForm: FormGroup;
   regions: Set<string>;
 
+  @Input() report: Report;
   @Output() reportEvent = new EventEmitter();
 
   constructor(

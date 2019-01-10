@@ -1,2 +1,2 @@
-<app-generate-report (reportEvent)="recieveReport($event)"></app-generate-report>
-<app-view-report [report]="report$ | async"></app-view-report>
+<app-generate-report (reportEvent)="recieveReport($event)" [report]="report$ | async"></app-generate-report>
+<app-view-report (reportEvent)="recieveReport($event)" [report]="report$ | async"></app-view-report>

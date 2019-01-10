@@ -1,11 +1,15 @@
 .form-field-container {
-    position: relative;
+  position: relative;
 }
 
 .mat-form-field {
-    margin: auto 6px;
+  margin: auto 6px;
 }
 
 .generate-button {
-    margin-left: 24px;
+  margin-left: 24px;
+}
+
+mat-expansion-panel {
+  margin-bottom: 16px;
 }
