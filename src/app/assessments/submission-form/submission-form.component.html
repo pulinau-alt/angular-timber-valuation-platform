@@ -74,7 +74,7 @@
         </mat-form-field>
 
         <mat-form-field style="width: 8.3em;">
-          <input matInput formControlName="volume" placeholder="Felled Volume">
+          <input matInput formControlName="volume" type="number" placeholder="Felled Volume">
           <span matSuffix>m<sup>3</sup></span>
           <mat-error *ngIf="logForm.get('volume').invalid">{{ getErrorMessage(logForm.get('volume')) }}</mat-error>
         </mat-form-field>
@@ -157,7 +157,7 @@
         </mat-form-field>
 
         <mat-form-field style="width: 8.3em;">
-          <input matInput formControlName="tpQty" placeholder="Quantity">
+          <input matInput formControlName="tpQty" type="number" placeholder="Quantity">
           <mat-error *ngIf="tpForm.get('tpQty').invalid">{{ getErrorMessage(tpForm.get('tpQty')) }}</mat-error>
         </mat-form-field>
         <button mat-mini-fab color="primary" class="add-button" (click)="addTPField()" form="tpForm">
@@ -235,7 +235,7 @@
         </mat-form-field>
 
         <mat-form-field style="width: 8.3em;">
-          <input matInput formControlName="qty" placeholder="Quantity">
+          <input matInput formControlName="qty" type="number" placeholder="Quantity">
           <mat-error *ngIf="rpForm.get('qty').invalid">{{ getErrorMessage(rpForm.get('qty')) }}</mat-error>
         </mat-form-field>
         <button mat-mini-fab color="primary" class="add-button" (click)="addRPField()" form="rpForm">
@@ -313,7 +313,7 @@
         </mat-form-field>
 
         <mat-form-field style="width: 8.3em;">
-          <input matInput formControlName="qty" placeholder="Quantity">
+          <input matInput formControlName="qty" type="number" placeholder="Quantity">
           <mat-error *ngIf="fpForm.get('qty').invalid">{{ getErrorMessage(fpForm.get('qty')) }}</mat-error>
         </mat-form-field>
         <button mat-mini-fab color="primary" class="add-button" (click)="addFPField()" form="fpForm">
@@ -378,7 +378,7 @@
     </mat-expansion-panel-header>
     <div [formGroup]="forestForm">
       <mat-form-field>
-        <input matInput formControlName="firewood" placeholder="Volume" form="forestForm">
+        <input matInput formControlName="firewood" type="number" placeholder="Volume" form="forestForm">
         <mat-error *ngIf="forestForm.get('firewood').invalid">{{ getErrorMessage(forestForm.get('firewood')) }}</mat-error>
         <span matSuffix>m<sup>3</sup></span>
       </mat-form-field>
