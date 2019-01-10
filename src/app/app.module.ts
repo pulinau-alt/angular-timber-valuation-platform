@@ -1,5 +1,5 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule } from '@angular/fire';
@@ -53,6 +53,7 @@ import { AuthGuard } from './core/guards/auth.guard';
   ],
   providers: [
     Title,
+    { provide: LOCALE_ID, useValue: 'en-SL' },
     AuthGuard,
     AdminGuard,
     DevOfficerGuard,
