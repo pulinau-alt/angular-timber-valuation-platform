@@ -20,10 +20,12 @@ export class CreationFormComponent implements OnInit {
   sub;
   id: String;
   show: boolean ;
+  date: FormControl;
 
   plotData: Array<PlotData> = [];
   plotDataTable: MatTableDataSource<PlotData>;
-  plotDisplayedColumns: string[] = ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'blA', 'slA', 'bsA', 'tpA', 'blB', 'slB', 'bsB', 'tpB' , 'delete'];
+  plotDisplayedColumns: string[] = ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'blA', 'slA',
+                                   'bsA', 'tpA', 'blB', 'slB', 'bsB', 'tpB' , 'delete'];
   //  ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'delete'];
 
  // ['tree', 'species', 'dbh', 'dh', 'boForm', 'dmg', 'blA', 'slA', 'bsA', 'tpA', 'blB', 'slB', 'bsB', 'tpB' , 'delete'];
@@ -68,28 +70,28 @@ export class CreationFormComponent implements OnInit {
   private initForm() {
     this.plotForm = this.fBuilder.group({
       id: new FormControl({ value: '', disabled: true }),
-      division: new FormControl('', Validators.required),
-      beat: new FormControl('', Validators.required),
-      range: new FormControl('', Validators.required),
-      block: new FormControl('', Validators.required),
-      sBlock: new FormControl('', Validators.required),
-      plot: new FormControl('', Validators.required),
-      plotSize: new FormControl('', Validators.required),
-      mainSP: new FormControl('', Validators.required),
+      division: new FormControl('', [Validators.required, Validators.pattern('.*\\S.*[a-zA-Z]*')]),
+      beat: new FormControl('', [Validators.required, Validators.pattern('.*\\S.*[a-zA-Z]*')]),
+      range: new FormControl('', [Validators.required, Validators.pattern('.*\\S.*[a-zA-Z]*')]),
+      block: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      sBlock: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      plot: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      plotSize: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      mainSP: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
       minorSP: new FormControl(''),
-      pYear: new FormControl('', Validators.required),
-      nStanding: new FormControl('', Validators.required),
-      nRemoved: new FormControl('', Validators.required),
-      slope: new FormControl('', Validators.required),
-      slopePos: new FormControl('', Validators.required),
-      aspect: new FormControl('', Validators.required),
+      pYear: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      nStanding: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      nRemoved: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      slope: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      slopePos: new FormControl('', [Validators.required, Validators.pattern('[A-Z]*')]),
+      aspect: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
       date: new FormControl('', Validators.required),
-      groundVeg: new FormControl('', Validators.required),
-      underStr: new FormControl('', Validators.required),
-      soilDp: new FormControl('', Validators.required),
-      soilTxt: new FormControl('', Validators.required),
-      humus: new FormControl('', Validators.required),
-       pData: new FormControl(this.plotData),
+      groundVeg: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      underStr: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+      soilDp: new FormControl('', [Validators.required, Validators.pattern('[A-Z]*')]),
+      soilTxt: new FormControl('', [Validators.required, Validators.pattern('[A-Z]*')]),
+      humus: new FormControl('', [Validators.required, Validators.pattern('[A-Z]*')]),
+      pData: new FormControl(this.plotData),
 
     });
   }
@@ -98,6 +100,8 @@ export class CreationFormComponent implements OnInit {
    this.pService.plotGet(id)
     .subscribe(item => {
       this.plot = item.data();
+
+
       this.plotForm.get('id').setValue(id);
       this.plotForm.get('division').setValue(this.plot.division);
       this.plotForm.get('beat').setValue(this.plot.beat);
@@ -114,7 +118,7 @@ export class CreationFormComponent implements OnInit {
       this.plotForm.get('slope').setValue(this.plot.slope);
       this.plotForm.get('slopePos').setValue(this.plot.slopePos);
       this.plotForm.get('aspect').setValue(this.plot.aspect);
-      this.plotForm.get('date').setValue(this.plot.date);
+      // this.plotForm.get('date').setValue(this.plot.date);
       this.plotForm.get('groundVeg').setValue(this.plot.groundVeg);
       this.plotForm.get('underStr').setValue(this.plot.underStr);
       this.plotForm.get('soilDp').setValue(this.plot.soilDp);
@@ -235,6 +239,13 @@ export class CreationFormComponent implements OnInit {
     this.getPlotData();
     console.log(this.plotData);
   }
+  // get error massages for inputs
+  getErrorMessage(fControl: FormControl) {
+    return fControl.hasError('required') ? 'This field is required' :
+    fControl.hasError('pattern') ? 'Invalid input' :
+        '';
+  }
+
 }
 
 

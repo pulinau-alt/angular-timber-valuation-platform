@@ -21,7 +21,7 @@
       <div class="table-plots">
         <table mat-table [dataSource]="dataSource">
 
-          <ng-container matColumnDef="division" sticky>
+          <ng-container matColumnDef="division" sticky >
             <th mat-header-cell *matHeaderCellDef> Division </th>
             <td mat-cell *matCellDef="let plot"> {{plot.division}} </td>
           </ng-container>
@@ -56,7 +56,7 @@
             <td mat-cell *matCellDef="let plot"> {{plot.plotSize}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="mainSP">
+          <ng-container matColumnDef="mainSP" >
             <th mat-header-cell *matHeaderCellDef> Main SP </th>
             <td mat-cell *matCellDef="let plot"> {{plot.mainSP}} </td>
           </ng-container>
@@ -121,7 +121,7 @@
             <td mat-cell *matCellDef="let plot"> {{plot.soilTxt}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="humus">
+          <ng-container matColumnDef="humus" >
             <th mat-header-cell *matHeaderCellDef> Humus </th>
             <td mat-cell *matCellDef="let plot"> {{plot.humus}} </td>
           </ng-container>
@@ -166,7 +166,7 @@
   <mat-card *ngIf="show">
     <mat-card-content>
       <div >
-        <h4>Plot Data</h4>
+        <h4>Trees Data</h4>
         <table mat-table [dataSource]="plotDataTable">
 
           <ng-container matColumnDef="tree">
