@@ -9,11 +9,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatTableDataSource } from '@angular/material';
 
 
-
-// export interface DialogData {
-//   classific: string;
-// }
-
 @Component({
   selector: 'app-price-list-view',
   templateUrl: './price-list-view.component.html',
@@ -22,36 +17,20 @@ import { MatTableDataSource } from '@angular/material';
 export class PriceListViewComponent implements OnInit {
 
   priceListData: PriceList[];
-  //dataSource = new PriceListDataSource(this.ps);
   dataSource: MatTableDataSource<PriceList>;
   displayedColumns: string[] = ['clas', 'species', 'view', 'edit', 'delete'];
 
   clasForm: FormGroup;
-  // clases: Clas[];
-  // gClass: GirthClass[];
 
   show: boolean; //for show girth and price data when clicked show icon
   githClassTable: MatTableDataSource<any>;
   girthclassColums: String[] = ['minGirth', 'price', 'operationCost', 'otherCost', 'overHeadCost',
     'stumpageVal', 'profit', 'stumpage'];
 
-  //dSource: MatTableDataSource<PriceList>;
-
-
-  // selectedValue: string; // selected value of drop down
-
-  // sel: string;
-
-  //classific: string;
-  //name: string;
-
   constructor(
     private pls: PriceListService,
     public router: Router,
-    public dialog: MatDialog
-  ) {// dialog eka oni wenne pop upekata. eka ain karanna
-    // this.clases = [];
-
+  ) {
   }
 
   ngOnInit() {
@@ -65,35 +44,12 @@ export class PriceListViewComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.priceListData);
     });
 
-    // Populate class list
-    // this.cs.getClas()
-    //   .subscribe(clases => {
-    //     clases.forEach(clas => {
-    //       this.clases.push(clas);
-    //     });
-    //   });
   }
-
-  // openDialog(): void {
-  //   const dialogRef = this.dialog.open(Classification, {
-  //     width: '270px',
-  //     data: { name: this.name, classific: this.classific }
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //     this.classific = result;
-  //   });
-  // }
 
   // navigathion to new price list when price list button clicked
   addPlist() {
     this.router.navigate(['/pricelist/form']);
   }
-
-  // changeSelect() {
-  //   this.ps.newSelect(this.selectedValue);
-  // }
 
   // delete
   onDeleteClicked(row) {
@@ -121,25 +77,3 @@ export class PriceListViewComponent implements OnInit {
 
 }
 
-// @Component({
-//   // tslint:disable-next-line:component-selector
-//   selector: 'classification',
-//   templateUrl: 'classification.html',
-// })
-// // tslint:disable-next-line:component-class-suffix
-// export class Classification {
-
-//   constructor(
-//     private cs: ClasService,
-//     public dialogRef: MatDialogRef<Classification>,
-//     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-
-//   onNoClick(): void {
-//     this.dialogRef.close();
-//   }
-
-//   save(newName: string) {
-//     this.cs.addClas(newName);
-//   }
-
-// }
