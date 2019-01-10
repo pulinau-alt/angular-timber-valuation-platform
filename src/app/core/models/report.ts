@@ -7,26 +7,28 @@ export interface Report {
     endDate: any;
     region: string;
     forestReports: ForestReport[];
-    totals: {
-        felledTimberVolume: number;
-        stumpageTimber: number;
-        noOfTP?: number;
-        stumpageTP?: number;
-        noOfRPFP?: number;
-        firewood?: number;
-        stumpageRPFPFW?: number;
-        totalStumpage?: number;
-    };
+    totals: Total;
 }
 
 export interface ForestReport {
     forest: Forest;
     felledTimberVolume: number;
     stumpageTimber: number;
-    noOfTP?: number;
-    stumpageTP?: number;
-    noOfRPFP?: number;
-    firewood?: number;
-    stumpageRPFPFW?: number;
-    totalStumpage?: number;
+    // noOfTP?: number;
+    // stumpageTP?: number;
+    // noOfRPFP?: number;
+    // firewood?: number;
+    // stumpageRPFPFW?: number;
+    // totalStumpage?: number;
+}
+
+export interface Total {
+    felledTimberVolume: number;
+    stumpageTimber: number;
+    // noOfTP?: number;
+    // stumpageTP?: number;
+    // noOfRPFP?: number;
+    // firewood?: number;
+    // stumpageRPFPFW?: number;
+    // totalStumpage?: number;
 }

@@ -3,9 +3,10 @@ import { ForestReport, Report } from './../../core/models/report';
 import { Forest, Log } from './../../core/models/forest';
 import { AssessmentService } from './../../services/assessment.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ReportsService } from 'src/app/services/reports.service';
 import { PriceListService } from 'src/app/services/price-list.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-generate-report',
@@ -16,6 +17,8 @@ export class GenerateReportComponent implements OnInit {
 
   generateForm: FormGroup;
   regions: Set<string>;
+
+  @Output() reportEvent = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
@@ -112,8 +115,8 @@ export class GenerateReportComponent implements OnInit {
           totals.stumpageTimber += +value.stumpageTimber;
         });
         const report: Report = {
-          startDate: startDate,
-          endDate: endDate,
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
           region: region,
           forestReports: forestReportList,
           totals: totals,
@@ -121,6 +124,7 @@ export class GenerateReportComponent implements OnInit {
         message = 'Report successfully generated';
 
         console.log(report);
+        this.reportEvent.emit(of(report));
       } else {
         message = 'No assessment found with the specified criteria';
       }

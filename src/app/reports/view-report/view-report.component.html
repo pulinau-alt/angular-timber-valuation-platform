@@ -1,0 +1,119 @@
+<div *ngIf="report; then viewReport else viewAll"></div>
+
+<ng-template #viewReport>
+  <h2 class="mat-title" style="display: inline-block">{{ report.name }}</h2>
+  <span class="mat-subtitle" style="margin: 14px">{{ report.forestReports.length }} items</span>
+
+  <div class="table-container mat-card">
+    <table mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="division">
+        <th mat-header-cell *matHeaderCellDef> Divison </th>
+        <td mat-cell *matCellDef="let row"> {{ row.forest.division }} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="beat">
+        <th mat-header-cell *matHeaderCellDef> Beat </th>
+        <td mat-cell *matCellDef="let row"> {{ row.forest.beat }} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="range">
+        <th mat-header-cell *matHeaderCellDef> Range </th>
+        <td mat-cell *matCellDef="let row"> {{ row.forest.range }} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="block">
+        <th mat-header-cell *matHeaderCellDef> Block </th>
+        <td mat-cell *matCellDef="let row"> {{ row.forest.block }} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="sBlock">
+        <th mat-header-cell *matHeaderCellDef> S.Block </th>
+        <td mat-cell *matCellDef="let row"> {{ row.forest.sBlock }} </td>
+        <td mat-footer-cell *matFooterCellDef> Total: </td>
+      </ng-container>
+
+      <ng-container matColumnDef="felledTimberVolume">
+        <th mat-header-cell *matHeaderCellDef> Felled Timber Volume </th>
+        <td mat-cell *matCellDef="let row">
+          {{ +row.felledTimberVolume | number:'1.2-3' }}
+          <span matSuffix>m<sup>3</sup></span>
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+          {{ +report.totals.felledTimberVolume }}
+          <span matSuffix>m<sup>3</sup></span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stumpageTimber">
+        <th mat-header-cell *matHeaderCellDef> Stumpage </th>
+        <td mat-cell *matCellDef="let row">
+          <span matPrefix>Rs.</span>
+          {{ +row.stumpageTimber | number:'1.2-2' }}
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+          <span matPrefix>Rs.</span>
+          {{ +report.totals.stumpageTimber | number:'1.2-2' }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+  </div>
+
+  <div class="page-actions">
+    <button *ngIf="!saved" mat-raised-button color="primary" (click)="onSaveClicked()">save</button>
+    <button *ngIf="!saved" mat-raised-button (click)="onCancelClicked()">cancel</button>
+    <button *ngIf="saved" mat-raised-button color="primary" (click)="onCancelClicked()">done</button>
+    <button *ngIf="saved" mat-raised-button color="warn" (click)="onDeleteClicked(report)">delete</button>
+  </div>
+
+</ng-template>
+
+<!-- View all reports -->
+<ng-template #viewAll>
+  <h2 class="mat-title" style="display: inline-block">Reports</h2>
+  <span class="mat-subtitle" style="margin: 14px">{{ items }} items</span>
+
+  <mat-action-list class="mat-card">
+    <mat-list-item *ngFor="let report of reports" (click)="onReportClicked(report)">
+      <mat-icon mat-list-icon>note</mat-icon>
+      <h4 mat-line>{{report.name}}</h4>
+      <p mat-line> {{report.startDate | date}} - {{report.endDate | date}} | {{report.region}} </p>
+    </mat-list-item>
+  </mat-action-list>
+
+  <!-- <div class="table-container mat-card">
+    <table mat-table [dataSource]="reportsDataSource">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let row"> {{ row.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef> From </th>
+        <td mat-cell *matCellDef="let row"> {{ row.startDate }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef> To </th>
+        <td mat-cell *matCellDef="let row"> {{ row.endDate }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="region">
+        <th mat-header-cell *matHeaderCellDef> Region </th>
+        <td mat-cell *matCellDef="let row"> {{ row.region }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="reportsDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: reportsDisplayedColumns;"></tr>
+    </table>
+  </div> -->
+</ng-template>
