@@ -1,7 +1,6 @@
-import { GirthClass } from './../../core/models/price-list';
+import { PriceList, GirthClass } from './../../core/models/price-list';
 import { PriceListService } from './../../services/price-list.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import { Clas, PriceList } from '../../core/models/price-list';
 import { DataSource } from '@angular/cdk/table';
 import { Router } from '@angular/router';
 import { ClasService } from 'src/app/services/clas.service';
@@ -10,130 +9,71 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatTableDataSource } from '@angular/material';
 
 
-
-export interface DialogData {
-  classific: string;
-}
-
 @Component({
   selector: 'app-price-list-view',
   templateUrl: './price-list-view.component.html',
   styleUrls: ['./price-list-view.component.scss']
 })
 export class PriceListViewComponent implements OnInit {
-  dataSource = new PriceListDataSource(this.ps);
-  displayedColumns: string[] = ['species', 'clas', 'view', 'edit', 'delete'];
+
+  priceListData: PriceList[];
+  dataSource: MatTableDataSource<PriceList>;
+  displayedColumns: string[] = ['clas', 'species', 'view', 'edit', 'delete'];
 
   clasForm: FormGroup;
-  clases: Clas[];
-  // gClass: GirthClass[];
-  show: boolean;
+
+  show: boolean; //for show girth and price data when clicked show icon
   githClassTable: MatTableDataSource<any>;
-  girthclassColums: String[] = ['minGirth', 'price', 'otherCost', 'overHeadCost',
+  girthclassColums: String[] = ['minGirth', 'price', 'operationCost', 'otherCost', 'overHeadCost',
     'stumpageVal', 'profit', 'stumpage'];
 
-  selectedValue: string; // selected value of drop down
-
-  sel: string;
-
-  classific: string;
-  name: string;
-
   constructor(
-    private ps: PriceListService,
-    private cs: ClasService,
+    private pls: PriceListService,
     public router: Router,
-    public dialog: MatDialog
   ) {
-    this.clases = [];
-
   }
 
   ngOnInit() {
-
-    // Populate class list
-    this.cs.getClas()
-      .subscribe(clases => {
-        clases.forEach(clas => {
-          this.clases.push(clas);
-        });
+    const data = this.pls.getPriceLists();
+    data.subscribe(pData => {
+      this.priceListData = [];
+      pData.forEach(e => {
+        this.priceListData.push(e);
+        // this.items = this.plotDataList.length;
       });
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(Classification, {
-      width: '270px',
-      data: { name: this.name, classific: this.classific }
+      this.dataSource = new MatTableDataSource(this.priceListData);
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.classific = result;
-    });
   }
+
+  // navigathion to new price list when price list button clicked
   addPlist() {
     this.router.navigate(['/pricelist/form']);
   }
 
-  changeSelect() {
-    // this.ps.newSelect(this.selectedValue);
-    // this.dataSources.filter = this.selectedValue.trim().toLowerCase();
-  }
-
-  // applyFilter(filterValue: string) {
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
-
-
+  // delete
   onDeleteClicked(row) {
-    this.ps.deletePriceList(row.id);
+    if (confirm('Are you sure you want to delete?')) {
+      this.pls.deletePriceList(row.id);
+    }
   }
 
+   // update
   onEditClicked(row) {
     this.router.navigate(['/pricelist/form'], { queryParams: { id: row.id } });
   }
 
+  // view girth and price data
   onViewClicked(row) {
     this.show = true;
-    console.log(row.midGirthClasses);
     const gClass: GirthClass[] = row.midGirthClasses;
     this.githClassTable = new MatTableDataSource(gClass);
   }
 
-}
-
-export class PriceListDataSource extends DataSource<any> {
-  constructor(private ps: PriceListService) {
-    super();
-  }
-
-  connect() {
-    return this.ps.getPriceLists();
-  }
-
-  disconnect() { }
-
-}
-
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'classification',
-  templateUrl: 'classification.html',
-})
-// tslint:disable-next-line:component-class-suffix
-export class Classification {
-
-  constructor(
-    private cs: ClasService,
-    public dialogRef: MatDialogRef<Classification>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  save(newName: string) {
-    this.cs.addClas(newName);
+  // search
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }
+
