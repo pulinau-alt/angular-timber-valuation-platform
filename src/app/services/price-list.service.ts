@@ -21,32 +21,32 @@ export class PriceListService {
     return this.priceListCollection.add(priceList);
   }
 
-  // getPriceLists(species?: string): Observable<PriceList[]> {
-  //   const collectionSnapshot = species ?
-  //     this.afs.collection(
-  //       'priceList',
-  //       ref => ref.where('species', '==', species)
-  //     ).snapshotChanges() :
-  //     this.priceListCollection.snapshotChanges();
-  //   return collectionSnapshot.pipe(
-  //     map(actions => actions.map(a => {
-  //       const data = a.payload.doc.data() as PriceList;
-  //       const id = a.payload.doc.id;
-  //       return { id, ...data };
-  //     }))
-  //   );
-  // }
-
-  //get data from firestore
-  getPriceLists(): Observable<PriceList[]> {
-    return this.priceListCollection.snapshotChanges().pipe(
-      map(action => action.map(p => {
-        const data = p.payload.doc.data() as PriceList;
-        const id = p.payload.doc.id;
-        return {id, ...data };
+  getPriceLists(species?: string): Observable<PriceList[]> {
+    const collectionSnapshot = species ?
+      this.afs.collection(
+        'priceList',
+        ref => ref.where('species', '==', species)
+      ).snapshotChanges() :
+      this.priceListCollection.snapshotChanges();
+    return collectionSnapshot.pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as PriceList;
+        const id = a.payload.doc.id;
+        return { id, ...data };
       }))
     );
   }
+
+  //get data from firestore
+  // getPriceLists(): Observable<PriceList[]> {
+  //   return this.priceListCollection.snapshotChanges().pipe(
+  //     map(action => action.map(p => {
+  //       const data = p.payload.doc.data() as PriceList;
+  //       const id = p.payload.doc.id;
+  //       return {id, ...data };
+  //     }))
+  //   );
+  // }
 
   // get data from firestore for spescific id
   getPriceList(id) {
