@@ -78,7 +78,7 @@ export class PlotsViewComponent implements OnInit {
     this.show = false;
   }
 
-  // delete plot's data
+  // delete tree's data
 
   /*deletePlotData(row) {
     if (confirm('Are you sure?')) {

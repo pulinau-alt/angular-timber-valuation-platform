@@ -16,7 +16,8 @@ th {
 }
 
 mat-card {
-  align-content: center;
+  // overflow: auto;
+  align-content: center
 }
 
 .add-btn {
@@ -28,7 +29,7 @@ mat-card {
 .table-plots {
   //  height: 400px;
    width: 100%;
-  overflow: auto;
+  // overflow: auto;
 }
 
 .container {
